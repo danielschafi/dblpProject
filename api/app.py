@@ -1,11 +1,12 @@
 from flask import Flask, render_template
 from flask_restful import Api
+from db import db
 
 
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = "TODO"
-#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost:5432/dblp"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "superKevin"
 api = Api(app)
 
