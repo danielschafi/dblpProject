@@ -1,40 +1,49 @@
+"""
+Author: Adrian Joost
+created: July 2022
+Notes:
+Entry point for API, this app will create a
+link to the postgres db. It is important, that
+posgres db runs on port 5432, user is 'postgres'
+and password is 1234. Maybe, password should be imporved
+when deploying API on production server
+"""
+
 from flask import Flask, render_template
 from flask_restful import Api
 from db import db
-
+from Resources.authorRes import AuthorRes
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:postgres@localhost:5432/dblp"
+#URI to connect to Postgres DB
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:1234@localhost:5432/dblp"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = "superKevin"
+
+#Setup API
+app.secret_key = "1234"
 api = Api(app)
 
+
+#Create Tables in db object and do some woodomagic
 @app.before_first_request
 def create_table():
-    #db.create_all()
-    pass
+    db.create_all()
     
     
-
-@app.route('/', methods=['GET'])
+#Get API interface | currently not implemented
+@app.route('/API', methods=['GET'])
 def home():
-    return render_template("index.html")
+    return render_template("API.html")
 
-@app.route('/controls', methods=['GET'])
-def controls():
-    return render_template("controls.html")
+#Add API resources
+api.add_resource(AuthorRes, "/api/author/<int:_id>")
 
-
-#api.add_resource(Nerve_Center, "/nerveCenter")
-#api.add_resource(Thread_resource, "/thread/<string:thread_name>")
 
 if __name__ == "__main__":
 
-
     #setup DB
-    #db.init_app(app)
+    db.init_app(app)
 
-    
     #start app
     app.run(port=5000, host="0.0.0.0", debug=True, threaded=True)
