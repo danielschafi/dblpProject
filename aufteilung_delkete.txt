@@ -39,8 +39,8 @@ bookEeList - []
 bookAuthorList - []
 bookEditorList - []
 
-www - []
-wwwCiteList - []
+www - [DONE]
+wwwCiteList - [DONE]
 
 article - [DONE]
 articleEeList - [DONE]
