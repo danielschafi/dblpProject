@@ -2,7 +2,7 @@ author - DONE
 cite - DONE
 ee - DONE
 eeType - DONE
-school - []
+school - School
 publisher - []
 journal - []
 editor - []
