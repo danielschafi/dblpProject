@@ -178,7 +178,7 @@ CREATE TABLE masterthesis (
     ID serial PRIMARY KEY,
     title VARCHAR(255),
     note VARCHAR(255),
-    authorListId int,
+    -- authorListId int,
     year VARCHAR(25),
     schoolId int,
     CONSTRAINT fkSchool

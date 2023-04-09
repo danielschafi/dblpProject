@@ -23,9 +23,9 @@ masterthesis - []
 masterthesisEeList - []
 masterthesisAuthorList - []
 
-phdthesis - []
-phdthesisEeList - []
-phdthesisAuthorList - []
+phdthesis - [DONE]
+phdthesisEeList - [DONE]
+phdthesisAuthorList - [DONE]
 
 --Sangeeths--
 
