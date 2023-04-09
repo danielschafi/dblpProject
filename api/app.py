@@ -13,6 +13,7 @@ from flask import Flask, render_template
 from flask_restful import Api
 from db import db
 from Resources.authorRes import AuthorRes
+from Resources.citeRes import CiteRes
 
 app = Flask(__name__)
 
@@ -38,6 +39,7 @@ def home():
 
 #Add API resources
 api.add_resource(AuthorRes, "/api/author/<int:_id>")
+api.add_resource(CiteRes, "/api/cite/<int:_id>")
 
 
 if __name__ == "__main__":

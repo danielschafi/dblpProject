@@ -6,22 +6,19 @@ Notes: -
 
 from db import db
 
-class AuthorModel(db.Model):
+class CiteModel(db.Model):
 
-    __tablename__ = "author"
+    __tablename__ = "cite"
     id = db.Column(db.Integer, primary_key=True)
-    orcid = db.Column(db.String(255))
-    name = db.Column(db.String(255))
+    ref = db.Column(db.String(255))
 
-    def __init__(self, _id, orcId, name):
+    def __init__(self, _id, ref):
         self._id = _id
-        self.orcId = orcId
-        self.name = name
+        self.ref = ref
 
     def to_json(self):
         return {self.id: {
-            "orcId": self.orcid,
-            "name": self.name
+            "ref": self.ref
         }}
     
     def save(self):
@@ -40,6 +37,6 @@ class AuthorModel(db.Model):
         return cls.query.filter_by(id=myId).first()
     
     @classmethod
-    def getByOrcid(cls, myOrcId):
+    def getByRef(cls, myRef):
         #returns all authors filterd by orcID
-        return cls.query.filter_by(orcid=myOrcId).all()
+        return cls.query.filter_by(ref=myRef).all()
