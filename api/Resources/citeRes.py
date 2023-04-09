@@ -15,4 +15,4 @@ class CiteRes(Resource):
         cite = CiteModel.get(_id)
         if cite:
             return create_response(cite.to_json(), 200)
-        return create_response({"message":"Author not found"}, 404)
+        return create_response({"message":"Cite not found"}, 404)

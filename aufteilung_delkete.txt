@@ -1,6 +1,6 @@
 author - DONE
-cite - []
-ee - []
+cite - DONE
+ee - DONE
 eeType - []
 school - []
 publisher - []
