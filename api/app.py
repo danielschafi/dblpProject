@@ -16,6 +16,7 @@ from Resources.authorRes import AuthorRes
 from Resources.citeRes import CiteRes
 from Resources.eeRes import EeRes
 from Resources.eeTypeRes import EeTypeRes
+from Resources.schoolRes import SchoolRes
 
 app = Flask(__name__)
 
@@ -44,6 +45,7 @@ api.add_resource(AuthorRes, "/api/author/<int:_id>")
 api.add_resource(CiteRes, "/api/cite/<int:_id>")
 api.add_resource(EeRes, "/api/ee/<int:_id>")
 api.add_resource(EeTypeRes, "/api/eetype/<int:_id>")
+api.add_resource(SchoolRes, "/api/school/<int:_id>")
 
 
 if __name__ == "__main__":
