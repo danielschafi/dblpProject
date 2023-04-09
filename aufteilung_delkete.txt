@@ -19,9 +19,9 @@ Data - []
 dataEeList - []
 dataAuthorList - []
 
-masterthesis - []
-masterthesisEeList - []
-masterthesisAuthorList - []
+masterthesis - [DONE]
+masterthesisEeList - [DONE]
+masterthesisAuthorList - [DONE]
 
 phdthesis - [DONE]
 phdthesisEeList - [DONE]
