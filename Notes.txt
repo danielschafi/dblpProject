@@ -1,0 +1,1 @@
+1. SQLAlchemy uses lowercase tables by default -> Reasons for using CamelCase over SnakeCase in DB?
