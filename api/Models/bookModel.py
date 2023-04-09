@@ -6,7 +6,7 @@ Notes: -
 
 from db import db
 
-class bookModel(db.Model):
+class BookModel(db.Model):
 
     __tablename__ = "book"
     id = db.Column(db.Integer, primary_key=True)

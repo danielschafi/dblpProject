@@ -29,10 +29,10 @@ phdthesisAuthorList - []
 
 --Sangeeths--
 
-incollection - []
-incollectionEeList - []
-incollectionAuthorList - []
-incollectionCiteList - []
+incollection - [DONE]
+incollectionEeList - [DONE]
+incollectionAuthorList - [DONE]
+incollectionCiteList - [DONE]
 
 book - [DONE]
 bookEeList - [DONE]
