@@ -1,0 +1,47 @@
+author - DONE
+cite - []
+ee - []
+eeType - []
+school - []
+publisher - []
+journal - []
+editor - []
+
+proceedings - []
+proceedingsEeList - []
+proceedingsEditorList - []
+
+Inproceedings - []
+inproceedingsEeList - []
+inproceedingsAuthorList - []
+
+Data - []
+dataEeList - []
+dataAuthorList - []
+
+masterthesis - []
+masterthesisEeList - []
+masterthesisAuthorList - []
+
+phdthesis - []
+phdthesisEeList - []
+phdthesisAuthorList - []
+
+--Sangeeths--
+
+incollection - []
+incollectionEeList - []
+incollectionAuthorList - []
+incollectionCiteList - []
+
+book - []
+bookEeList - []
+bookAuthorList - []
+bookEditorList - []
+
+www - []
+wwwCiteList - []
+
+article - []
+articleEeList - []
+articleAuthorList - []

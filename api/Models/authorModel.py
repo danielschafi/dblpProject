@@ -34,6 +34,13 @@ class AuthorModel(db.Model):
         
     @classmethod
     def get(cls, myId):
+        #Get always filters by primary_key
         #Gets Author with author.id = myId from db
         #None, if author not found
         return cls.query.filter_by(id=myId).first()
+    
+#TODO: 
+    @classmethod
+    def getByOrcid(cls, myOrcId):
+        #returns all authors filterd by orcID
+        return cls.query.filter_by(orcid=myOrcId).all()
