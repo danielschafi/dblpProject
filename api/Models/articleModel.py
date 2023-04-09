@@ -6,29 +6,36 @@ Notes: -
 
 from db import db
 
-class ProceedingsModel(db.Model):
+class ArticleModel(db.Model):
 
-    __tablename__ = "proceedings"
+    __tablename__ = "article"
     id = db.Column(db.Integer, primary_key=True)
-    year = db.Column(db.String(255))
+    title = db.Column(db.String(255))
+    number = db.Column(db.String(255))
+    pages = db.Column(db.String(255))
     url = db.Column(db.String(255))
-    isbn = db.Column(db.String(255))
-    publisherid = db.Column(db.Integer(), db.ForeignKey("publisher.id"))
-    publisher = db.relationship("PublisherModel")
+    year = db.Column(db.String(255))
+    journalId = db.Column(db.Integer(), db.ForeignKey("journal.id"))
+    journal = db.relationship("JournalModel")
 
-    def __init__(self, _id, year, url, isbn, publisherid):
+    def __init__(self, _id, title, number, pages, url, year, journalId):
         self._id = _id
-        self.year = year
+        self.title = title
+        self.number = number
+        self.pages = pages
         self.url = url
-        self.isbn = isbn
-        self.publisherid = publisherid
+        self.year = year
+        self.journalId = journalId
+
 
     def to_json(self):
         return {self.id: {
-            "year": self.year,
+            "title": self.title,
+            "number": self.number,
+            "pages": self.pages,
             "url": self.url,
-            "isbn": self.isbn,
-            "publisher": self.publisher.to_json()
+            "year": self.year,
+            "journal": self.journal.to_json()
         }}
     
     def save(self):

@@ -20,7 +20,7 @@ from Resources.schoolRes import SchoolRes
 from Resources.publisherRes import PublisherRes
 from Resources.journalRes import JournalRes
 from Resources.editorRes import EditorRes
-from Resources.ProceedingsRes import ProceedingsRes
+from Resources.proceedingsRes import ProceedingsRes
 from Resources.proceedingsEeListRes import ProceedingsEeListRes as PLR
 
 app = Flask(__name__)
