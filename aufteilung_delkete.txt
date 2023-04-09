@@ -9,15 +9,15 @@ editor - DONE
 
 proceedings - DONE
 proceedingsEeList - DONE
-proceedingsEditorList - []
+proceedingsEditorList - [DONE]
 
-Inproceedings - []
-inproceedingsEeList - []
-inproceedingsAuthorList - []
+Inproceedings - [DONE]
+inproceedingsEeList - [DONE]
+inproceedingsAuthorList - [DONE]
 
-Data - []
-dataEeList - []
-dataAuthorList - []
+Data - [DONE]
+dataEeList - [DONE]
+dataAuthorList - [DONE]
 
 masterthesis - [DONE]
 masterthesisEeList - [DONE]
