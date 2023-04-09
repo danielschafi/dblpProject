@@ -5,7 +5,7 @@ eeType - DONE
 school - DONE
 publisher - DONE
 journal - DONE
-editor - []
+editor - DONE
 
 proceedings - []
 proceedingsEeList - []
