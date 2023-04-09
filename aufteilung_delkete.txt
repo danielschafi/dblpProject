@@ -7,8 +7,8 @@ publisher - DONE
 journal - DONE
 editor - DONE
 
-proceedings - []
-proceedingsEeList - []
+proceedings - DONE
+proceedingsEeList - DONE
 proceedingsEditorList - []
 
 Inproceedings - []
