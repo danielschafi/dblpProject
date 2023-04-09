@@ -18,6 +18,7 @@ from Resources.eeRes import EeRes
 from Resources.eeTypeRes import EeTypeRes
 from Resources.schoolRes import SchoolRes
 from Resources.publisherRes import PublisherRes
+from Resources.journalRes import JournalRes
 
 app = Flask(__name__)
 
@@ -48,6 +49,7 @@ api.add_resource(EeRes, "/api/ee/<int:_id>")
 api.add_resource(EeTypeRes, "/api/eetype/<int:_id>")
 api.add_resource(SchoolRes, "/api/school/<int:_id>")
 api.add_resource(PublisherRes, "/api/publisher/<int:_id>")
+api.add_resource(JournalRes, "/api/journal/<int:_id>")
 
 
 if __name__ == "__main__":

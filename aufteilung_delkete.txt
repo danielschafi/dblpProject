@@ -2,8 +2,8 @@ author - DONE
 cite - DONE
 ee - DONE
 eeType - DONE
-school - School
-publisher - []
+school - DONE
+publisher - DONE
 journal - []
 editor - []
 
