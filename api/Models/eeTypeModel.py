@@ -6,19 +6,19 @@ Notes: -
 
 from db import db
 
-class CiteModel(db.Model):
+class EeTypeModel(db.Model):
 
-    __tablename__ = "cite"
+    __tablename__ = "eetype"
     id = db.Column(db.Integer, primary_key=True)
-    ref = db.Column(db.String(255))
+    type = db.Column(db.String(255))
 
-    def __init__(self, _id, ref):
+    def __init__(self, _id, type):
         self._id = _id
-        self.ref = ref
+        self.type = type
 
     def to_json(self):
         return {self.id: {
-            "ref": self.ref
+            "type": self.type
         }}
     
     def save(self):
@@ -36,5 +36,5 @@ class CiteModel(db.Model):
         return cls.query.filter_by(id=myId).first()
     
     @classmethod
-    def getByRef(cls, myRef):
-        return cls.query.filter_by(ref=myRef).all()
+    def getByType(cls, myType):
+        return cls.query.filter_by(type=myType).all()
