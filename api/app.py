@@ -22,10 +22,11 @@ from Resources.journalRes import JournalRes
 from Resources.editorRes import EditorRes
 from Resources.proceedingsRes import ProceedingsRes
 from Resources.proceedingsEeListRes import ProceedingsEeListRes as PLR
-from Resources.articleAuthorListRes import ArticleAuthorListRes as AALM
+from Resources.articleAuthorListRes import ArticleAuthorListRes as AALR
 from Resources.articleRes import ArticleRes
-from Resources.articleEeListRes import ArticleEeListRes as AELM
+from Resources.articleEeListRes import ArticleEeListRes as AELR
 from Resources.bookRes import BookRes
+from Resources.bookAuthorListRes import BookAuthorListRes as BALR
 
 app = Flask(__name__)
 
@@ -60,10 +61,12 @@ api.add_resource(JournalRes, "/api/journal/<int:_id>")
 api.add_resource(EditorRes, "/api/editor/<int:_id>")
 api.add_resource(ProceedingsRes, "/api/proceedings/<int:_id>")
 api.add_resource(PLR, "/api/proceedingseelist/<int:_id>")
-api.add_resource(AALM, "/api/articleauthorlist/<int:_id>")
+api.add_resource(AALR, "/api/articleauthorlist/<int:_id>")
 api.add_resource(ArticleRes, "/api/article/<int:_id>")
-api.add_resource(AELM, "/api/articleeelist/<int:_id>")
+api.add_resource(AELR, "/api/articleeelist/<int:_id>")
 api.add_resource(BookRes, "/api/book/<int:_id>")
+api.add_resource(BALR, "/api/bookauthorlist/<int:_id>")
+
 
 
 if __name__ == "__main__":
