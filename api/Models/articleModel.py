@@ -15,7 +15,7 @@ class ArticleModel(db.Model):
     pages = db.Column(db.String(255))
     url = db.Column(db.String(255))
     year = db.Column(db.String(255))
-    journalId = db.Column(db.Integer(), db.ForeignKey("journal.id"))
+    journalid = db.Column(db.Integer(), db.ForeignKey("journal.id"))
     journal = db.relationship("JournalModel")
 
     def __init__(self, _id, title, number, pages, url, year, journalId):

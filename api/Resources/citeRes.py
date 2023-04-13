@@ -1,5 +1,5 @@
 """
-Author: Adrian Joost
+Author: GroupName
 created: April 2022
 Notes: -
 """
