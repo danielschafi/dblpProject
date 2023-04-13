@@ -8,17 +8,17 @@ from db import db
 
 class ArticleEeListModel(db.Model):
 
-    __tablename__ = "articleEeList"
+    __tablename__ = "articleeelist"
     id = db.Column(db.Integer, primary_key=True)
-    eeid = db.Column(db.Integer(), db.ForeignKey("ee.id"))
+    eeid = db.Column(db.Integer, db.ForeignKey("ee.id"))
     ee = db.relationship("EeModel")
 
-    articleid = db.Column(db.Integer(), db.ForeignKey("article.id"))
+    articleid = db.Column(db.Integer, db.ForeignKey("article.id"))
     article = db.relationship("ArticleModel")
 
 
     def __init__(self, _id, eeid, articleid):
-        self._id = _id
+        self.id = _id
         self.eeid = eeid
         self.articleid = articleid
 
