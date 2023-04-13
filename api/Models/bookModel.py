@@ -23,7 +23,7 @@ class BookModel(db.Model):
 
 
     def __init__(self, _id, crossref, series, title, note, volume, pages, year, schoolid):
-        self._id = _id
+        self.id = _id
         self.crossref = crossref
         self.series = series
         self.title = title
