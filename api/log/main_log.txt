@@ -13,3 +13,12 @@ Log-File for Air-Tracker. Created: 2023-04-08T19:23:41.268960
 [API-CALL] Got myId = 1 -- 2023-04-08T19:27:40.949435
 [API-CALL] Got myId = 1 -- 2023-04-08T19:28:07.402824
 [API-CALL] Got myId = 1 -- 2023-04-08T19:28:36.470343
+[AALM] got AALM: None, id=1 -- 2023-04-13T09:24:16.760661
+[Models.articleAuthorListModel] Search with id: 1 -- 2023-04-13T09:25:23.323664
+[AALM] got AALM: None, id=1 -- 2023-04-13T09:25:23.355338
+[Models.articleAuthorListModel] Search with id: 1 -- 2023-04-13T09:25:46.992255
+[AALM] got AALM: None, id=1 -- 2023-04-13T09:25:47.066065
+[Models.articleAuthorListModel] Search with id: 1 -- 2023-04-13T09:26:58.072794
+[AALM] got AALM: None, id=1 -- 2023-04-13T09:26:58.136400
+[Models.articleAuthorListModel] Search with id: 2 -- 2023-04-13T09:27:20.404091
+[AALM] got AALM: <ArticleAuthorListModel 2>, id=2 -- 2023-04-13T09:27:20.408169

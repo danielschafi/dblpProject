@@ -8,18 +8,18 @@ from db import db
 
 class ArticleAuthorListModel(db.Model):
 
-    __tablename__ = "articleAuthorList"
+    __tablename__ = "articleauthorlist"
     id = db.Column(db.Integer, primary_key=True)
 
-    authorid = db.Column(db.Integer(), db.ForeignKey("author.id"))
+    authorid = db.Column(db.Integer, db.ForeignKey("author.id"))
     author = db.relationship("AuthorModel")
 
-    articleid = db.Column(db.Integer(), db.ForeignKey("article.id"))
+    articleid = db.Column(db.Integer, db.ForeignKey("article.id"))
     article = db.relationship("ArticleModel")
 
 
     def __init__(self, _id, authorid, articleid):
-        self._id = _id
+        self.id = _id
         self.authorid = authorid
         self.articleid = articleid
 
@@ -45,7 +45,7 @@ class ArticleAuthorListModel(db.Model):
     
     @classmethod
     def getByAuthorId(cls, myAuthorId):
-        return cls.query.filter_by(eeid=myAuthorId).all()
+        return cls.query.filter_by(authorid=myAuthorId).all()
     
     @classmethod
     def getByArticleId(cls, myarthicleId):
