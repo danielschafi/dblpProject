@@ -31,6 +31,8 @@ from Resources.bookAuthorListRes import BookAuthorListRes as BALR
 from Resources.bookEditorListRes import BookEditorListRes as BELR
 from Resources.bookEeListRes import BookEeListRes as BEELR
 from Resources.dataAuthorListRes import DataAuthorListRes as DALM
+from Resources.incollectionRes import IncollectionRes
+from Resources.incollectionAuthorListRes import IncollectionAuthorListRes as IALM
 
 app = Flask(__name__)
 
@@ -74,6 +76,8 @@ api.add_resource(BALR, "/api/bookauthorlist/<int:_id>")
 api.add_resource(BELR, "/api/bookeditorlist/<int:_id>")
 api.add_resource(BEELR, "/api/bookeelist/<int:_id>")
 api.add_resource(DALM, "/api/dataauthorlist/<int:_id>")
+api.add_resource(IncollectionRes, "/api/incollection/<int:_id>")
+api.add_resource(IALM, "/api/incollectionauthorlist/<int:_id>")
 
 
 

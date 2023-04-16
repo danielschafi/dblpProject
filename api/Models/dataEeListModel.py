@@ -8,18 +8,18 @@ from db import db
 
 class DataEeListModel(db.Model):
 
-    __tablename__ = "dataeeList"
+    __tablename__ = "dataeelist"
     id = db.Column(db.Integer, primary_key=True)
 
-    eeid = db.Column(db.Integer(), db.ForeignKey("ee.id"))
+    eeid = db.Column(db.Integer, db.ForeignKey("ee.id"))
     ee = db.relationship("EeModel")
 
-    dataid = db.Column(db.Integer(), db.ForeignKey("data.id"))
+    dataid = db.Column(db.Integer, db.ForeignKey("data.id"))
     data = db.relationship("DataModel")
 
 
     def __init__(self, _id, eeid, dataid):
-        self._id = _id
+        self.id = _id
         self.eeid = eeid
         self.dataid = dataid
 
@@ -40,7 +40,7 @@ class DataEeListModel(db.Model):
     @classmethod
     def get(cls, myId):
         #Get always filters by primary_key
-        #Gets Author with author.id = myId from db
+        #Gets dataeelist with dataeelist.id = myId from db
         #None, if author not found
         return cls.query.filter_by(id=myId).first()
     
@@ -49,5 +49,5 @@ class DataEeListModel(db.Model):
         return cls.query.filter_by(eeid=myEeId).all()
     
     @classmethod
-    def getByDataId(cls, myProceId):
-        return cls.query.filter_by(dataid=myProceId).all()
+    def getByDataId(cls, myDataId):
+        return cls.query.filter_by(dataid=myDataId).all()

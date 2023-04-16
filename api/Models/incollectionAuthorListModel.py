@@ -8,13 +8,13 @@ from db import db
 
 class IncollectionAuthorListModel(db.Model):
 
-    __tablename__ = "incollectionAuthorList"
+    __tablename__ = "incollectionauthorlist"
     id = db.Column(db.Integer, primary_key=True)
 
-    authorid = db.Column(db.Integer(), db.ForeignKey("author.id"))
+    authorid = db.Column(db.Integer, db.ForeignKey("author.id"))
     author = db.relationship("AuthorModel")
 
-    incollectionid = db.Column(db.Integer(), db.ForeignKey("incollection.id"))
+    incollectionid = db.Column(db.Integer, db.ForeignKey("incollection.id"))
     incollection = db.relationship("IncollectionModel")
 
 
