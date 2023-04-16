@@ -43,9 +43,10 @@ from Resources.masterthesisAuthorListRes import MasterthesisAuthorListRes as MAL
 from Resources.MasterthesisEeListRes import MasterthesisEeListRes as MELM
 from Resources.phdthesisRes import PhdthesisRes
 from Resources.phdthesisAutorRes import PhdthesisAuthorListRes as PALR
-from Resources.phdthesisEeListRes import PhdthesisEeListRes as PELM
+from Resources.phdthesisEeListRes import PhdthesisEeListRes as PEELR
 from Resources.proceedingsEditorListRes import ProceedingsEditorListRes as PELR
 from Resources.wwwRes import WwwRes
+from Resources.wwwCiteListRes import WwwCiteListRes as WCLR
 
 app = Flask(__name__)
 
@@ -110,9 +111,10 @@ api.add_resource(MELM, "/api/masterthesiseelist/<int:_id>")
 
 api.add_resource(PhdthesisRes, "/api/phdthesis/<int:_id>")
 api.add_resource(PALR, "/api/phdthesisauthorlist/<int:_id>")
-api.add_resource(PELM, "/api/phdthesiseelist/<int:_id>")
+api.add_resource(PEELR, "/api/phdthesiseelist/<int:_id>")
 
 api.add_resource(WwwRes, "/api/www/<int:_id>")
+api.add_resource(WCLR, "/api/wwwcitelist/<int:_id>")
 
 
 

@@ -8,13 +8,13 @@ from db import db
 
 class WwwCiteListModel(db.Model):
 
-    __tablename__ = "wwwCiteList"
+    __tablename__ = "wwwcitelist"
     id = db.Column(db.Integer, primary_key=True)
 
-    citeId = db.Column(db.Integer(), db.ForeignKey("cite.id"))
+    citeid = db.Column(db.Integer, db.ForeignKey("cite.id"))
     cite = db.relationship("CiteModel")
 
-    wwwid = db.Column(db.Integer(), db.ForeignKey("www.id"))
+    wwwid = db.Column(db.Integer, db.ForeignKey("www.id"))
     www = db.relationship("WwwModel")
 
 
@@ -45,7 +45,7 @@ class WwwCiteListModel(db.Model):
     
     @classmethod
     def getByCiteId(cls, myCiteId):
-        return cls.query.filter_by(citeId=myCiteId).all()
+        return cls.query.filter_by(citeid=myCiteId).all()
     
     @classmethod
     def getByWwwId(cls, myWwwId):
