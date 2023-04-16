@@ -8,13 +8,13 @@ from db import db
 
 class BookEeListModel(db.Model):
 
-    __tablename__ = "bookEeList"
+    __tablename__ = "bookeelist"
     id = db.Column(db.Integer, primary_key=True)
 
-    eeid = db.Column(db.Integer(), db.ForeignKey("ee.id"))
+    eeid = db.Column(db.Integer, db.ForeignKey("ee.id"))
     ee = db.relationship("EeModel")
 
-    bookid = db.Column(db.Integer(), db.ForeignKey("book.id"))
+    bookid = db.Column(db.Integer, db.ForeignKey("book.id"))
     book = db.relationship("BookModel")
 
 
@@ -48,5 +48,5 @@ class BookEeListModel(db.Model):
         return cls.query.filter_by(eeid=myEeId).all()
     
     @classmethod
-    def getByBookId(cls, myProceId):
-        return cls.query.filter_by(bookid=myProceId).all()
+    def getByBookId(cls, myBookId):
+        return cls.query.filter_by(bookid=myBookId).all()

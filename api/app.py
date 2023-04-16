@@ -27,6 +27,8 @@ from Resources.articleRes import ArticleRes
 from Resources.articleEeListRes import ArticleEeListRes as AELR
 from Resources.bookRes import BookRes
 from Resources.bookAuthorListRes import BookAuthorListRes as BALR
+from Resources.bookEditorListRes import BookEditorListRes as BELR
+from Resources.bookEeListRes import BookEeListRes as BEELR
 
 app = Flask(__name__)
 
@@ -66,6 +68,8 @@ api.add_resource(ArticleRes, "/api/article/<int:_id>")
 api.add_resource(AELR, "/api/articleeelist/<int:_id>")
 api.add_resource(BookRes, "/api/book/<int:_id>")
 api.add_resource(BALR, "/api/bookauthorlist/<int:_id>")
+api.add_resource(BELR, "/api/bookeditorlist/<int:_id>")
+api.add_resource(BEELR, "/api/bookeelist/<int:_id>")
 
 
 

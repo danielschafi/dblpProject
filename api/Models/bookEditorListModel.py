@@ -8,18 +8,18 @@ from db import db
 
 class BookEditorListModel(db.Model):
 
-    __tablename__ = "bookEditorList"
+    __tablename__ = "bookeditorlist"
     id = db.Column(db.Integer, primary_key=True)
 
-    editorid = db.Column(db.Integer(), db.ForeignKey("editor.id"))
+    editorid = db.Column(db.Integer, db.ForeignKey("editor.id"))
     editor = db.relationship("EditorModel")
 
-    bookid = db.Column(db.Integer(), db.ForeignKey("book.id"))
+    bookid = db.Column(db.Integer, db.ForeignKey("book.id"))
     book = db.relationship("BookModel")
 
 
     def __init__(self, _id, editorid, bookid):
-        self._id = _id
+        self.id = _id
         self.editorid = editorid
         self.bookid = bookid
 
