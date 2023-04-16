@@ -8,18 +8,18 @@ from db import db
 
 class DataAuthorListModel(db.Model):
 
-    __tablename__ = "dataAuthorList"
+    __tablename__ = "dataauthorlist"
     id = db.Column(db.Integer, primary_key=True)
 
-    authorid = db.Column(db.Integer(), db.ForeignKey("author.id"))
+    authorid = db.Column(db.Integer, db.ForeignKey("author.id"))
     author = db.relationship("AuthorModel")
 
-    dataid = db.Column(db.Integer(), db.ForeignKey("data.id"))
+    dataid = db.Column(db.Integer, db.ForeignKey("data.id"))
     data = db.relationship("DataModel")
 
 
     def __init__(self, _id, authorid, dataid):
-        self._id = _id
+        self.id = _id
         self.authorid = authorid
         self.dataid = dataid
 

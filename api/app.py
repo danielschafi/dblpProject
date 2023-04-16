@@ -20,6 +20,7 @@ from Resources.schoolRes import SchoolRes
 from Resources.publisherRes import PublisherRes
 from Resources.journalRes import JournalRes
 from Resources.editorRes import EditorRes
+from Resources.dataRes import DataRes
 from Resources.proceedingsRes import ProceedingsRes
 from Resources.proceedingsEeListRes import ProceedingsEeListRes as PLR
 from Resources.articleAuthorListRes import ArticleAuthorListRes as AALR
@@ -29,6 +30,7 @@ from Resources.bookRes import BookRes
 from Resources.bookAuthorListRes import BookAuthorListRes as BALR
 from Resources.bookEditorListRes import BookEditorListRes as BELR
 from Resources.bookEeListRes import BookEeListRes as BEELR
+from Resources.dataAuthorListRes import DataAuthorListRes as DALM
 
 app = Flask(__name__)
 
@@ -60,6 +62,7 @@ api.add_resource(EeTypeRes, "/api/eetype/<int:_id>")
 api.add_resource(SchoolRes, "/api/school/<int:_id>")
 api.add_resource(PublisherRes, "/api/publisher/<int:_id>")
 api.add_resource(JournalRes, "/api/journal/<int:_id>")
+api.add_resource(DataRes, "/api/data/<int:_id>")
 api.add_resource(EditorRes, "/api/editor/<int:_id>")
 api.add_resource(ProceedingsRes, "/api/proceedings/<int:_id>")
 api.add_resource(PLR, "/api/proceedingseelist/<int:_id>")
@@ -70,6 +73,7 @@ api.add_resource(BookRes, "/api/book/<int:_id>")
 api.add_resource(BALR, "/api/bookauthorlist/<int:_id>")
 api.add_resource(BELR, "/api/bookeditorlist/<int:_id>")
 api.add_resource(BEELR, "/api/bookeelist/<int:_id>")
+api.add_resource(DALM, "/api/dataauthorlist/<int:_id>")
 
 
 

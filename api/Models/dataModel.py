@@ -48,6 +48,6 @@ class DataModel(db.Model):
     @classmethod
     def get(cls, myId):
         #Get always filters by primary_key
-        #Gets Author with author.id = myId from db
-        #None, if author not found
+        #Gets dat with data.id = myId from db
+        #None, if data not found
         return cls.query.filter_by(id=myId).first()
