@@ -40,6 +40,7 @@ from Resources.inproceedingsAuthorListRes import InproceedingsAuthorListRes as I
 from Resources.inproceedingsEeListRes import InproceedingsEeListRes as INELR
 from Resources.masterthesisRes import MasterthesisRes
 from Resources.masterthesisAuthorListRes import MasterthesisAuthorListRes as MALR
+from Resources.MasterthesisEeListRes import MasterthesisEeListRes as MELM
 
 app = Flask(__name__)
 
@@ -92,6 +93,7 @@ api.add_resource(INALR, "/api/inproceedingsauthorlist/<int:_id>")
 api.add_resource(INELR, "/api/inproceedingseelist/<int:_id>")
 api.add_resource(MasterthesisRes, "/api/masterthesis/<int:_id>")
 api.add_resource(MALR, "/api/masterthesisauthorlist/<int:_id>")
+api.add_resource(MELM, "/api/masterthesiseelist/<int:_id>")
 
 
 

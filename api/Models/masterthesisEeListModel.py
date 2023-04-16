@@ -6,26 +6,26 @@ Notes: -
 
 from db import db
 
-class MasterthesisAuthorListModel(db.Model):
+class MasterthesisEeListModel(db.Model):
 
-    __tablename__ = "masterthesisauthorlist"
+    __tablename__ = "masterthesiseelist"
     id = db.Column(db.Integer, primary_key=True)
 
-    authorid = db.Column(db.Integer(), db.ForeignKey("author.id"))
-    author = db.relationship("AuthorModel")
+    eeid = db.Column(db.Integer, db.ForeignKey("ee.id"))
+    ee = db.relationship("EeModel")
 
-    masterthesisid = db.Column(db.Integer(), db.ForeignKey("masterthesis.id"))
+    masterthesisid = db.Column(db.Integer, db.ForeignKey("masterthesis.id"))
     masterthesis = db.relationship("MasterthesisModel")
 
 
-    def __init__(self, _id, authorid, masterthesisid):
-        self._id = _id
-        self.authorid = authorid
+    def __init__(self, _id, eeid, masterthesisid):
+        self.id = _id
+        self.eeid = eeid
         self.masterthesisid = masterthesisid
 
     def to_json(self):
         return {self.id: {
-            "author": self.author.to_json(),
+            "Ee": self.ee.to_json(),
             "masterthesis": self.masterthesis.to_json()
         }}
     
@@ -44,9 +44,9 @@ class MasterthesisAuthorListModel(db.Model):
         return cls.query.filter_by(id=myId).first()
     
     @classmethod
-    def getByAuthorId(cls, myAuthorId):
-        return cls.query.filter_by(eeid=myAuthorId).all()
+    def getByEeId(cls, myEeId):
+        return cls.query.filter_by(eeid=myEeId).all()
     
     @classmethod
-    def getByMasterthesisId(cls, myProceId):
-        return cls.query.filter_by(masterthesisid=myProceId).all()
+    def getByMasterthesisId(cls, myMasterthesisId):
+        return cls.query.filter_by(masterthesisid=myMasterthesisId).all()
