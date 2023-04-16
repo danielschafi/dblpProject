@@ -41,6 +41,7 @@ from Resources.inproceedingsEeListRes import InproceedingsEeListRes as INELR
 from Resources.masterthesisRes import MasterthesisRes
 from Resources.masterthesisAuthorListRes import MasterthesisAuthorListRes as MALR
 from Resources.MasterthesisEeListRes import MasterthesisEeListRes as MELM
+from Resources.phdthesisRes import PhdthesisRes
 
 app = Flask(__name__)
 
@@ -74,26 +75,36 @@ api.add_resource(PublisherRes, "/api/publisher/<int:_id>")
 api.add_resource(JournalRes, "/api/journal/<int:_id>")
 api.add_resource(DataRes, "/api/data/<int:_id>")
 api.add_resource(EditorRes, "/api/editor/<int:_id>")
+api.add_resource(DALR, "/api/dataauthorlist/<int:_id>")
+
 api.add_resource(ProceedingsRes, "/api/proceedings/<int:_id>")
 api.add_resource(PLR, "/api/proceedingseelist/<int:_id>")
+
 api.add_resource(AALR, "/api/articleauthorlist/<int:_id>")
 api.add_resource(ArticleRes, "/api/article/<int:_id>")
 api.add_resource(AELR, "/api/articleeelist/<int:_id>")
+
 api.add_resource(BookRes, "/api/book/<int:_id>")
 api.add_resource(BALR, "/api/bookauthorlist/<int:_id>")
 api.add_resource(BELR, "/api/bookeditorlist/<int:_id>")
 api.add_resource(BEELR, "/api/bookeelist/<int:_id>")
-api.add_resource(DALR, "/api/dataauthorlist/<int:_id>")
+
+
 api.add_resource(IncollectionRes, "/api/incollection/<int:_id>")
 api.add_resource(IALR, "/api/incollectionauthorlist/<int:_id>")
 api.add_resource(ICLR, "/api/incollectioncitelist/<int:_id>")
 api.add_resource(IELR, "/api/incollectioneelist/<int:_id>")
+
 api.add_resource(InproceedingsRes, "/api/inproceedings/<int:_id>")
 api.add_resource(INALR, "/api/inproceedingsauthorlist/<int:_id>")
 api.add_resource(INELR, "/api/inproceedingseelist/<int:_id>")
+
 api.add_resource(MasterthesisRes, "/api/masterthesis/<int:_id>")
 api.add_resource(MALR, "/api/masterthesisauthorlist/<int:_id>")
 api.add_resource(MELM, "/api/masterthesiseelist/<int:_id>")
+
+api.add_resource(PhdthesisRes, "/api/phdthesis/<int:_id>")
+
 
 
 
