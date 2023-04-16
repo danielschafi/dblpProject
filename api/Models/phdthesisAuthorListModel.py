@@ -11,15 +11,15 @@ class PhdthesisAuthorListModel(db.Model):
     __tablename__ = "phdthesisauthorlist"
     id = db.Column(db.Integer, primary_key=True)
 
-    authorid = db.Column(db.Integer(), db.ForeignKey("author.id"))
+    authorid = db.Column(db.Integer, db.ForeignKey("author.id"))
     author = db.relationship("AuthorModel")
 
-    phdthesisid = db.Column(db.Integer(), db.ForeignKey("phdthesis.id"))
+    phdthesisid = db.Column(db.Integer, db.ForeignKey("phdthesis.id"))
     phdthesis = db.relationship("PhdthesisModel")
 
 
     def __init__(self, _id, authorid, phdthesisid):
-        self._id = _id
+        self.id = _id
         self.authorid = authorid
         self.phdthesisid = phdthesisid
 
@@ -45,7 +45,7 @@ class PhdthesisAuthorListModel(db.Model):
     
     @classmethod
     def getByAuthorId(cls, myAuthorId):
-        return cls.query.filter_by(eeid=myAuthorId).all()
+        return cls.query.filter_by(authorid=myAuthorId).all()
     
     @classmethod
     def getByPhdthesisId(cls, myPhdthesisId):
