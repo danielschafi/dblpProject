@@ -44,6 +44,7 @@ from Resources.MasterthesisEeListRes import MasterthesisEeListRes as MELM
 from Resources.phdthesisRes import PhdthesisRes
 from Resources.phdthesisAutorRes import PhdthesisAuthorListRes as PALR
 from Resources.phdthesisEeListRes import PhdthesisEeListRes as PELM
+from Resources.proceedingsEditorListRes import ProceedingsEditorListRes as PELR
 
 app = Flask(__name__)
 
@@ -81,6 +82,7 @@ api.add_resource(DALR, "/api/dataauthorlist/<int:_id>")
 
 api.add_resource(ProceedingsRes, "/api/proceedings/<int:_id>")
 api.add_resource(PLR, "/api/proceedingseelist/<int:_id>")
+api.add_resource(PELR, "/api/proceedingseditorlist/<int:_id>")
 
 api.add_resource(AALR, "/api/articleauthorlist/<int:_id>")
 api.add_resource(ArticleRes, "/api/article/<int:_id>")

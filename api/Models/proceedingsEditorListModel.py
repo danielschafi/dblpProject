@@ -8,18 +8,18 @@ from db import db
 
 class ProceedingsEditorListModel(db.Model):
 
-    __tablename__ = "proceedingsEditorList"
+    __tablename__ = "proceedingseditorlist"
     id = db.Column(db.Integer, primary_key=True)
     
-    editorid = db.Column(db.Integer(), db.ForeignKey("editor.id"))
+    editorid = db.Column(db.Integer, db.ForeignKey("editor.id"))
     editor = db.relationship("EditorModel")
 
-    proceedingsid = db.Column(db.Integer(), db.ForeignKey("proceedings.id"))
+    proceedingsid = db.Column(db.Integer, db.ForeignKey("proceedings.id"))
     proceedings = db.relationship("ProceedingsModel")
 
 
     def __init__(self, _id, editorid, proceedingsid):
-        self._id = _id
+        self.id = _id
         self.editorid = editorid
         self.proceedingsid = proceedingsid
 
