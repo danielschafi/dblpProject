@@ -8,7 +8,7 @@ from db import db
 
 class InproceedingsAuthorListModel(db.Model):
 
-    __tablename__ = "inproceedingsAuthorList"
+    __tablename__ = "inproceedingsauthorlist"
     id = db.Column(db.Integer, primary_key=True)
 
     inproceedingsid = db.Column(db.Integer, db.ForeignKey('inproceedings.id'))
@@ -19,7 +19,7 @@ class InproceedingsAuthorListModel(db.Model):
 
 
     def __init__(self, _id, inproceedingsid, authorid):
-        self._id = _id
+        self.id = _id
         self.inproceedingsid = inproceedingsid
         self.authorid = authorid
 
@@ -41,8 +41,7 @@ class InproceedingsAuthorListModel(db.Model):
     @classmethod
     def get(cls, myId):
         #Get always filters by primary_key
-        #Gets Author with author.id = myId from db
-        #None, if author not found
+        #None, if element not found
         return cls.query.filter_by(id=myId).first()
 
     @classmethod
