@@ -6,27 +6,27 @@ Notes: -
 
 from db import db
 
-class PhdthesisAuthorListModel(db.Model):
+class MasterthesisAuthorListModel(db.Model):
 
-    __tablename__ = "phdthesisauthorlist"
+    __tablename__ = "masterthesisauthorlist"
     id = db.Column(db.Integer, primary_key=True)
 
-    authorid = db.Column(db.Integer(), db.ForeignKey("author.id"))
+    authorid = db.Column(db.Integer, db.ForeignKey("author.id"))
     author = db.relationship("AuthorModel")
 
-    phdthesisid = db.Column(db.Integer(), db.ForeignKey("phdthesis.id"))
-    phdthesis = db.relationship("PhdthesisModel")
+    masterthesisid = db.Column(db.Integer, db.ForeignKey("masterthesis.id"))
+    masterthesis = db.relationship("MasterthesisModel")
 
 
-    def __init__(self, _id, authorid, phdthesisid):
-        self._id = _id
+    def __init__(self, _id, authorid, masterthesis):
+        self.id = _id
         self.authorid = authorid
-        self.phdthesisid = phdthesisid
+        self.masterthesis = masterthesis
 
     def to_json(self):
         return {self.id: {
             "author": self.author.to_json(),
-            "phdthesis": self.phdthesis.to_json()
+            "masterthesis": self.masterthesis.to_json()
         }}
     
     def save(self):
@@ -45,8 +45,8 @@ class PhdthesisAuthorListModel(db.Model):
     
     @classmethod
     def getByAuthorId(cls, myAuthorId):
-        return cls.query.filter_by(eeid=myAuthorId).all()
+        return cls.query.filter_by(authorid=myAuthorId).all()
     
     @classmethod
-    def getByPhdthesisId(cls, myPhdthesisId):
-        return cls.query.filter_by(phdthesisid=myPhdthesisId).all()
+    def getByPhdthesisId(cls, myMasterthesisID):
+        return cls.query.filter_by(masterthesisid=myMasterthesisID).all()
