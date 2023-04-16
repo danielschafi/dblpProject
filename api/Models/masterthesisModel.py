@@ -19,7 +19,7 @@ class MasterthesisModel(db.Model):
 
 
     def __init__(self, _id, title, note, year, schoolid):
-        self._id = _id
+        self.id = _id
         self.title = title
         self.note = note
         self.year = year
@@ -45,8 +45,7 @@ class MasterthesisModel(db.Model):
     @classmethod
     def get(cls, myId):
         #Get always filters by primary_key
-        #Gets Author with author.id = myId from db
-        #None, if author not found
+        #None, if element not found
         return cls.query.filter_by(id=myId).first()
     
     @classmethod
