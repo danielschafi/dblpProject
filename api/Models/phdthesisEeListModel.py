@@ -8,18 +8,18 @@ from db import db
 
 class PhdthesisEeListModel(db.Model):
 
-    __tablename__ = "phdthesisEeList"
+    __tablename__ = "phdthesiseelist"
     id = db.Column(db.Integer, primary_key=True)
 
-    eeid = db.Column(db.Integer(), db.ForeignKey("ee.id"))
+    eeid = db.Column(db.Integer, db.ForeignKey("ee.id"))
     ee = db.relationship("EeModel")
 
-    phdthesisid = db.Column(db.Integer(), db.ForeignKey("phdthesis.id"))
+    phdthesisid = db.Column(db.Integer, db.ForeignKey("phdthesis.id"))
     phdthesis = db.relationship("PhdthesisModel")
 
 
     def __init__(self, _id, eeid, phdthesisid):
-        self._id = _id
+        self.id = _id
         self.eeid = eeid
         self.phdthesisid = phdthesisid
 
@@ -48,5 +48,5 @@ class PhdthesisEeListModel(db.Model):
         return cls.query.filter_by(eeid=myEeId).all()
     
     @classmethod
-    def getByPhdthesisId(cls, myProceId):
-        return cls.query.filter_by(phdthesisid=myProceId).all()
+    def getByPhdthesisId(cls, myPhdId):
+        return cls.query.filter_by(phdthesisid=myPhdId).all()

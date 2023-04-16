@@ -43,6 +43,7 @@ from Resources.masterthesisAuthorListRes import MasterthesisAuthorListRes as MAL
 from Resources.MasterthesisEeListRes import MasterthesisEeListRes as MELM
 from Resources.phdthesisRes import PhdthesisRes
 from Resources.phdthesisAutorRes import PhdthesisAuthorListRes as PALR
+from Resources.phdthesisEeListRes import PhdthesisEeListRes as PELM
 
 app = Flask(__name__)
 
@@ -106,6 +107,7 @@ api.add_resource(MELM, "/api/masterthesiseelist/<int:_id>")
 
 api.add_resource(PhdthesisRes, "/api/phdthesis/<int:_id>")
 api.add_resource(PALR, "/api/phdthesisauthorlist/<int:_id>")
+api.add_resource(PELM, "/api/phdthesiseelist/<int:_id>")
 
 
 
