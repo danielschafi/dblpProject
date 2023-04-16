@@ -37,6 +37,7 @@ from Resources.incollectionCiteListRes import IncollectionCiteListRes as ICLR
 from Resources.incollectionEeListRes import IncollectionEeListRes as IELR
 from Resources.inproceedingsRes import InproceedingsRes
 from Resources.inproceedingsAuthorListRes import InproceedingsAuthorListRes as INALR
+from Resources.inproceedingsEeListRes import InproceedingsEeListRes as INELR
 
 app = Flask(__name__)
 
@@ -86,6 +87,7 @@ api.add_resource(ICLR, "/api/incollectioncitelist/<int:_id>")
 api.add_resource(IELR, "/api/incollectioneelist/<int:_id>")
 api.add_resource(InproceedingsRes, "/api/inproceedings/<int:_id>")
 api.add_resource(INALR, "/api/inproceedingsauthorlist/<int:_id>")
+api.add_resource(INELR, "/api/inproceedingseelist/<int:_id>")
 
 
 
