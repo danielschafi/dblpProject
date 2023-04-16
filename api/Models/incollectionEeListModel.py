@@ -8,18 +8,18 @@ from db import db
 
 class IncollectionEeListModel(db.Model):
 
-    __tablename__ = "incollectionEeList"
+    __tablename__ = "incollectioneelist"
     id = db.Column(db.Integer, primary_key=True)
 
-    eeid = db.Column(db.Integer(), db.ForeignKey("ee.id"))
+    eeid = db.Column(db.Integer, db.ForeignKey("ee.id"))
     ee = db.relationship("EeModel")
 
-    incollectionid = db.Column(db.Integer(), db.ForeignKey("incollection.id"))
+    incollectionid = db.Column(db.Integer, db.ForeignKey("incollection.id"))
     incollection = db.relationship("IncollectionModel")
 
 
     def __init__(self, _id, eeid, incollectionid):
-        self._id = _id
+        self.id = _id
         self.eeid = eeid
         self.incollectionid = incollectionid
 
@@ -48,5 +48,5 @@ class IncollectionEeListModel(db.Model):
         return cls.query.filter_by(eeid=myEeId).all()
     
     @classmethod
-    def getByIncollectionId(cls, myProceId):
-        return cls.query.filter_by(incollectionid=myProceId).all()
+    def getByIncollectionId(cls, myIncollID):
+        return cls.query.filter_by(incollectionid=myIncollID).all()

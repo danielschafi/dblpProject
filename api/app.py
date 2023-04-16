@@ -30,9 +30,11 @@ from Resources.bookRes import BookRes
 from Resources.bookAuthorListRes import BookAuthorListRes as BALR
 from Resources.bookEditorListRes import BookEditorListRes as BELR
 from Resources.bookEeListRes import BookEeListRes as BEELR
-from Resources.dataAuthorListRes import DataAuthorListRes as DALM
+from Resources.dataAuthorListRes import DataAuthorListRes as DALR
 from Resources.incollectionRes import IncollectionRes
-from Resources.incollectionAuthorListRes import IncollectionAuthorListRes as IALM
+from Resources.incollectionAuthorListRes import IncollectionAuthorListRes as IALR
+from Resources.incollectionCiteListRes import IncollectionCiteListRes as ICLR
+from Resources.incollectionEeListRes import IncollectionEeListRes as IELR
 
 app = Flask(__name__)
 
@@ -75,9 +77,11 @@ api.add_resource(BookRes, "/api/book/<int:_id>")
 api.add_resource(BALR, "/api/bookauthorlist/<int:_id>")
 api.add_resource(BELR, "/api/bookeditorlist/<int:_id>")
 api.add_resource(BEELR, "/api/bookeelist/<int:_id>")
-api.add_resource(DALM, "/api/dataauthorlist/<int:_id>")
+api.add_resource(DALR, "/api/dataauthorlist/<int:_id>")
 api.add_resource(IncollectionRes, "/api/incollection/<int:_id>")
-api.add_resource(IALM, "/api/incollectionauthorlist/<int:_id>")
+api.add_resource(IALR, "/api/incollectionauthorlist/<int:_id>")
+api.add_resource(ICLR, "/api/incollectioncitelist/<int:_id>")
+api.add_resource(IELR, "/api/incollectioneelist/<int:_id>")
 
 
 

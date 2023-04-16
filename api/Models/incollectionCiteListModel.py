@@ -8,19 +8,19 @@ from db import db
 
 class IncollectionCiteListModel(db.Model):
 
-    __tablename__ = "incollectionCiteList"
+    __tablename__ = "incollectioncitelist"
     id = db.Column(db.Integer, primary_key=True)
 
-    citeId = db.Column(db.Integer(), db.ForeignKey("cite.id"))
+    citeid = db.Column(db.Integer, db.ForeignKey("cite.id"))
     cite = db.relationship("CiteModel")
 
-    incollectionid = db.Column(db.Integer(), db.ForeignKey("incollection.id"))
+    incollectionid = db.Column(db.Integer, db.ForeignKey("incollection.id"))
     incollection = db.relationship("IncollectionModel")
 
 
     def __init__(self, _id, citeId, incollectionid):
-        self._id = _id
-        self.citeId = citeId
+        self.id = _id
+        self.citeid = citeId
         self.incollectionid = incollectionid
 
     def to_json(self):
