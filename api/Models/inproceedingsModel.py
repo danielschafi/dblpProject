@@ -49,6 +49,6 @@ class InproceedingsModel(db.Model):
     @classmethod
     def get(cls, myId):
         #Get always filters by primary_key
-        #Gets Author with author.id = myId from db
-        #None, if author not found
+        #Gets inproceedings with inproceedings.id = myId from db
+        #None, if inproceedings not found
         return cls.query.filter_by(id=myId).first()
