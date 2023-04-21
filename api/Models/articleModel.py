@@ -5,6 +5,7 @@ Notes: -
 """
 
 from db import db
+from Models.journalModel import JournalModel
 
 class ArticleModel(db.Model):
 
@@ -15,17 +16,17 @@ class ArticleModel(db.Model):
     pages = db.Column(db.String(255))
     url = db.Column(db.String(255))
     year = db.Column(db.String(255))
-    journalid = db.Column(db.Integer(), db.ForeignKey("journal.id"))
+    journalid = db.Column(db.Integer, db.ForeignKey("journal.id"))
     journal = db.relationship("JournalModel")
 
-    def __init__(self, _id, title, number, pages, url, year, journalId):
-        self._id = _id
+    def __init__(self, title, number, pages, url, year, journalid):
+        #self._id = _id
         self.title = title
         self.number = number
         self.pages = pages
         self.url = url
         self.year = year
-        self.journalId = journalId
+        self.journalid = journalid
 
 
     def to_json(self):
@@ -45,6 +46,9 @@ class ArticleModel(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+    def getJournal(self):
+        self.journal = JournalModel.get(self.journalid)
         
     @classmethod
     def get(cls, myId):

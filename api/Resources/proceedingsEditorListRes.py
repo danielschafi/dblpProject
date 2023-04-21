@@ -16,3 +16,4 @@ class ProceedingsEditorListRes(Resource):
         if pelm:
             return create_response(pelm.to_json(), 200)
         return create_response({"message":"ProceedingsEditorList not found"}, 404)
+    
