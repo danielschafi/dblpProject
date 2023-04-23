@@ -16,8 +16,7 @@ class ProceedingsModel(db.Model):
     publisherid = db.Column(db.Integer(), db.ForeignKey("publisher.id"))
     publisher = db.relationship("PublisherModel")
 
-    def __init__(self, _id, year, url, isbn, publisherid):
-        self._id = _id
+    def __init__(self, year, url, isbn, publisherid):
         self.year = year
         self.url = url
         self.isbn = isbn
