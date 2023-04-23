@@ -12,8 +12,7 @@ class EeModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     link = db.Column(db.String(255))
 
-    def __init__(self, _id, link):
-        self._id = _id
+    def __init__(self, link):
         self.link = link
 
     def to_json(self):

@@ -12,8 +12,7 @@ class EeTypeModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(255))
 
-    def __init__(self, _id, type):
-        self._id = _id
+    def __init__(self, type):
         self.type = type
 
     def to_json(self):
