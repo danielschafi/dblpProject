@@ -18,8 +18,7 @@ class InproceedingsEeListModel(db.Model):
     ee = db.relationship('EeModel')
 
 
-    def __init__(self, _id, inproceedingsid, eeid):
-        self.id = _id
+    def __init__(self, inproceedingsid, eeid):
         self.inproceedingsid = inproceedingsid
         self.eeid = eeid
 
