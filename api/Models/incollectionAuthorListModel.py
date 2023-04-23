@@ -18,8 +18,7 @@ class IncollectionAuthorListModel(db.Model):
     incollection = db.relationship("IncollectionModel")
 
 
-    def __init__(self, _id, authorid, incollectionid):
-        self._id = _id
+    def __init__(self, authorid, incollectionid):
         self.authorid = authorid
         self.incollectionid = incollectionid
 
