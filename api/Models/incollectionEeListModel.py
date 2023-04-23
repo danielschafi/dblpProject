@@ -18,8 +18,7 @@ class IncollectionEeListModel(db.Model):
     incollection = db.relationship("IncollectionModel")
 
 
-    def __init__(self, _id, eeid, incollectionid):
-        self.id = _id
+    def __init__(self, eeid, incollectionid):
         self.eeid = eeid
         self.incollectionid = incollectionid
 
