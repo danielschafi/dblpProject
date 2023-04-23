@@ -18,8 +18,7 @@ class MasterthesisModel(db.Model):
     school = db.relationship('SchoolModel')
 
 
-    def __init__(self, _id, title, note, year, schoolid):
-        self.id = _id
+    def __init__(self, title, note, year, schoolid):
         self.title = title
         self.note = note
         self.year = year
