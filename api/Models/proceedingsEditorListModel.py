@@ -18,8 +18,7 @@ class ProceedingsEditorListModel(db.Model):
     proceedings = db.relationship("ProceedingsModel")
 
 
-    def __init__(self, _id, editorid, proceedingsid):
-        self.id = _id
+    def __init__(self, editorid, proceedingsid):
         self.editorid = editorid
         self.proceedingsid = proceedingsid
 
