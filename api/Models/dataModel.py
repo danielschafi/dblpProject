@@ -18,8 +18,7 @@ class DataModel(db.Model):
     year = db.Column(db.String(255))
 
 
-    def __init__(self, _id, crossref, title, note, number, month, year):
-        self._id = _id
+    def __init__(self, crossref, title, note, number, month, year):
         self.crossref = crossref
         self.title = title
         self.note = note
