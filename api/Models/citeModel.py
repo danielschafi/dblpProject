@@ -12,8 +12,7 @@ class CiteModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ref = db.Column(db.String(255))
 
-    def __init__(self, _id, ref):
-        self._id = _id
+    def __init__(self, ref):
         self.ref = ref
 
     def to_json(self):
