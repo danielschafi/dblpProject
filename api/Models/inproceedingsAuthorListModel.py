@@ -18,8 +18,7 @@ class InproceedingsAuthorListModel(db.Model):
     author = db.relationship('AuthorModel')
 
 
-    def __init__(self, _id, inproceedingsid, authorid):
-        self.id = _id
+    def __init__(self, inproceedingsid, authorid):
         self.inproceedingsid = inproceedingsid
         self.authorid = authorid
 
