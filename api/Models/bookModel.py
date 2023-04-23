@@ -22,8 +22,7 @@ class BookModel(db.Model):
     school = db.relationship('SchoolModel')
 
 
-    def __init__(self, _id, crossref, series, title, note, volume, pages, year, schoolid):
-        self.id = _id
+    def __init__(self, crossref, series, title, note, volume, pages, year, schoolid):
         self.crossref = crossref
         self.series = series
         self.title = title
