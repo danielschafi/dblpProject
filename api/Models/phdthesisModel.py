@@ -27,8 +27,7 @@ class PhdthesisModel(db.Model):
     school = db.relationship('SchoolModel')
 
 
-    def __init__(self, _id, series, title, isbn, note, number, pages, volume, year, month, publisherid, schoolid):
-        self._id = _id
+    def __init__(self, series, title, isbn, note, number, pages, volume, year, month, publisherid, schoolid):
         self.series = series
         self.title = title
         self.isbn = isbn
