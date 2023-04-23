@@ -18,10 +18,9 @@ class MasterthesisAuthorListModel(db.Model):
     masterthesis = db.relationship("MasterthesisModel")
 
 
-    def __init__(self, _id, authorid, masterthesis):
-        self.id = _id
+    def __init__(self, authorid, masterthesisid):
         self.authorid = authorid
-        self.masterthesis = masterthesis
+        self.masterthesisid = masterthesisid
 
     def to_json(self):
         return {self.id: {
