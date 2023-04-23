@@ -18,8 +18,7 @@ class BookAuthorListModel(db.Model):
     book = db.relationship("BookModel")
 
 
-    def __init__(self, _id, authorid, bookid):
-        self.id = _id
+    def __init__(self, authorid, bookid):
         self.authorid = authorid
         self.bookid = bookid
 
