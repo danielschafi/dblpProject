@@ -18,8 +18,7 @@ class DataAuthorListModel(db.Model):
     data = db.relationship("DataModel")
 
 
-    def __init__(self, _id, authorid, dataid):
-        self.id = _id
+    def __init__(self, authorid, dataid):
         self.authorid = authorid
         self.dataid = dataid
 
