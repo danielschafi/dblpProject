@@ -18,8 +18,7 @@ class PhdthesisAuthorListModel(db.Model):
     phdthesis = db.relationship("PhdthesisModel")
 
 
-    def __init__(self, _id, authorid, phdthesisid):
-        self.id = _id
+    def __init__(self, authorid, phdthesisid):
         self.authorid = authorid
         self.phdthesisid = phdthesisid
 
