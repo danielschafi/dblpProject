@@ -18,8 +18,7 @@ class BookEeListModel(db.Model):
     book = db.relationship("BookModel")
 
 
-    def __init__(self, _id, eeid, bookid):
-        self._id = _id
+    def __init__(self, eeid, bookid):
         self.eeid = eeid
         self.bookid = bookid
 
