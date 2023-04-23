@@ -18,8 +18,7 @@ class MasterthesisEeListModel(db.Model):
     masterthesis = db.relationship("MasterthesisModel")
 
 
-    def __init__(self, _id, eeid, masterthesisid):
-        self.id = _id
+    def __init__(self, eeid, masterthesisid):
         self.eeid = eeid
         self.masterthesisid = masterthesisid
 
