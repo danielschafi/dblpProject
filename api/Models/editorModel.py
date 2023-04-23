@@ -13,8 +13,7 @@ class EditorModel(db.Model):
     orcid = db.Column(db.String(255))
     name = db.Column(db.String(255))
 
-    def __init__(self, _id, orcid, name):
-        self._id = _id
+    def __init__(self, orcid, name):
         self.orcid = orcid
         self.name = name
 
