@@ -15,8 +15,7 @@ class WwwModel(db.Model):
     note = db.Column(db.String(255))
     url = db.Column(db.String(255))
 
-    def __init__(self, _id, crossref, title, note, url):
-        self._id = _id
+    def __init__(self, crossref, title, note, url):
         self.crossref = crossref
         self.title = title
         self.note = note
