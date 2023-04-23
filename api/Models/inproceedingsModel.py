@@ -18,8 +18,7 @@ class InproceedingsModel(db.Model):
     pages = db.Column(db.String(255))
 
 
-    def __init__(self, _id, title, year, crossref, booktitle, url, pages):
-        self._id = _id
+    def __init__(self, title, year, crossref, booktitle, url, pages):
         self.title = title
         self.year = year
         self.crossref = crossref

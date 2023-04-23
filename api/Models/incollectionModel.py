@@ -18,8 +18,7 @@ class IncollectionModel(db.Model):
     year = db.Column(db.String(255))
 
 
-    def __init__(self, _id, crossref, title, pages, booktitle, url, year):
-        self._id = _id
+    def __init__(self, crossref, title, pages, booktitle, url, year):
         self.crossref = crossref
         self.title = title
         self.pages = pages
