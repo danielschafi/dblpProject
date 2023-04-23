@@ -18,9 +18,8 @@ class WwwCiteListModel(db.Model):
     www = db.relationship("WwwModel")
 
 
-    def __init__(self, _id, citeId, wwwid):
-        self._id = _id
-        self.citeId = citeId
+    def __init__(self, citeid, wwwid):
+        self.citeid = citeid
         self.wwwid = wwwid
 
     def to_json(self):
