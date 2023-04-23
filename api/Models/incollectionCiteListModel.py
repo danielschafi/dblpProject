@@ -18,9 +18,8 @@ class IncollectionCiteListModel(db.Model):
     incollection = db.relationship("IncollectionModel")
 
 
-    def __init__(self, _id, citeId, incollectionid):
-        self.id = _id
-        self.citeid = citeId
+    def __init__(self, citeid, incollectionid):
+        self.citeid = citeid
         self.incollectionid = incollectionid
 
     def to_json(self):
