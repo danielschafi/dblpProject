@@ -13,14 +13,13 @@ class AuthorModel(db.Model):
     orcid = db.Column(db.String(255))
     name = db.Column(db.String(255))
 
-    def __init__(self, _id, orcId, name):
-        self._id = _id
-        self.orcId = orcId
+    def __init__(self, orcid, name):
+        self.orcid = orcid
         self.name = name
 
     def to_json(self):
         return {self.id: {
-            "orcId": self.orcid,
+            "orcid": self.orcid,
             "name": self.name
         }}
     
