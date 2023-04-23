@@ -6,7 +6,10 @@ Notes: -
 
 from flask_restful import Resource
 from Models.articleEeListModel import ArticleEeListModel as AELM
+from Models.articleModel import ArticleModel
+from Models.eeModel import EeModel
 from pseudocode import create_response
+import os
 
 class ArticleEeListRes(Resource):
 

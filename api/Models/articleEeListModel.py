@@ -17,8 +17,7 @@ class ArticleEeListModel(db.Model):
     article = db.relationship("ArticleModel")
 
 
-    def __init__(self, _id, eeid, articleid):
-        self.id = _id
+    def __init__(self, eeid, articleid):
         self.eeid = eeid
         self.articleid = articleid
 

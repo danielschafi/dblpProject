@@ -8,7 +8,7 @@ from flask_restful import Resource, reqparse
 from Models.articleAuthorListModel import ArticleAuthorListModel as AALM
 from Models.articleModel import ArticleModel
 from Models.authorModel import AuthorModel
-from pseudocode import create_response
+from pseudocode import create_response, getDelParser
 import os
 
 class ArticleAuthorListRes(Resource):
@@ -41,6 +41,23 @@ class ArticleAuthorListRes(Resource):
         return create_response({
             "message": "AALM created"
         }, 201)
+    
+    def delete(self, _id):
+        parser = getDelParser()
+        data = parser.parse_args()
+        if data["pw"] != os.environ["DBLP_API_PW"]:
+          return create_response({"message": "Unauthorized"}, 401)
+        del data["pw"]
+
+        aalm = AALM.get(_id)
+        if not aalm:
+            return create_response({
+                "message": f"No AALM with ID={_id} found"
+            }, 200)
+        aalm.delete()
+        return create_response({
+            "message": f"AALM with ID={_id} deleted"
+        }, 200)
 
 
 def getPoParser():

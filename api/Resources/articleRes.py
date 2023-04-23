@@ -6,7 +6,7 @@ Notes: -
 
 from flask_restful import Resource, reqparse
 from Models.articleModel import ArticleModel
-from pseudocode import create_response
+from pseudocode import create_response, getDelParser
 import os
 
 class ArticleRes(Resource):
@@ -90,14 +90,6 @@ def getPoParser():
                         type=int,
                         required=True,
                         help="This field cannot be left blank")
-    parser.add_argument("pw",
-                        type=str,
-                        )
-    return parser
-
-def getDelParser():
-    #returns a reqparser for the article delete method
-    parser = reqparse.RequestParser()
     parser.add_argument("pw",
                         type=str,
                         )
