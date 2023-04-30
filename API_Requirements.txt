@@ -1,0 +1,22 @@
+->API takes JSON-Payload with multiple entries of one Type and inserts them into DB.
+-> All or nothing.
+->  Json elements: {
+    "pw": "xxxx",
+    "objects": [
+    object1:"",
+    object2:"",
+]
+}
+
+->GET on name:, journal etc:
+type:"name",
+list object: [
+    "name1",
+    "name2",
+    "name3"
+] -> return [
+    object1,
+    object2,
+    object3,
+    None
+]

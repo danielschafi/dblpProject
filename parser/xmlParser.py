@@ -2,6 +2,7 @@ import lxml.etree as etree
 import psycopg2
 from getDBRelation import getJournalID
 
+
 conn = psycopg2.connect("dbname=dblp user=postgres password=Sahana15! host=localhost port=5432")
 cur = conn.cursor()
 
@@ -20,6 +21,8 @@ for event, element in etree.iterparse("testData.xml",dtd_validation=True):
             cur.execute(insertJournal,(journal,))
             conn.commit()
             journalID = getJournalID(journal)
+
+        
         number = element.find("number").text
         ee = element.find("ee").text
         url = element.find("url").text
