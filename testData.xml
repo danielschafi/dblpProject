@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!DOCTYPE dblp SYSTEM "dblp.dtd">
-<dblp>   
+<dblp>
     <article mdate="2020-12-29" key="journals/ijtmcc/BabuRAHN14">
         <author>Shaik Sahil Babu</author>
         <author>Arnab Raha</author>
@@ -229,6 +229,4 @@
 
     <title>An Overview and Introduction to Logic and Data Bases.</title>
     <title>On Algebraic Query Processing in Logical Databases.</title>
-
-    
 </dblp>

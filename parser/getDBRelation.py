@@ -1,18 +1,27 @@
-import psycopg2
+import requests
+import json
 
-conn = psycopg2.connect("dbname=dblp user=postgres password=Sahana15! host=localhost port=5432")
-cur = conn.cursor()
+url = "127.0.0.1:5000/api"
+
+
 
 def getJournalID(journal):
-    cur.execute("SELECT id FROM journal WHERE name = %s",(journal,))
-    if cur.rowcount > 0:
-        return cur.fetchone()[0]
+    # TODO endpoint doesen't exist yet to get by journalName /journal/(str)
+    response = requests.get(url+"/journal/"+journal[0])
+    if response.status_code == 200:
+        data = json.loads(response.text)
+        return data['name']
     else:
         return None
     
+def createJournal(journal):
+    response = requests.post(url+"/journal/1", journal)
+    return response.status_code
+        
 def getAuthorID(author):
-    cur.execute("SELECT id FROM author WHERE name = %s",(author,))
-    if cur.rowcount > 0:
-        return cur.fetchone()[0]
+    response = requests.get(url+"/author/"+author)
+    if response.status_code == 200:
+        data = json.loads(response.text)
+        return data['name']
     else:
         return None

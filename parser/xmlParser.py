@@ -3,7 +3,7 @@ import psycopg2
 from getDBRelation import getJournalID
 
 
-conn = psycopg2.connect("dbname=dblp user=postgres password=Sahana15! host=localhost port=5432")
+conn = psycopg2.connect("dbname=dblp user=postgres password=1234 host=localhost port=5432")
 cur = conn.cursor()
 
 
@@ -28,3 +28,4 @@ for event, element in etree.iterparse("testData.xml",dtd_validation=True):
         url = element.find("url").text
         year = element.find("year").text
         authors = element.findall("author")
+        print(authors)
