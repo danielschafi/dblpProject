@@ -18,7 +18,7 @@ return: dict of the element
 def parseArticle(element):
     journalID = parseJournal(element.find("journal"))
     authors = parseAuthors(element.findall("author").text)
-    
+    #  ee = parseEe
     
     articleDict = {
         "title" : element.find("title").text,
@@ -28,24 +28,28 @@ def parseArticle(element):
         "year" : element.find("year").text,
         "journalid" : journalID,
     }
+    createArticle(json.dumps(articleDict)) # probably password missing
     
-    return articleDict
+    if authors:
+        #todo create articleAuthorList here
+        pass
+    
 
 
 def parseJournal(element):
     journalID = getJournalID(element)
     if journalID is None:
-        createJournal(element)
+        createJournal(json.dumps(element))
         journalID = getJournalID(element)   
     return journalID
 
 
-def parseAuthors(elements):
+def parseAuthors(authors):
     authorIDList = []
-    for a in elements:
+    for a in authors:
         authorID = getAuthorID(a)
         if authorID is None:
-            createAuthor(a)
+            createAuthor(json.dumps(a))
             authorIDList.append(getAuthorID(a))
     return authorIDList or None
 

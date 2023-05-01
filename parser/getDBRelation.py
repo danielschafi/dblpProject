@@ -2,6 +2,7 @@ import requests
 import json
 
 url = "127.0.0.1:5000/api"
+headers = {'Content-type': 'application/json'}
 
 
 
@@ -15,7 +16,7 @@ def getJournalID(journal):
         return None
 
 def createJournal(journal):
-    response = requests.post(url+"/journal/1", journal)
+    response = requests.post(url=url+"/journal/1/", data=journal, headers=headers)
     return response.status_code
         
 def getAuthorID(author):
@@ -27,5 +28,9 @@ def getAuthorID(author):
         return None
 
 def createAuthor(author):
-    response = requests.post(url+"/author/1", author)
+    response = requests.post(url=url+"/author/1/", data=author, headers=headers)
+    return response.status_code
+
+def createArticle(article):
+    response = requests.post(url=url+"/article/1/", data=article, headers=headers)
     return response.status_code
