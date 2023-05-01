@@ -1,7 +1,7 @@
 import lxml.etree as etree
-import psycopg2
 import json
 from getDBRelation import *
+import parseElement as par
 import requests
 
 url = "127.0.0.1:5000/api/"
@@ -11,45 +11,33 @@ threshold = 1000
 articleList = []
 authorList = []
 
+"""
+These get inserted as they are found
+- journal
+- author
+
+"""
+
 
 for event, element in etree.iterparse("testData.xml", dtd_validation=True):
-    if event == "end" and element.tag == "article":
-        
-        journal = element.find("journal").text,
-        journalID = getJournalID(journal)
-        
-        if journalID is None:
-            createJournal(journal)
-            journalID = getJournalID(journal)   
-        
+    if event == "end":
+        if element.tag == "article":
+            articleDict = par.parseArticle(element)
+            articleList.append(articleDict)
             
+            """
+                "ee" : element.find("ee").text,
+                "authors" : element.findall("author"),
+            """
+            
+            
+            
+            if len(articleList) > threshold:
+                articleList.clear()
+                #articleList = 
                 
-        articleDict = {
-            "title" : element.find("title").text,
-            "number" : element.find("number").text,
-            "pages" : element.find("pages").text,
-            "url" : element.find("url").text,
-            "year" : element.find("year").text,
-            "journalid" : journalID,
-        }
-        
-        """
-            Not needed here, these get inserted in separate table (other than volume)
-            "volume" : element.find("volume").text, No volume?
-            "ee" : element.find("ee").text,
-            "authors" : element.findall("author"),
-        """
-        
-        articleList.append(articleDict)
-        print(json.dumps(articleList))
-        
-        
-        if len(articleList) > threshold:
-            articleList.clear()
-            #articleList = 
-            pass
-            # TODO postRequest with batch of ArticleList
-            
+                # TODO postRequest with batch of ArticleList
+                
             
             
             
