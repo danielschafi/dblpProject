@@ -1,7 +1,7 @@
 import requests
 import json
 
-url = "127.0.0.1:5000/api"
+url = "http://127.0.0.1:5000/api"
 headers = {'Content-type': 'application/json'}
 
 
@@ -72,9 +72,8 @@ def getEditorID(editor):
         return None
 
 
-# TODO: create post methods for all endpoints
 def createJournal(journal):
-    response = requests.post(url=url+"/journal/1/", data=journal, headers=headers)
+    response = requests.post(url=url, data=journal, headers=headers)
     return response.status_code
 
 def createPublisher(publisher):
@@ -103,4 +102,12 @@ def createEditor(editor):
 
 def createArticle(article):
     response = requests.post(url=url+"/article/1/", data=article, headers=headers)
+    return response.status_code
+
+def createArticleAuthorList(articleAuthor):
+    response = requests.post(url=url+"/articleauthorlist/1/", data=articleAuthor, headers=headers)
+    return response.status_code
+
+def createArticleEeList(articleEe):
+    response = requests.post(url=url+"/articleeelist/1/", data=articleEe, headers=headers)
     return response.status_code
