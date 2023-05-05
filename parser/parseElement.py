@@ -16,7 +16,7 @@ pw = 1234
 def parseArticle(article):
     journalID = parseJournal(article.find("journal"))
     authorIDList = parseAuthors(article.findall("author").text)
-    eeIDList = parseEe(article.findall("ee").text)
+    eeIDList = parseEes(article.findall("ee").text)
     
     articleDict = {
         "title" : article.find("title").text,
@@ -91,14 +91,23 @@ def parseCites(cites):
             citesIDList.append(getCiteID(c))
     return citesIDList or None
 
-def parseEe(ees):
+def parseEes(ees):
     eeIDList = []
-    for e in ees:
-        eeID = getEeID(e)
+    for ee in ees:
+        eeID = getEeID()(ee)
         if eeID is None:
-            createEe(json.dumps(e))
-            eeIDList.append(getEeID(e))
+            eeDict = {
+                "link": ee.text,
+                "pw": pw
+            }
+            createEe(json.dumps(eeDict))
+            eeIDList.append(getEeID(ee))
+        else:
+            eeIDList.append(eeID)
     return eeIDList or None
+
+
+
 
 def parseEeType(eeTypes):
     eeTypeIDList = []
