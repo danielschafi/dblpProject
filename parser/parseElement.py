@@ -61,10 +61,10 @@ def parsePublisher(publishers):
 def parseCites(cites):
     citesIDList = []
     for c in cites:
-        citesID = getCitesID(c)
+        citesID = getCiteID(c)
         if citesID is None:
-            createCites(json.dumps(c))
-            citesIDList.append(getCitesID(c))
+            createCite(json.dumps(c))
+            citesIDList.append(getCiteID(c))
     return citesIDList or None
 
 def parseEe(ees):
