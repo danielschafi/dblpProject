@@ -50,17 +50,21 @@ def parseArticle(article):
             createArticleEeList(json.dumps(articleEeDict))
 
 
-def parseJournal(element):
-    journalID = getJournalID(element)
+def parseJournal(journal):
+    journalID = getJournalID(journal.text)
     if journalID is None:
-        createJournal(json.dumps(element))
-        journalID = getJournalID(element)   
+        journalDict = {
+            "name" : journal.text,
+            "pw" : 1234
+        }
+        createJournal(json.dumps(journalDict))
+        journalID = getJournalID(journal.text)   
     return journalID
 
 def parseAuthors(authors):
     authorIDList = []
     for a in authors:
-        authorID = getAuthorID(a)
+        authorID = getAuthorID(a.get("orcid", a.text))
         if authorID is None:
             authorDict = {
                 "orcid": a.get("orcid"),
@@ -68,40 +72,48 @@ def parseAuthors(authors):
                 "pw": pw
             }
             createAuthor(json.dumps(authorDict))
-            authorIDList.append(getAuthorID(a))
+            authorIDList.append(getAuthorID(a.get("orcid", a.text)))
         else:
             authorIDList.append(authorID)
     return authorIDList or None
 
-def parsePublisher(publishers):
-    publisherIDList = []
-    for p in publishers:
-        publisherID = getPublisherID(p)
-        if publisherID is None:
-            createPublisher(json.dumps(p))
-            publisherIDList.append(getPublisherID(p))
-    return publisherIDList or None
+def parsePublisher(publisher):
+    publisherID = getPublisherID(publisher.text)
+    if publisherID is None:
+        publisherDict = {
+            "name" : publisher.text,
+            "pw" : 1234
+        }
+        createJournal(json.dumps(publisherDict))
+        publisherID = getPublisherID(publisher.text)   
+    return publisherID
 
 def parseCites(cites):
-    citesIDList = []
+    citeIDList = []
     for c in cites:
-        citesID = getCiteID(c)
-        if citesID is None:
-            createCite(json.dumps(c))
-            citesIDList.append(getCiteID(c))
-    return citesIDList or None
+        citeID = getCiteID(c.text)
+        if citeID is None:
+            citeDict = {
+                "ref": c.text,
+                "pw": pw
+            }
+            createAuthor(json.dumps(citeDict))
+            citeIDList.append(getCiteID(c.text))
+        else:
+            citeIDList.append(citeID)
+    return citeIDList or None
 
 def parseEes(ees):
     eeIDList = []
     for ee in ees:
-        eeID = getEeID()(ee)
+        eeID = getEeID(ee.text)
         if eeID is None:
             eeDict = {
                 "link": ee.text,
                 "pw": pw
             }
             createEe(json.dumps(eeDict))
-            eeIDList.append(getEeID(ee))
+            eeIDList.append(getEeID(ee.text))
         else:
             eeIDList.append(eeID)
     return eeIDList or None
