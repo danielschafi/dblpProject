@@ -11,26 +11,43 @@ param: element from xml with type XXXX
 return: dict of the element
 -> Add dict to list 
 """
+pw = 1234
 
-def parseArticle(element):
-    journalID = parseJournal(element.find("journal"))
-    authors = parseAuthors(element.findall("author").text)
-    #  ee = parseEe
+def parseArticle(article):
+    journalID = parseJournal(article.find("journal"))
+    authorIDList = parseAuthors(article.findall("author").text)
+    eeIDList = parseEe(article.findall("ee").text)
     
     articleDict = {
-        "title" : element.find("title").text,
-        "number" : element.find("number").text,
-        "pages" : element.find("pages").text,
-        "url" : element.find("url").text,
-        "year" : element.find("year").text,
+        "title" : article.find("title").text,
+        "number" : article.find("number").text,
+        "pages" : article.find("pages").text,
+        "url" : article.find("url").text,
+        "year" : article.find("year").text,
         "journalid" : journalID,
+        "pw" : pw
     }
-    createArticle(json.dumps(articleDict)) # probably password missing
     
-    if authors:
-        #todo create articleAuthorList here
-        pass
-    
+    createArticle(json.dumps(articleDict))
+    articleID = getArticleID(article)
+
+    if authorIDList:
+        for a in authorIDList:
+            articleAuthorDict = {
+                "articleid" : articleID,
+                "authorid" : a,
+                "pw" : pw
+            }
+            createArticleAuthorList(json.dumps(articleAuthorDict))
+            
+    if eeIDList:
+        for a in eeIDList:
+            articleEeDict = {
+                "articleid" : articleID,
+                "eeId" : a,
+                "pw" : pw
+            }
+            createArticleEeList(json.dumps(articleAuthorDict))
 
 
 def parseJournal(element):
@@ -45,8 +62,15 @@ def parseAuthors(authors):
     for a in authors:
         authorID = getAuthorID(a)
         if authorID is None:
-            createAuthor(json.dumps(a))
+            authorDict = {
+                "orcid": a.get("orcid"),
+                "name": a.text,
+                "pw": pw
+            }
+            createAuthor(json.dumps(authorDict))
             authorIDList.append(getAuthorID(a))
+        else:
+            authorIDList.append(authorID)
     return authorIDList or None
 
 def parsePublisher(publishers):

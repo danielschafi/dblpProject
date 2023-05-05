@@ -104,3 +104,11 @@ def createEditor(editor):
 def createArticle(article):
     response = requests.post(url=url+"/article/1/", data=article, headers=headers)
     return response.status_code
+
+def createArticleAuthorList(articleAuthor):
+    response = requests.post(url=url+"/articleauthorlist/1/", data=articleAuthor, headers=headers)
+    return response.status_code
+
+def createArticleEeList(articleEe):
+    response = requests.post(url=url+"/articleeelist/1/", data=articleEe, headers=headers)
+    return response.status_code
