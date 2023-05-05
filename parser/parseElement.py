@@ -15,8 +15,8 @@ pw = 1234
 
 def parseArticle(article):
     journalID = parseJournal(article.find("journal"))
-    authorIDList = parseAuthors(article.findall("author").text)
-    eeIDList = parseEes(article.findall("ee").text)
+    authorIDList = parseAuthors(article.findall("author"))
+    eeIDList = parseEes(article.findall("ee"))
     
     articleDict = {
         "title" : article.find("title").text,
@@ -119,16 +119,16 @@ def parseEes(ees):
     return eeIDList or None
 
 
-
-
-def parseEeType(eeTypes):
-    eeTypeIDList = []
-    for e in eeTypes:
-        eeTypeID = getEeTypeID(e)
-        if eeTypeID is None:
-            createEeType(json.dumps(e))
-            eeTypeIDList.append(getEeTypeID(e))
-    return eeTypeIDList or None
+def parseEeType(eeType):
+    eeTypeID = getPublisherID(eeType.text)
+    if eeTypeID is None:
+        publisherDict = {
+            "type" : eeType.text,
+            "pw" : 1234
+        }
+        createJournal(json.dumps(publisherDict))
+        eeTypeID = getPublisherID(eeType.text)   
+    return eeTypeID
 
 def parseSchool(schools):
     schoolIDList = []
