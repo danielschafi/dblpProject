@@ -44,7 +44,7 @@ def parseArticle(article):
         for e in eeIDList:
             articleEeDict = {
                 "articleid" : articleID,
-                "eeId" : e,
+                "eeid" : e,
                 "pw" : pw
             }
             createArticleEeList(json.dumps(articleEeDict))
@@ -64,10 +64,10 @@ def parseJournal(journal):
 def parseAuthors(authors):
     authorIDList = []
     for a in authors:
-        authorID = getAuthorID(getattr(a.get("orcid"), "text", None) .text, a.text)
+        authorID = getAuthorID(getattr(a.get("orcid"), "text", None), a.text)
         if authorID is None:
             authorDict = {
-                "orcid": a.get("orcid").text,
+                "orcid": getattr(a.get("orcid"), "text", None),
                 "name": a.text,
                 "pw": pw
             }
