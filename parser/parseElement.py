@@ -29,7 +29,7 @@ def parseArticle(article):
     }
     
     createArticle(json.dumps(articleDict))
-    articleID = getArticleID(article)
+    articleID = getArticleID(articleDict["url"])
 
     if authorIDList:
         for a in authorIDList:
@@ -64,10 +64,10 @@ def parseJournal(journal):
 def parseAuthors(authors):
     authorIDList = []
     for a in authors:
-        authorID = getAuthorID(a.get("orcid"), a.text)
+        authorID = getAuthorID(a.get("orcid").text, a.text)
         if authorID is None:
             authorDict = {
-                "orcid": a.get("orcid"),
+                "orcid": a.get("orcid").text,
                 "name": a.text,
                 "pw": pw
             }
