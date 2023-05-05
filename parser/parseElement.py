@@ -77,31 +77,31 @@ def parseAuthors(authors):
             authorIDList.append(authorID)
     return authorIDList or None
 
-def parsePublisher(publisher):
-    publisherID = getPublisherID(publisher.text)
-    if publisherID is None:
-        publisherDict = {
-            "name" : publisher.text,
-            "pw" : 1234
-        }
-        createJournal(json.dumps(publisherDict))
-        publisherID = getPublisherID(publisher.text)   
-    return publisherID
+# def parsePublisher(publisher):
+#     publisherID = getPublisherID(publisher.text)
+#     if publisherID is None:
+#         publisherDict = {
+#             "name" : publisher.text,
+#             "pw" : 1234
+#         }
+#         createJournal(json.dumps(publisherDict))
+#         publisherID = getPublisherID(publisher.text)   
+#     return publisherID
 
-def parseCites(cites):
-    citeIDList = []
-    for c in cites:
-        citeID = getCiteID(c.text)
-        if citeID is None:
-            citeDict = {
-                "ref": c.text,
-                "pw": pw
-            }
-            createAuthor(json.dumps(citeDict))
-            citeIDList.append(getCiteID(c.text))
-        else:
-            citeIDList.append(citeID)
-    return citeIDList or None
+# def parseCites(cites):
+#     citeIDList = []
+#     for c in cites:
+#         citeID = getCiteID(c.text)
+#         if citeID is None:
+#             citeDict = {
+#                 "ref": c.text,
+#                 "pw": pw
+#             }
+#             createAuthor(json.dumps(citeDict))
+#             citeIDList.append(getCiteID(c.text))
+#         else:
+#             citeIDList.append(citeID)
+#     return citeIDList or None
 
 def parseEes(ees):
     eeIDList = []
@@ -119,40 +119,40 @@ def parseEes(ees):
     return eeIDList or None
 
 
-def parseEeType(eeType):
-    eeTypeID = getPublisherID(eeType.text)
-    if eeTypeID is None:
-        eeTypeDict = {
-            "type" : eeType.text,
-            "pw" : 1234
-        }
-        createJournal(json.dumps(eeTypeDict))
-        eeTypeID = getPublisherID(eeType.text)   
-    return eeTypeID
+# def parseEeType(eeType):
+#     eeTypeID = getPublisherID(eeType.text)
+#     if eeTypeID is None:
+#         eeTypeDict = {
+#             "type" : eeType.text,
+#             "pw" : 1234
+#         }
+#         createJournal(json.dumps(eeTypeDict))
+#         eeTypeID = getPublisherID(eeType.text)   
+#     return eeTypeID
 
-def parseSchool(school):
-    schoolID = getSchoolID(school.text)
-    if schoolID is None:
-        schoolDict = {
-            "name" : school.text,
-            "pw" : 1234
-        }
-        createJournal(json.dumps(schoolDict))
-        schoolID = getPublisherID(school.text)   
-    return schoolID
+# def parseSchool(school):
+#     schoolID = getSchoolID(school.text)
+#     if schoolID is None:
+#         schoolDict = {
+#             "name" : school.text,
+#             "pw" : 1234
+#         }
+#         createJournal(json.dumps(schoolDict))
+#         schoolID = getPublisherID(school.text)   
+#     return schoolID
 
-def parseEditors(editors):
-    editorIDList = []
-    for e in editors:
-        editorID = getEditorID(e.get("orcid"), e.text)
-        if editorID is None:
-            editorDict = {
-                "name": e.text,
-                "orcid": e.get("orcid"),
-                "pw": pw
-            }
-            createAuthor(json.dumps(editorDict))
-            editorIDList.append(getEditorID(e.get("orcid"), e.text))
-        else:
-            editorIDList.append(editorID)
-    return editorIDList or None
+# def parseEditors(editors):
+#     editorIDList = []
+#     for e in editors:
+#         editorID = getEditorID(e.get("orcid"), e.text)
+#         if editorID is None:
+#             editorDict = {
+#                 "name": e.text,
+#                 "orcid": e.get("orcid"),
+#                 "pw": pw
+#             }
+#             createAuthor(json.dumps(editorDict))
+#             editorIDList.append(getEditorID(e.get("orcid"), e.text))
+#         else:
+#             editorIDList.append(editorID)
+#     return editorIDList or None
