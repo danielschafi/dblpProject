@@ -16,7 +16,7 @@ def getJournalID(journal):
         return None
          
 def getAuthorID(author):
-    response = requests.get(f"{url}/author/{author}")
+    response = requests.get(f"{url}/author/{author[0]}")
     if response.status_code == 200:
         data = json.loads(response.text)
         return data['name']
@@ -24,7 +24,7 @@ def getAuthorID(author):
         return None
     
 def getPublisherID(publisher):
-    response = requests.get(f"{url}/publisher/{publisher}")
+    response = requests.get(f"{url}/publisher/{publisher[0]}")
     if response.status_code == 200:
         data = json.loads(response.text)
         return data['name']
@@ -32,7 +32,7 @@ def getPublisherID(publisher):
         return None
     
 def getCiteID(cite):
-    response = requests.get(f"{url}/cite/{cite}")
+    response = requests.get(f"{url}/cite/{cite[0]}")
     if response.status_code == 200:
         data = json.loads(response.text)
         return data['name']
@@ -40,7 +40,7 @@ def getCiteID(cite):
         return None
     
 def getEeID(ee):
-    response = requests.get(f"{url}/ee/{ee}")
+    response = requests.get(f"{url}/ee/{ee[0]}")
     if response.status_code == 200:
         data = json.loads(response.text)
         return data['name']
@@ -56,7 +56,7 @@ def getEeType(ee):
         return None
 
 def getSchoolID(school):
-    response = requests.get(f"{url}/school/{school}")
+    response = requests.get(f"{url}/school/{school[0]}")
     if response.status_code == 200:
         data = json.loads(response.text)
         return data['name']
@@ -64,7 +64,7 @@ def getSchoolID(school):
         return None
     
 def getEditorID(editor):
-    response = requests.get(f"{url}/editor/{editor}")
+    response = requests.get(f"{url}/editor/{editor[0]}")
     if response.status_code == 200:
         data = json.loads(response.text)
         return data['name']
