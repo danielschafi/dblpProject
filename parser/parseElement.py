@@ -47,7 +47,7 @@ def parseArticle(article):
                 "eeId" : a,
                 "pw" : pw
             }
-            createArticleEeList(json.dumps(articleAuthorDict))
+            createArticleEeList(json.dumps(articleEeDict))
 
 
 def parseJournal(element):
