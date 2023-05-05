@@ -21,7 +21,7 @@ def getJournalID(journal):
         return row[0]
     return None
 
-def getauthorID(orcid,author):
+def getAuthorID(orcid,author):
     conn = engine.connect()
     query = text("SELECT * FROM author WHERE orcid = :orcid")
     query = query.bindparams(orcid=orcid)
@@ -38,6 +38,26 @@ def getauthorID(orcid,author):
                 return row[0]
         else:
             return None
+    return None
+
+def getEeID(ee):
+    conn = engine.connect()
+    query = text("SELECT * FROM ee WHERE link = :ee")
+    query = query.bindparams(ee=ee)
+    result = conn.execute(query)
+    conn.close()
+    for row in result:
+        return row[0]
+    return None
+
+def getArticleID(article):
+    conn = engine.connect()
+    query = text("SELECT * FROM article WHERE url = :url")
+    query = query.bindparams(url=article)
+    result = conn.execute(query)
+    conn.close()
+    for row in result:
+        return row[0]
     return None
 
 def createJournal(journal):
