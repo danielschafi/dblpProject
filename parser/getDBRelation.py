@@ -1,21 +1,44 @@
 import requests
+from sqlalchemy import create_engine, text
 import json
 
 url = "http://127.0.0.1:5000/api"
 headers = {'Content-type': 'application/json'}
 
+# create a database engine
+engine = create_engine('postgresql://postgres:1234@localhost/dblp')
+
+
 
 #TODO: create get methods for all endpoints
 def getJournalID(journal):
-    # TODO endpoint doesen't exist yet to get by journalName /journal/(str)
-    response = requests.get(f"{url}/journal/{journal[0]}")
-    if response.status_code == 200:
-        data = json.loads(response.text)
-        return data['name']
-    else:
-        return None
-         
+    conn = engine.connect()
+    query = text("SELECT * FROM journal WHERE name = :journal")
+    query = query.bindparams(journal=journal)
+    result = conn.execute(query)
+    conn.close()
+    for row in result:
+        return row[0]
+    return None
 
+def getauthorID(orcid,author):
+    conn = engine.connect()
+    query = text("SELECT * FROM author WHERE orcid = :orcid")
+    query = query.bindparams(orcid=orcid)
+    result = conn.execute(query)
+    conn.close()
+    for row in result:
+        if row[0] is None:
+            conn = engine.connect()
+            query = text("SELECT * FROM author WHERE name = :author")
+            query = query.bindparams(author=author)
+            result = conn.execute(query)
+            conn.close()
+            for row in result:
+                return row[0]
+        else:
+            return None
+    return None
 
 def createJournal(journal):
     response = requests.post(url=url, data=journal, headers=headers)
