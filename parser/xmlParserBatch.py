@@ -9,12 +9,6 @@ url = "http://127.0.0.1:5000/api"
 
 
 
-"""
-These get inserted as they are found
-- journal
-- author
-
-"""
 @jit
 def parseXML():
     for event, element in etree.iterparse("testData.xml", dtd_validation=True):

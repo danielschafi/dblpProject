@@ -64,7 +64,7 @@ def parseJournal(journal):
 def parseAuthors(authors):
     authorIDList = []
     for a in authors:
-        authorID = getAuthorID(a.get("orcid").text, a.text)
+        authorID = getAuthorID(getattr(a.get("orcid"), "text", None) .text, a.text)
         if authorID is None:
             authorDict = {
                 "orcid": a.get("orcid").text,
@@ -72,7 +72,7 @@ def parseAuthors(authors):
                 "pw": pw
             }
             createAuthor(json.dumps(authorDict))
-            authorIDList.append(getAuthorID(a.get("orcid"), a.text))
+            authorIDList.append(getAuthorID(getattr(a.get("orcid"), "text", None), a.text))
         else:
             authorIDList.append(authorID)
     return authorIDList or None

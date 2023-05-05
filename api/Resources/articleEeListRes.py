@@ -34,7 +34,7 @@ class ArticleEeListRes(Resource):
             }, 400)
         if not EeModel.get(data["eeid"]):
             return create_response({
-                "message": "Author does not exist"
+                "message": "EE does not exist"
             }, 400)
         
         aelm.save()
