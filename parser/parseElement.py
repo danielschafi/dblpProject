@@ -122,28 +122,37 @@ def parseEes(ees):
 def parseEeType(eeType):
     eeTypeID = getPublisherID(eeType.text)
     if eeTypeID is None:
-        publisherDict = {
+        eeTypeDict = {
             "type" : eeType.text,
             "pw" : 1234
         }
-        createJournal(json.dumps(publisherDict))
+        createJournal(json.dumps(eeTypeDict))
         eeTypeID = getPublisherID(eeType.text)   
     return eeTypeID
 
-def parseSchool(schools):
-    schoolIDList = []
-    for s in schools:
-        schoolID = getSchoolID(s)
-        if schoolID is None:
-            createSchool(json.dumps(s))
-            schoolIDList.append(getSchoolID(s))
-    return schoolIDList or None
+def parseSchool(school):
+    schoolID = getSchoolID(school.text)
+    if schoolID is None:
+        schoolDict = {
+            "name" : school.text,
+            "pw" : 1234
+        }
+        createJournal(json.dumps(schoolDict))
+        schoolID = getPublisherID(school.text)   
+    return schoolID
 
-def parseEditor(editors):
+def parseEditors(editors):
     editorIDList = []
     for e in editors:
-        editorID = getEditorID(e)
+        editorID = getEditorID(e.get("orcid"), e.text)
         if editorID is None:
-            createEditor(json.dumps(e))
-            editorIDList.append(getEditorID(e))
+            editorDict = {
+                "name": e.text,
+                "orcid": e.get("orcid"),
+                "pw": pw
+            }
+            createAuthor(json.dumps(editorDict))
+            editorIDList.append(getEditorID(e.get("orcid"), e.text))
+        else:
+            editorIDList.append(editorID)
     return editorIDList or None
