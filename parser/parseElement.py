@@ -41,10 +41,10 @@ def parseArticle(article):
             createArticleAuthorList(json.dumps(articleAuthorDict))
             
     if eeIDList:
-        for a in eeIDList:
+        for e in eeIDList:
             articleEeDict = {
                 "articleid" : articleID,
-                "eeId" : a,
+                "eeId" : e,
                 "pw" : pw
             }
             createArticleEeList(json.dumps(articleEeDict))

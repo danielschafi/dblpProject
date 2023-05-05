@@ -45,9 +45,5 @@ for event, element in etree.iterparse("testData.xml", dtd_validation=True):
         elif element.tag == "data":
             par.parseData(element)
             
-            """
-                "ee" : element.find("ee").text,
-                "authors" : element.findall("author"),
-            """
-            
+          
             
