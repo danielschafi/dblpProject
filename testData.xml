@@ -215,18 +215,4 @@
         <ee type="oa">https://doi.org/10.5281/zenodo.1213050</ee>
         <ee type="oa">https://zenodo.org/record/1213050</ee>
     </data>
-
-        
-    <author orcid="0000-0002-3808-9042">Oliver Hoffmann 0002</author>
-    <author orcid="0000-0001-6114-3388">Florian Reitz</author>
-
-
-    <editor>Otmar Scherzer</editor>
-    <editor orcid="0000-0002-9819-7221">Pietro Michelucci</editor>
-
-    <address>New York</address>
-    <address>New York</address>
-
-    <title>An Overview and Introduction to Logic and Data Bases.</title>
-    <title>On Algebraic Query Processing in Logical Databases.</title>
 </dblp>
