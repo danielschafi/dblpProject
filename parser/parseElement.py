@@ -84,7 +84,7 @@ def parseAuthors(authors):
 #             "name" : publisher.text,
 #             "pw" : 1234
 #         }
-#         createJournal(json.dumps(publisherDict))
+#         createPublisher(json.dumps(publisherDict))
 #         publisherID = getPublisherID(publisher.text)   
 #     return publisherID
 
@@ -97,7 +97,7 @@ def parseAuthors(authors):
 #                 "ref": c.text,
 #                 "pw": pw
 #             }
-#             createAuthor(json.dumps(citeDict))
+#             createCite(json.dumps(citeDict))
 #             citeIDList.append(getCiteID(c.text))
 #         else:
 #             citeIDList.append(citeID)
@@ -120,14 +120,14 @@ def parseEes(ees):
 
 
 # def parseEeType(eeType):
-#     eeTypeID = getPublisherID(eeType.text)
+#     eeTypeID = getEeTypeID(eeType.text)
 #     if eeTypeID is None:
 #         eeTypeDict = {
 #             "type" : eeType.text,
 #             "pw" : 1234
 #         }
-#         createJournal(json.dumps(eeTypeDict))
-#         eeTypeID = getPublisherID(eeType.text)   
+#         createEeType(json.dumps(eeTypeDict))
+#         eeTypeID = getEeTypeID(eeType.text)   
 #     return eeTypeID
 
 # def parseSchool(school):
@@ -137,8 +137,8 @@ def parseEes(ees):
 #             "name" : school.text,
 #             "pw" : 1234
 #         }
-#         createJournal(json.dumps(schoolDict))
-#         schoolID = getPublisherID(school.text)   
+#         createSchool(json.dumps(schoolDict))
+#         schoolID = getSchoolID(school.text)   
 #     return schoolID
 
 # def parseEditors(editors):
@@ -151,7 +151,7 @@ def parseEes(ees):
 #                 "orcid": e.get("orcid"),
 #                 "pw": pw
 #             }
-#             createAuthor(json.dumps(editorDict))
+#             createEditor(json.dumps(editorDict))
 #             editorIDList.append(getEditorID(e.get("orcid"), e.text))
 #         else:
 #             editorIDList.append(editorID)
