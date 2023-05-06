@@ -109,3 +109,8 @@ def createArticleAuthorList(articleAuthor):
 def createArticleEeList(articleEe):
     response = requests.post(url=url+"/articleeelist/1", data=articleEe, headers=headers)
     return response.status_code
+
+
+def createInproceedings(inproceedings):
+    response = requests.post(url=url+"/inproceedings/1", data=inproceedings, headers=headers)
+    return response.status_code
