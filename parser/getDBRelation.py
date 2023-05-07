@@ -31,66 +31,30 @@ def getPublisherID(publisher):
         return row[0]
     return None
 
-def getAuthorID(orcid,author):
-    if orcid is not None:
-        conn = engine.connect()
-        query = text("SELECT * FROM author WHERE orcid = :orcid")
-        query = query.bindparams(orcid=orcid)
-        result = conn.execute(query)
-        conn.close()
-        for row in result:
-            if row[0] is None:
-                conn = engine.connect()
-                query = text("SELECT * FROM author WHERE name = :author")
-                query = query.bindparams(author=author)
-                result = conn.execute(query)
-                conn.close()
-                for row in result:
-                    return row[0]
-            else:
-                return None
-    else:
-        conn = engine.connect()
-        query = text("SELECT * FROM author WHERE name = :author")
-        query = query.bindparams(author=author)
-        result = conn.execute(query)
-        conn.close()
-        for row in result:
-            return row[0]
+def getAuthorID(author):
+    conn = engine.connect()
+    query = text("SELECT * FROM author WHERE key = :key")
+    query = query.bindparams(key=author)
+    result = conn.execute(query)
+    conn.close()
+    for row in result:
+        return row[0]
     return None
 
-def getEditorID(orcid,editor):
-    if orcid is not None:
-        conn = engine.connect()
-        query = text("SELECT * FROM editor WHERE orcid = :orcid")
-        query = query.bindparams(orcid=orcid)
-        result = conn.execute(query)
-        conn.close()
-        for row in result:
-            if row[0] is None:
-                conn = engine.connect()
-                query = text("SELECT * FROM editor WHERE name = :editor")
-                query = query.bindparams(editor=editor)
-                result = conn.execute(query)
-                conn.close()
-                for row in result:
-                    return row[0]
-            else:
-                return None
-    else:
-        conn = engine.connect()
-        query = text("SELECT * FROM editor WHERE name = :editor")
-        query = query.bindparams(editor=editor)
-        result = conn.execute(query)
-        conn.close()
-        for row in result:
-            return row[0]
+def getEditorID(editor):
+    conn = engine.connect()
+    query = text("SELECT * FROM editor WHERE key = :key")
+    query = query.bindparams(key=editor)
+    result = conn.execute(query)
+    conn.close()
+    for row in result:
+        return row[0]
     return None
 
 def getInproceedingsID(inproceedings):
     conn = engine.connect()
-    query = text("SELECT * FROM inproceedings WHERE url = :url")
-    query = query.bindparams(url=inproceedings)
+    query = text("SELECT * FROM inproceedings WHERE key = :key")
+    query = query.bindparams(key=inproceedings)
     result = conn.execute(query)
     conn.close()
     for row in result:
@@ -99,8 +63,8 @@ def getInproceedingsID(inproceedings):
 
 def getProceedingsID(proceedings):
     conn = engine.connect()
-    query = text("SELECT * FROM proceedings WHERE url = :url")
-    query = query.bindparams(url=proceedings)
+    query = text("SELECT * FROM proceedings WHERE key = :key")
+    query = query.bindparams(key=proceedings)
     result = conn.execute(query)
     conn.close()
     for row in result:
@@ -109,8 +73,8 @@ def getProceedingsID(proceedings):
 
 def getBookID(book):
     conn = engine.connect()
-    query = text("SELECT * FROM book WHERE url = :url")
-    query = query.bindparams(url=book)
+    query = text("SELECT * FROM book WHERE key = :key")
+    query = query.bindparams(key=book)
     result = conn.execute(query)
     conn.close()
     for row in result:
@@ -119,8 +83,8 @@ def getBookID(book):
 
 def getIncollectionID(incollection):
     conn = engine.connect()
-    query = text("SELECT * FROM incollection WHERE url = :url")
-    query = query.bindparams(url=incollection)
+    query = text("SELECT * FROM incollection WHERE key = :key")
+    query = query.bindparams(key=incollection)
     result = conn.execute(query)
     conn.close()
     for row in result:
@@ -129,8 +93,8 @@ def getIncollectionID(incollection):
 
 def getPhdthesisID(phdthesis):
     conn = engine.connect()
-    query = text("SELECT * FROM phdthesis WHERE url = :url")
-    query = query.bindparams(url=phdthesis)
+    query = text("SELECT * FROM phdthesis WHERE key = :key")
+    query = query.bindparams(key=phdthesis)
     result = conn.execute(query)
     conn.close()
     for row in result:
@@ -139,8 +103,8 @@ def getPhdthesisID(phdthesis):
 
 def getMastersthesisID(mastersthesis):
     conn = engine.connect()
-    query = text("SELECT * FROM mastersthesis WHERE url = :url")
-    query = query.bindparams(url=mastersthesis)
+    query = text("SELECT * FROM mastersthesis WHERE key = :key")
+    query = query.bindparams(key=mastersthesis)
     result = conn.execute(query)
     conn.close()
     for row in result:
@@ -149,8 +113,8 @@ def getMastersthesisID(mastersthesis):
 
 def getWwwID(www):
     conn = engine.connect()
-    query = text("SELECT * FROM www WHERE url = :url")
-    query = query.bindparams(url=www)
+    query = text("SELECT * FROM www WHERE key = :key")
+    query = query.bindparams(key=www)
     result = conn.execute(query)
     conn.close()
     for row in result:
@@ -159,8 +123,8 @@ def getWwwID(www):
 
 def getDataID(data):
     conn = engine.connect()
-    query = text("SELECT * FROM data WHERE url = :url")
-    query = query.bindparams(url=data)
+    query = text("SELECT * FROM data WHERE key = :key")
+    query = query.bindparams(key=data)
     result = conn.execute(query)
     conn.close()
     for row in result:
@@ -179,8 +143,8 @@ def getEeID(ee):
 
 def getArticleID(article):
     conn = engine.connect()
-    query = text("SELECT * FROM article WHERE url = :url")
-    query = query.bindparams(url=article)
+    query = text("SELECT * FROM article WHERE key = :key")
+    query = query.bindparams(key=article)
     result = conn.execute(query)
     conn.close()
     for row in result:

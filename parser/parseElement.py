@@ -97,9 +97,9 @@ def parseProceedings(proceedings):
         "title" : getattr(proceedings.find("title"), "text",""),
         "year" : getattr(proceedings.find("year"),"text",""),
         "url" : getattr(proceedings.find("url"),"text",""),
-        "publisherId": publisherID or -1,
         "isbn" : getattr(proceedings.find("isbn"), "text",""),
         "key" : getattr(proceedings.get("key"), "text", ""),
+        "publisherId": publisherID or -1,
         "pw" : pw,
     }
     
@@ -363,7 +363,7 @@ def parseJournal(journal):
     if journalID is None:
         journalDict = {
             "name" : journal.text,
-            "pw" : 1234
+            "pw" : pw
         }
         createJournal(json.dumps(journalDict))
         journalID = getJournalID(journal.text)   
@@ -385,18 +385,17 @@ def parsePublisher(publisher):
 def parseAuthors(authors):
     authorIDList = []
     for a in authors:
-        orcid = getattr(a.get("orcid"), "text")
-        name = getattr(a , "text")
-        if orcid or name:
-            authorID = getAuthorID(orcid, name)
+        key = getattr(a.get("key"), "text")
+        if key is not None:
+            authorID = getAuthorID(key)
             if authorID is None:
                 authorDict = {
-                    "orcid": orcid or -1,
-                    "name": name or -1,
+                    "orcid":  getattr(a.get("orcid"), "text") or "",
+                    "name": getattr(a , "text") or "",
                     "pw": pw
                 }
                 createAuthor(json.dumps(authorDict))
-                authorIDList.append(getAuthorID(orcid, name))
+                authorIDList.append(getAuthorID(key))
             else:
                 authorIDList.append(authorID)
     return authorIDList or None
@@ -408,7 +407,7 @@ def parseSchool(school):
     if schoolID is None:
         schoolDict = {
             "name" : school.text,
-            "pw" : 1234
+            "pw" : pw
         }
         createSchool(json.dumps(schoolDict))
         schoolID = getSchoolID(school.text)   
@@ -456,7 +455,7 @@ def parseEeType(eeType):
     if eeTypeID is None:
         eeTypeDict = {
             "type" : eeType.text,
-            "pw" : 1234
+            "pw" : pw
         }
         createEeType(json.dumps(eeTypeDict))
         eeTypeID = getEeTypeID(eeType.text)   
@@ -465,18 +464,17 @@ def parseEeType(eeType):
 def parseEditors(editors):
     editorIDList = []
     for e in editors:
-        orcid = getattr(e.get("orcid"), "text")
-        name = getattr(e , "text")
-        if orcid or name:
-            editorID = getEditorID(orcid, name)
+        key = getattr(e.get("key"), "text")
+        if key is not None:
+            editorID = getEditorID(key)
             if editorID is None:
                 editorDict = {
-                    "name": name or -1,
-                    "orcid": orcid or -1,
+                    "name": getattr(e , "text") or "",
+                    "orcid": getattr(e.get("orcid"), "text") or "",
                     "pw": pw
                 }
                 createEditor(json.dumps(editorDict))
-                editorIDList.append(getEditorID(orcid, name))
+                editorIDList.append(getEditorID(key))
             else:
                 editorIDList.append(editorID)
     return editorIDList or None
