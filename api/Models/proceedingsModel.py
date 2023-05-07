@@ -13,7 +13,7 @@ class ProceedingsModel(db.Model):
     year = db.Column(db.String(255))
     url = db.Column(db.String(255))
     isbn = db.Column(db.String(255))
-    booktitle = db.Columen(db.String(255))
+    booktitle = db.Column(db.String(255))
     key = db.Column(db.String(255))
     publisherid = db.Column(db.Integer(), db.ForeignKey("publisher.id"))
     publisher = db.relationship("PublisherModel")
