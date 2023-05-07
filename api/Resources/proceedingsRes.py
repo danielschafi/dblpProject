@@ -7,6 +7,7 @@ Notes: -
 from flask_restful import Resource, reqparse
 from Models.proceedingsModel import ProceedingsModel
 from Models.publisherModel import PublisherModel
+from Models.seriesModel import SeriesModel
 from pseudocode import create_response, getDelParser
 import os
 
@@ -36,10 +37,17 @@ class ProceedingsRes(Resource):
 
       #Check relationships      
       publisher = PublisherModel.get(data["publisherid"])
+      series = SeriesModel.get(data["seriesid"])
+
 
       if not publisher:
           return create_response({
               "message":f"Publisher with ID={data['publisherid']} not found"
+              }, 400)
+          
+      if not series:
+          return create_response({
+              "message":f"SEries with ID={data['seriesid']} not found"
               }, 400)
       #save object to db 
       proceedings.save()
@@ -83,7 +91,15 @@ def getPoParser():
                         type=str,
                         required=True,
                         help="This field cannot be left blank")
+    parser.add_argument("booktitle",
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank")
     parser.add_argument("publisherid",
+                        type=int,
+                        required=True,
+                        help="This field cannot be left blank")
+    parser.add_argument("seriesid",
                         type=int,
                         required=True,
                         help="This field cannot be left blank")

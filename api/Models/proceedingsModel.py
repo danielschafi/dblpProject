@@ -13,24 +13,32 @@ class ProceedingsModel(db.Model):
     year = db.Column(db.String(255))
     url = db.Column(db.String(255))
     isbn = db.Column(db.String(255))
+    booktitle = db.Columen(db.String(255))
     key = db.Column(db.String(255))
     publisherid = db.Column(db.Integer(), db.ForeignKey("publisher.id"))
     publisher = db.relationship("PublisherModel")
+    seriesid = db.Column(db.Integer(), db.ForeignKey("series.id"))
+    series = db.relationship("SeriesModel")
 
-    def __init__(self, year, url, isbn, key, publisherid):
+    def __init__(self, year, url, isbn, booktitle, key, publisherid, seriesid):
         self.year = year
         self.url = url
         self.isbn = isbn
+        self.booktitle = booktitle
         self.key = key
         self.publisherid = publisherid
+        self.seriesid = seriesid
+
 
     def to_json(self):
         return {self.id: {
             "year": self.year,
             "url": self.url,
             "isbn": self.isbn,
+            "booktitle" : self.booktitle,
             "key" : self.key,
-            "publisher": self.publisher.to_json()
+            "publisher": self.publisher.to_json(),
+            "series": self.series.to_json()
         }}
     
     def save(self):
@@ -50,3 +58,7 @@ class ProceedingsModel(db.Model):
     @classmethod
     def getByRef(cls, myRef):
         return cls.query.filter_by(ref=myRef).all()
+    
+    @classmethod
+    def getBySeries(cls, mySeries):
+        return cls.query.filter_by(series=mySeries).all()

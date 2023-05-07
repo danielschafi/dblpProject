@@ -11,40 +11,45 @@ class BookModel(db.Model):
     __tablename__ = "book"
     id = db.Column(db.Integer, primary_key=True)
     crossref = db.Column(db.String(255))
-    series = db.Column(db.String(255))
     title = db.Column(db.String(255))
     note = db.Column(db.String(255))
     volume = db.Column(db.String(255))
     pages = db.Column(db.String(255))
     year = db.Column(db.String(255))
+    isbn = db.Column(db.String(255))
     key = db.Column(db.String(255))
     
     schoolid = db.Column(db.Integer, db.ForeignKey('school.id'))
     school = db.relationship('SchoolModel')
+    seriesid = db.Column(db.Integer, db.ForeignKey('series.id'))
+    series = db.relationship('SeriesModel')
 
 
-    def __init__(self, crossref, series, title, note, volume, pages, year, key, schoolid):
+    def __init__(self, crossref, title, note, volume, pages, year, isbn, key, schoolid, seriesid):
         self.crossref = crossref
-        self.series = series
         self.title = title
         self.note = note
         self.volume = volume
         self.pages = pages
         self.year = year
         self.key = key
+        self.isbn = isbn
         self.schoolid = schoolid
+        self.seriesid = seriesid
+
 
     def to_json(self):
         return {self.id: {
             "crossref": self.crossref,
-            "series": self.series,
             "title": self.title,
             "note": self.note,
             "volume": self.volume,
             "pages": self.pages,
             "year": self.year,
+            "isbn": self.isbn,
             "key" : self.key,
-            "school": self.school.to_json()
+            "school": self.school.to_json(),
+            "series": self.series.to_json()
         }}
     
     def save(self):
@@ -65,3 +70,7 @@ class BookModel(db.Model):
     @classmethod
     def getBySchoolId(cls, mySchoolId):
         return cls.query.filter_by(schoolid=mySchoolId).all()
+    
+    @classmethod
+    def getBySeriesId(cls, mySeriesId):
+        return cls.query.filter_by(seriesid=mySeriesId).all()

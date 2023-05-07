@@ -10,7 +10,7 @@ volume VARCHAR(255),
 ## proceedings
 booktitle VARCHAR(255),
 
-seriesId int,
+seriesId int, 
     CONSTRAINT fkSeries
     FOREIGN KEY(seriesId)
     REFERENCES series(ID)
@@ -19,7 +19,7 @@ seriesId int,
 ## book
 isbn VARCHAR(255),
 
-series to seriesId int,
+series to seriesId int,  
     CONSTRAINT fkSeries
     FOREIGN KEY(seriesId)
     REFERENCES series(ID)

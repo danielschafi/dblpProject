@@ -17,6 +17,7 @@ from Resources.citeRes import CiteRes
 from Resources.eeRes import EeRes
 from Resources.eeTypeRes import EeTypeRes
 from Resources.schoolRes import SchoolRes
+from Resources.seriesRes import SeriesRes
 from Resources.publisherRes import PublisherRes
 from Resources.journalRes import JournalRes
 from Resources.editorRes import EditorRes
@@ -48,6 +49,8 @@ from Resources.phdthesisEeListRes import PhdthesisEeListRes as PEELR
 from Resources.proceedingsEditorListRes import ProceedingsEditorListRes as PELR
 from Resources.wwwRes import WwwRes
 from Resources.wwwCiteListRes import WwwCiteListRes as WCLR
+from Resources.wwwAuthorListRes import WwwAuthorListRes as WALR
+
 
 app = Flask(__name__)
 
@@ -77,6 +80,7 @@ api.add_resource(CiteRes, "/api/cite/<int:_id>")
 api.add_resource(EeRes, "/api/ee/<int:_id>")
 api.add_resource(EeTypeRes, "/api/eetype/<int:_id>")
 api.add_resource(SchoolRes, "/api/school/<int:_id>")
+api.add_resource(SeriesRes, "/api/series/<int:_id>")
 api.add_resource(PublisherRes, "/api/publisher/<int:_id>")
 api.add_resource(JournalRes, "/api/journal/<int:_id>")
 api.add_resource(DataRes, "/api/data/<int:_id>")
@@ -117,6 +121,8 @@ api.add_resource(PEELR, "/api/phdthesiseelist/<int:_id>")
 
 api.add_resource(WwwRes, "/api/www/<int:_id>")
 api.add_resource(WCLR, "/api/wwwcitelist/<int:_id>")
+api.add_resource(WALR, "/api/wwwauthorlist/<int:_id>")
+
 
 
 

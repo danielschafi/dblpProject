@@ -7,6 +7,8 @@ Notes: -
 from flask_restful import Resource, reqparse
 from Models.bookModel import BookModel
 from Models.schoolModel import SchoolModel
+from Models.publisherModel import PublisherModel
+from Models.seriesModel import SeriesModel
 from pseudocode import create_response, getDelParser
 import os
 
@@ -35,11 +37,24 @@ class BookRes(Resource):
       book = BookModel(**data)
 
       school = SchoolModel.get(data["schoolid"])
+      publisher = PublisherModel.get(data["publisherid"])
+      series = SeriesModel.get(data["seriesid"])
+
 
       #Check relationships
       if not school:
           return create_response({
               "message":f"School with ID={data['schoolid']} not found"
+              }, 400)
+          
+      if not publisher:
+          return create_response({
+              "message":f"Publisher with ID={data['publisherid']} not found"
+              }, 400)
+
+      if not series:
+          return create_response({
+              "message":f"Series with ID={data['seriesid']} not found"
               }, 400)
       #save object to db 
       book.save()
@@ -71,10 +86,7 @@ def getPoParser():
                         type=str,
                         required=True,
                         help="This field cannot be left blank")
-    parser.add_argument("series",
-                        type=str,
-                        required=True,
-                        help="This field cannot be left blank")
+
     parser.add_argument("title",
                         type=str,
                         required=True,
@@ -91,6 +103,10 @@ def getPoParser():
                         type=str,
                         required=True,
                         help="This field cannot be left blank")
+    parser.add_argument("isbn",
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank")
     parser.add_argument("year",
                         type=str,
                         required=True,
@@ -100,6 +116,14 @@ def getPoParser():
                         required=True,
                         help="This field cannot be left blank")
     parser.add_argument("schoolid",
+                        type=int,
+                        required=True,
+                        help="This field cannot be left blank")
+    parser.add_argument("publisherid",
+                        type=int,
+                        required=True,
+                        help="This field cannot be left blank")
+    parser.add_argument("seriesid",
                         type=int,
                         required=True,
                         help="This field cannot be left blank")
