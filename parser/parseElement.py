@@ -359,7 +359,7 @@ def parseData(data):
 def parseJournal(journal):
     if getattr(journal, "text") is None:
         return None
-    journalID = getJournalID(journal, "text")
+    journalID = getJournalID(journal.text)
     if journalID is None:
         journalDict = {
             "name" : journal.text,
@@ -386,7 +386,7 @@ def parsePublisher(publisher):
 def parseAuthors(authors):
     authorIDList = []
     for a in authors:
-        orcid = getattr(a.get("orcid"), "text")
+        orcid = a.get("orcid") or None
         name = getattr(a , "text")
         if orcid or name:
             authorID = getAuthorID(orcid, name)
@@ -467,7 +467,7 @@ def parseEeType(eeType):
 def parseEditors(editors):
     editorIDList = []
     for e in editors:
-        orcid = getattr(e.get("orcid"), "text")
+        orcid = e.get("orcid") or None
         name = getattr(e , "text")
         if orcid or name:
             editorID = getEditorID(orcid, name)
