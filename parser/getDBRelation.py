@@ -191,6 +191,16 @@ def getSchoolID(school):
         return row[0]
     return None
 
+def getSeriesID(series):
+    conn = engine.connect()
+    query = text("SELECT * FROM serie WHERE name = :series")
+    query = query.bindparams(series=series)
+    result = conn.execute(query)
+    conn.close()
+    for row in result:
+        return row[0]
+    return None
+
 def getCiteID(cite):
     conn = engine.connect()
     query = text("SELECT * FROM cite WHERE ref = :ref")
@@ -205,6 +215,9 @@ def createJournal(journal):
     response = requests.post(url=url+"/journal/1", data=journal, headers=headers)
     return response.status_code
 
+def createSeries(series):
+    response = requests.post(url=url+"/series/1", data=series, headers=headers)
+    return response.status_code
 
 def createPublisher(publisher):
     response = requests.post(url=url+"/publisher/1", data=publisher, headers=headers)
@@ -336,6 +349,10 @@ def createWWW(www):
 
 def createWwwCiteList(wwwCite):
     response = requests.post(url=url+"/wwwcitelist/1", data=wwwCite, headers=headers)
+    return response.status_code
+
+def createWwwAuthorList(wwwAuthor):
+    response = requests.post(url=url+"/wwwauthorlist/1", data=wwwAuthor, headers=headers)
     return response.status_code
 
 

@@ -27,6 +27,7 @@ def parseArticle(article):
             "pages" : getattr(article.find("pages"),"text",""),
             "url" : getattr(article.find("url"),"text",""),
             "year" : getattr(article.find("year"),"text",""),
+            "volume" : getattr(article.find("volume"),"text",""),
             "key" : article.get("key"),
             "journalid" : journalID or 1,
             "pw" : pw
@@ -138,19 +139,23 @@ def parseBook(book):
     if bookID is None:
         if book is None: return None
         schoolID = parseSchool(book.find("school"))
+        publisherID = parsePublisher(book.find("publisher"))
+        seriedID = parseSeries(book.find("series"))
         authorIDList = parseAuthors(book.findall("author"))
         eeIDList = parseEes(book.findall("ee"))
         editorIDList = parseEditors(book.findall("editor"))
         
         bookDict = {
             "crossref" : getattr(book.find("crossref"), "text",""),
-            "series" : getattr(book.find("series"), "text",""),
+            "seriesid" : seriedID or 1,
             "schoolid" : schoolID or 1,
+            "publisherid" : publisherID or 1,
             "title" : getattr(book.find("title"), "text",""),
             "note" : getattr(book.find("note"), "text",""),
             "volume" : getattr(book.find("volume"), "text",""),
             "pages" : getattr(book.find("pages"), "text",""),
             "year" : getattr(book.find("year"), "text",""),
+            "isbn" : getattr(book.find("isbn"), "text",""),
             "key" : book.get("key"),
             "pw" : pw,
         }
@@ -303,7 +308,7 @@ def parseMastersthesis(mastersthesis):
         if authorIDList and mastersthesisID:
             for a in authorIDList:
                 mastersthesisAuthorDict = {
-                    "mastersthesisid" : mastersthesisID,
+                    "masterthesisid" : mastersthesisID,
                     "authorid" : a,
                     "pw" : pw
                 }
@@ -312,7 +317,7 @@ def parseMastersthesis(mastersthesis):
         if eeIDList and mastersthesisID:
             for e in eeIDList:
                 mastersthesisEeDict = {
-                    "mastersthesisid" : mastersthesisID,
+                    "masterthesisid" : mastersthesisID,
                     "eeid" : e,
                     "pw" : pw
                 }
@@ -323,6 +328,7 @@ def parseWww(www):
     if wwwID is None:
         if www is None: return None
         citeIDList = parseCites(www.findall("cite"))
+        authorIDList = parseAuthors(www.findall("author"))
 
         wwwDict = {
             "crossref" : getattr(www.find("crossref"),"text",""),
@@ -344,6 +350,15 @@ def parseWww(www):
                     "pw" : pw
                 }
                 createWwwCiteList(json.dumps(wwwCiteDict))
+        
+        if authorIDList and wwwID:
+            for a in authorIDList:
+                wwwAuthorDict = {
+                    "wwwid" : wwwID,
+                    "authorid" : a,
+                    "pw" : pw
+                }
+                createWwwAuthorList(json.dumps(wwwAuthorDict))
 
 def parseData(data):
     dataID = getDataID(data.get("key"))
@@ -445,6 +460,20 @@ def parseSchool(school):
         createSchool(json.dumps(schoolDict))
         schoolID = getSchoolID(school.text)   
     return schoolID
+
+def parseSeries(series):
+    if series is None: return None
+    if getattr(series, "text") is None:
+        return None
+    seriesID = getSeriesID(series.text)
+    if seriesID is None:
+        seriesDict = {
+            "name" : series.text,
+            "pw" : pw
+        }
+        createSeries(json.dumps(seriesDict))
+        seriesID = getSeriesID(series.text)   
+    return seriesID
 
 def parseEes(ees):
     if ees is None: return None
