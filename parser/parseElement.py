@@ -19,19 +19,19 @@ def parseArticle(article):
     eeIDList = parseEes(article.findall("ee"))
     
     articleDict = {
-        "title" : getattr(article.find("title"), "text", None),
-        "number" : getattr(article.find("number"),"text", None),
-        "pages" : getattr(article.find("pages"),"text", None),
-        "url" : getattr(article.find("url"),"text", None),
-        "year" : getattr(article.find("year"),"text", None),
+        "title" : getattr(article.find("title"), "text"),
+        "number" : getattr(article.find("number"),"text"),
+        "pages" : getattr(article.find("pages"),"text"),
+        "url" : getattr(article.find("url"),"text"),
+        "year" : getattr(article.find("year"),"text"),
         "journalid" : journalID,
         "pw" : pw
     }
     
     createArticle(json.dumps(articleDict))
-    articleID = getArticleID(articleDict["url"])
+    articleID = getArticleID(articleDict.get("url"))
 
-    if authorIDList:
+    if authorIDList and articleID:
         for a in authorIDList:
             articleAuthorDict = {
                 "articleid" : articleID,
@@ -40,7 +40,7 @@ def parseArticle(article):
             }
             createArticleAuthorList(json.dumps(articleAuthorDict))
             
-    if eeIDList:
+    if eeIDList and articleID:
         for e in eeIDList:
             articleEeDict = {
                 "articleid" : articleID,
@@ -54,20 +54,20 @@ def parseInproceedings(inproceedings):
     eeIDList = parseEes(inproceedings.findall("ee"))
     
     inproceedingsDict = {
-        "title" : inproceedings.find("title").text,
-        "year" : inproceedings.find("year").text,
-        "crossref" : inproceedings.find("crossref").text,
-        "booktitle" : inproceedings.find("booktitle").text,
-        "url" : inproceedings.find("url").text,
-        "pages" : inproceedings.find("pages").text,
+        "title" : getattr(inproceedings.find("title"),"text"),
+        "year" : getattr(inproceedings.find("year") , "text"),
+        "crossref" : getattr(inproceedings.find("crossref"), "text"),
+        "booktitle" : getattr(inproceedings.find("booktitle"), "text"),
+        "url" : getattr(inproceedings.find("url"),"text"),
+        "pages" : getattr(inproceedings.find("pages"), "text"),
         "pw" : pw
     }
     
     
     createInproceedings(json.dumps(inproceedingsDict))
-    inproceedingsID = getInproceedingsID(inproceedingsDict["url"])
+    inproceedingsID = getInproceedingsID(inproceedingsDict.get("url"))
 
-    if authorIDList:
+    if authorIDList and inproceedingsID:
         for a in authorIDList:
             inproceedingsAuthorDict = {
                 "inproceedingsid" : inproceedingsID,
@@ -76,7 +76,7 @@ def parseInproceedings(inproceedings):
             }
             createInproceedingsAuthorList(json.dumps(inproceedingsAuthorDict))
 
-    if eeIDList:
+    if eeIDList and inproceedingsID:
         for e in eeIDList:
             inproceedingsEeDict = {
                 "inproceedingsid" : inproceedingsID,
@@ -92,18 +92,18 @@ def parseProceedings(proceedings):
     
     # Haben (zumindest in den testdaten) noch mehr properties und ees
     proceedingsDict = {
-        "title" : proceedings.find("title").text,
-        "year" : proceedings.find("year").text,
-        "url" : proceedings.find("url").text,
+        "title" : getattr(proceedings.find("title"), "text"),
+        "year" : getattr(proceedings.find("year"),"text"),
+        "url" : getattr(proceedings.find("url"),"text"),
         "publisherId": publisherID,
-        "isbn" : proceedings.find("isbn").text,
+        "isbn" : getattr(proceedings.find("isbn"), "text"),
         "pw" : pw,
     }
     
     createProceedings(json.dumps(proceedingsDict))
-    proceedingsID = getProceedingsID(proceedingsDict["url"])
+    proceedingsID = getProceedingsID(proceedingsDict.get("url"))
 
-    if eeIDList:
+    if eeIDList and proceedingsID:
         for e in eeIDList:
             proceedingsEeDict = {
                 "proceedingsid" : proceedingsID,
@@ -112,7 +112,7 @@ def parseProceedings(proceedings):
             }
             createProceedingsEeList(json.dumps(proceedingsEeDict))
 
-    if editorIDList:
+    if editorIDList and proceedingsID:
         for e in editorIDList:
             proceedingsEditorDict = {
                 "proceedingsid" : proceedingsID,
@@ -128,20 +128,21 @@ def parseBook(book):
     editorIDList = parseEditors(book.findall("editor"))
     
     bookDict = {
-        "crossref" : book.find("crossref").text,
-        "series" : book.find("series").text,
+        "crossref" : getattr(book.find("crossref"), "text"),
+        "series" : getattr(book.find("series"), "text"),
         "schoolId" : schoolID,
-        "title" : book.find("title").text,
-        "note" : book.find("note").text,
-        "volume" : book.find("volume").text,
-        "pages" : book.find("pages").text,
-        "year" : book.find("year").text,
+        "title" : getattr(book.find("title"), "text"),
+        "note" : getattr(book.find("note"), "text"),
+        "volume" : getattr(book.find("volume"), "text"),
+        "pages" : getattr(book.find("pages"), "text"),
+        "year" : getattr(book.find("year"), "text"),
+        "pw" : pw,
     }
     
     createBook(json.dumps(bookDict))
-    bookID = getBookID(bookDict["url"])
+    bookID = getBookID(bookDict.get("url"))
 
-    if eeIDList:
+    if eeIDList and bookID:
         for e in eeIDList:
             bookEeDict = {
                 "bookid" : bookID,
@@ -150,7 +151,7 @@ def parseBook(book):
             }
             createBookEeList(json.dumps(bookEeDict))
 
-    if editorIDList:
+    if editorIDList and bookID:
         for e in editorIDList:
             bookEditorDict = {
                 "bookid" : bookID,
@@ -159,7 +160,7 @@ def parseBook(book):
             }
             createBookEditorList(json.dumps(bookEditorDict))
     
-    if authorIDList:
+    if authorIDList and bookID:
         for a in authorIDList:
             bookAuthorDict = {
                 "bookid" : bookID,
@@ -174,18 +175,19 @@ def parseincollection(incollection):
     citeIDList = parseCites(incollection.findall("cite"))
 
     incollectionDict = {
-        "crossref" : incollection.find("crossref").text,
-        "title" : incollection.find("title").text,
-        "pages" : incollection.find("pages").text,
-        "booktitle" : incollection.find("booktitle").text,
-        "url" : incollection.find("url").text,
-        "year" : incollection.find("year").text,
+        "crossref" : getattr(incollection.find("crossref"), "text"),
+        "title" : getattr(incollection.find("title"), "text"),
+        "pages" : getattr(incollection.find("pages"), "text"),
+        "booktitle" : getattr(incollection.find("booktitle"), "text"),
+        "url" : getattr(incollection.find("url"), "text"),
+        "year" : getattr(incollection.find("year"), "text"),
+        "pw" : pw
     }
     
     createIncollection(json.dumps(incollectionDict))
-    incollectionID = getIncollectionID(incollectionDict["url"])
+    incollectionID = getIncollectionID(incollectionDict.get("url"))
 
-    if authorIDList:
+    if authorIDList and incollectionID:
         for a in authorIDList:
             incollectionAuthorDict = {
                 "incollectionid" : incollectionID,
@@ -194,7 +196,7 @@ def parseincollection(incollection):
             }
             createIncollectionAuthorList(json.dumps(incollectionAuthorDict))
 
-    if eeIDList:
+    if eeIDList and incollectionID:
         for e in eeIDList:
             incollectionEeDict = {
                 "incollectionid" : incollectionID,
@@ -203,7 +205,7 @@ def parseincollection(incollection):
             }
             createIncollectionEeList(json.dumps(incollectionEeDict))
 
-    if citeIDList:
+    if citeIDList and incollectionID:
         for c in citeIDList:
             incollectionCiteDict = {
                 "incollectionid" : incollectionID,
@@ -219,23 +221,24 @@ def parsephdthesis(phdthesis):
     eeIDList = parseEes(phdthesis.findall("ee"))
 
     phdthesisDict = {
-        "series" : phdthesis.find("series").text,
-        "title" : phdthesis.find("title").text,
-        "isbn" : phdthesis.find("isbn").text,
-        "note" : phdthesis.find("note").text,
-        "number" : phdthesis.find("number").text,
-        "pages" : phdthesis.find("pages").text,
-        "volume" : phdthesis.find("volume").text,
-        "year" : phdthesis.find("year").text,
-        "month" : phdthesis.find("month").text,
+        "series" : getattr(phdthesis.find("series"),"text"),
+        "title" : getattr(phdthesis.find("title"),"text"),
+        "isbn" : getattr(phdthesis.find("isbn"),"text"),
+        "note" : getattr(phdthesis.find("note"),"text"),
+        "number" : getattr(phdthesis.find("number"),"text"),
+        "pages" : getattr(phdthesis.find("pages"),"text"),
+        "volume" : getattr(phdthesis.find("volume"),"text"),
+        "year" : getattr(phdthesis.find("year"),"text"),
+        "month" : getattr(phdthesis.find("month"),"text"),
         "schoolId" : schoolID,
         "publisherId": publisherID,
+        "pw" : pw
     }
     
     createPhdthesis(json.dumps(phdthesisDict))
-    phdthesisID = getPhdthesisID(phdthesisDict["url"])
+    phdthesisID = getPhdthesisID(phdthesisDict.get("url"))
 
-    if authorIDList:
+    if authorIDList and phdthesisID:
         for a in authorIDList:
             phdthesisAuthorDict = {
                 "phdthesisid" : phdthesisID,
@@ -244,7 +247,7 @@ def parsephdthesis(phdthesis):
             }
             createPhdthesisAuthorList(json.dumps(phdthesisAuthorDict))
 
-    if eeIDList:
+    if eeIDList and phdthesisID:
         for e in eeIDList:
             phdthesisEeDict = {
                 "phdthesisid" : phdthesisID,
@@ -259,16 +262,17 @@ def parseMastersthesis(mastersthesis):
     eeIDList = parseEes(mastersthesis.findall("ee"))
 
     mastersthesisDict = {
-        "title" : mastersthesis.find("title").text,
-        "note" : mastersthesis.find("note").text,
-        "year" : mastersthesis.find("year").text,
+        "title" : getattr(mastersthesis.find("title"),"text"),
+        "note" : getattr(mastersthesis.find("note"),"text"),
+        "year" : getattr(mastersthesis.find("year"),"text"),
         "schoolId" : schoolID,
+        "pw" : pw
     }
     
     createMastersthesis(json.dumps(mastersthesisDict))
     mastersthesisID = getMastersthesisID(mastersthesisDict["url"])
 
-    if authorIDList:
+    if authorIDList and mastersthesisID:
         for a in authorIDList:
             mastersthesisAuthorDict = {
                 "mastersthesisid" : mastersthesisID,
@@ -277,7 +281,7 @@ def parseMastersthesis(mastersthesis):
             }
             createMastersthesisAuthorList(json.dumps(mastersthesisAuthorDict))
 
-    if eeIDList:
+    if eeIDList and mastersthesisID:
         for e in eeIDList:
             mastersthesisEeDict = {
                 "mastersthesisid" : mastersthesisID,
@@ -290,16 +294,17 @@ def parseWww(www):
     citeIDList = parseCites(www.findall("cite"))
 
     wwwDict = {
-        "crossref" : www.find("crossref").text,
-        "title" : www.find("title").text,
-        "note" : www.find("note").text,
-        "url" : www.find("url").text,
+        "crossref" : getattr(www.find("crossref"),"text"),
+        "title" : getattr(www.find("title"),"text"),
+        "note" : getattr(www.find("note"),"text"),
+        "url" : getattr(www.find("url"),"text"),
+        "pw" : pw
     }
     
     createWWW(json.dumps(wwwDict))
-    wwwID = getWWWID(wwwDict["url"])
+    wwwID = getWWWID(wwwDict.get("url"))
 
-    if citeIDList:
+    if citeIDList and wwwID:
         for c in citeIDList:
             wwwCiteDict = {
                 "wwwid" : wwwID,
@@ -312,17 +317,18 @@ def parseData(data):
     authorIDList = parseAuthors(data.findall("author"))
     eeIDList = parseEes(data.findall("ee"))
     dataDict = {
-        "crossref" : data.find("crossref").text,
-        "title" : data.find("title").text,
-        "note" : data.find("note").text,
-        "number" : data.find("number").text,
-        "month" : data.find("month").text,
-        "year" : data.find("year").text,
+        "crossref" : getattr(data.find("crossref"),"text"),
+        "title" : getattr(data.find("title"),"text"),
+        "note" : getattr(data.find("note"),"text"),
+        "number" : getattr(data.find("number"),"text"),
+        "month" : getattr(data.find("month"),"text"),
+        "year" : getattr(data.find("year"),"text"),
+        "pw" : pw
     }
     createData(json.dumps(dataDict))
-    dateID = getDataID(dataDict["url"])
+    dateID = getDataID(dataDict.get("url"))
 
-    if authorIDList:
+    if authorIDList and dateID:
         for a in authorIDList:
             dataAuthorDict = {
                 "dataid" : dateID,
@@ -331,7 +337,7 @@ def parseData(data):
             }
             createDataAuthorList(json.dumps(dataAuthorDict))
 
-    if eeIDList:
+    if eeIDList and dateID:
         for e in eeIDList:
             dataEeDict = {
                 "dataid" : dateID,
@@ -342,65 +348,65 @@ def parseData(data):
 
 
 def parseJournal(journal):
-    journalID = getJournalID(journal.text)
+    journalID = getJournalID(getattr(journal, "text"))
     if journalID is None:
         journalDict = {
-            "name" : journal.text,
+            "name" : getattr(journal, "text"),
             "pw" : 1234
         }
         createJournal(json.dumps(journalDict))
-        journalID = getJournalID(journal.text)   
+        journalID = getJournalID(getattr(journal,"text"))   
     return journalID
 
 def parsePublisher(publisher):
-    publisherID = getPublisherID(publisher.text)
+    publisherID = getPublisherID(getattr(publisher,"text"))
     if publisherID is None:
         publisherDict = {
-            "name" : publisher.text,
-            "pw" : 1234
+            "name" : getattr(publisher, "text"),
+            "pw" : pw
         }
         createPublisher(json.dumps(publisherDict))
-        publisherID = getPublisherID(publisher.text)   
+        publisherID = getPublisherID(getattr(publisher,"text"))   
     return publisherID
 
 def parseAuthors(authors):
     authorIDList = []
     for a in authors:
-        authorID = getAuthorID(getattr(a.get("orcid"), "text", None), a.text)
+        authorID = getAuthorID(getattr(a.get("orcid"), "text"), getattr(a , "text"))
         if authorID is None:
             authorDict = {
-                "orcid": getattr(a.get("orcid"), "text", None),
-                "name": a.text,
+                "orcid": getattr(a.get("orcid"), "text"),
+                "name": getattr(a , "text"),
                 "pw": pw
             }
             createAuthor(json.dumps(authorDict))
-            authorIDList.append(getAuthorID(getattr(a.get("orcid"), "text", None), a.text))
+            authorIDList.append(getAuthorID(getattr(a.get("orcid"), "text"), getattr(a , "text")))
         else:
             authorIDList.append(authorID)
     return authorIDList or None
 
 def parseSchool(school):
-    schoolID = getSchoolID(school.text)
+    schoolID = getSchoolID(getattr(school,"text"))
     if schoolID is None:
         schoolDict = {
-            "name" : school.text,
+            "name" : getattr(school,"text"),
             "pw" : 1234
         }
         createSchool(json.dumps(schoolDict))
-        schoolID = getSchoolID(school.text)   
+        schoolID = getSchoolID(getattr(school,"text"))   
     return schoolID
 
 def parseEes(ees):
     eeIDList = []
     for ee in ees:
-        eeID = getEeID(ee.text)
+        eeID = getEeID(getattr(ee, "text"))
         if eeID is None:
             eeDict = {
-                "link": ee.text,
+                "link": getattr(ee,"text"),
                 "pw": pw
             }
             createEe(json.dumps(eeDict))
-            eeIDList.append(getEeID(ee.text))
+            eeIDList.append(getEeID(getattr(ee, "text")))
         else:
             eeIDList.append(eeID)
     return eeIDList or None
@@ -408,41 +414,41 @@ def parseEes(ees):
 def parseCites(cites):
     citeIDList = []
     for c in cites:
-        citeID = getCiteID(c.text)
+        citeID = getCiteID(getattr(c, "text"))
         if citeID is None:
             citeDict = {
-                "ref": c.text,
+                "ref": getattr(c, "text"),
                 "pw": pw
             }
             createCite(json.dumps(citeDict))
-            citeIDList.append(getCiteID(c.text))
+            citeIDList.append(getCiteID(getattr(c, "text")))
         else:
             citeIDList.append(citeID)
     return citeIDList or None
 
 def parseEeType(eeType):
-    eeTypeID = getEeTypeID(eeType.text)
+    eeTypeID = getEeTypeID(getattr(eeType, "text"))
     if eeTypeID is None:
         eeTypeDict = {
-            "type" : eeType.text,
+            "type" : getattr(eeType,"text"),
             "pw" : 1234
         }
         createEeType(json.dumps(eeTypeDict))
-        eeTypeID = getEeTypeID(eeType.text)   
+        eeTypeID = getEeTypeID(getattr(eeType, "text"))   
     return eeTypeID
 
 def parseEditors(editors):
     editorIDList = []
     for e in editors:
-        editorID = getEditorID(e.get("orcid"), e.text)
+        editorID = getEditorID(e.get("orcid"), getattr(e,"text"))
         if editorID is None:
             editorDict = {
-                "name": e.text,
+                "name": getattr(e, "text"),
                 "orcid": e.get("orcid"),
                 "pw": pw
             }
             createEditor(json.dumps(editorDict))
-            editorIDList.append(getEditorID(e.get("orcid"), e.text))
+            editorIDList.append(getEditorID(e.get("orcid"), getattr(e, "text")))
         else:
             editorIDList.append(editorID)
     return editorIDList or None
