@@ -133,7 +133,7 @@ def getPhdthesisID(phdthesis):
 
 def getMastersthesisID(mastersthesis):
     conn = engine.connect()
-    query = text("SELECT * FROM mastersthesis WHERE key = :key")
+    query = text("SELECT * FROM masterthesis WHERE key = :key")
     query = query.bindparams(key=mastersthesis)
     result = conn.execute(query)
     conn.close()
