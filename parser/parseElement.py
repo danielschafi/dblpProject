@@ -439,7 +439,7 @@ def parseCites(cites):
                 citeIDList.append(citeID)
     return citeIDList or None
 
-#TODO EEType is not from xml, is different depending on where the ee is added
+#TODO EEType is not from xml, is different depending on where the ee is added, bzt check if it is needed at all
 def parseEeType(eeType):
     if getattr(eeType, "text") is None:
         return None  
