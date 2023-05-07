@@ -102,7 +102,7 @@ def parseProceedings(proceedings):
         "url" : getattr(proceedings.find("url"),"text",""),
         "isbn" : getattr(proceedings.find("isbn"), "text",""),
         "key" : proceedings.get("key"),
-        "publisherId": publisherID or -1,
+        "publisherid": publisherID or -1,
         "pw" : pw,
     }
     
@@ -137,7 +137,7 @@ def parseBook(book):
     bookDict = {
         "crossref" : getattr(book.find("crossref"), "text",""),
         "series" : getattr(book.find("series"), "text",""),
-        "schoolId" : schoolID or -1,
+        "schoolid" : schoolID or -1,
         "title" : getattr(book.find("title"), "text",""),
         "note" : getattr(book.find("note"), "text",""),
         "volume" : getattr(book.find("volume"), "text",""),
