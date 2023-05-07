@@ -18,8 +18,7 @@ class DataEeListModel(db.Model):
     data = db.relationship("DataModel")
 
 
-    def __init__(self, _id, eeid, dataid):
-        self.id = _id
+    def __init__(self, eeid, dataid):
         self.eeid = eeid
         self.dataid = dataid
 
