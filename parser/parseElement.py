@@ -14,6 +14,7 @@ return: dict of the element
 pw = 1234
 
 def parseArticle(article):
+    if article is None: return None
     journalID = parseJournal(article.find("journal"))
     authorIDList = parseAuthors(article.findall("author"))
     eeIDList = parseEes(article.findall("ee"))
@@ -51,6 +52,7 @@ def parseArticle(article):
             createArticleEeList(json.dumps(articleEeDict))
 
 def parseInproceedings(inproceedings):
+    if inproceedings is None: return None
     authorIDList = parseAuthors(inproceedings.findall("author"))
     eeIDList = parseEes(inproceedings.findall("ee"))
     
@@ -88,6 +90,7 @@ def parseInproceedings(inproceedings):
             createInproceedingsEeList(json.dumps(inproceedingsEeDict))
 
 def parseProceedings(proceedings):
+    if proceedings is None: return None
     publisherID = parsePublisher(proceedings.find("publisher"))
     eeIDList = parseEes(proceedings.findall("ee"))
     editorIDList = parseEditors(proceedings.findall("editor"))
@@ -125,6 +128,7 @@ def parseProceedings(proceedings):
             createProceedingsEditorList(json.dumps(proceedingsEditorDict))
 
 def parseBook(book):
+    if book is None: return None
     schoolID = parseSchool(book.find("school"))
     authorIDList = parseAuthors(book.findall("author"))
     eeIDList = parseEes(book.findall("ee"))
@@ -174,6 +178,7 @@ def parseBook(book):
             createBookAuthorList(json.dumps(bookAuthorDict))
                 
 def parseIncollection(incollection):
+    if incollection is None: return None
     authorIDList = parseAuthors(incollection.findall("author"))
     eeIDList = parseEes(incollection.findall("ee"))
     citeIDList = parseCites(incollection.findall("cite"))
@@ -220,6 +225,7 @@ def parseIncollection(incollection):
             createIncollectionCiteList(json.dumps(incollectionCiteDict))
 
 def parsePhdthesis(phdthesis):
+    if phdthesis is None: return None
     schoolID = parseSchool(phdthesis.find("school"))
     publisherID = parsePublisher(phdthesis.find("publisher"))
     authorIDList = parseAuthors(phdthesis.findall("author"))
@@ -263,6 +269,7 @@ def parsePhdthesis(phdthesis):
             createPhdthesisEeList(json.dumps(phdthesisEeDict))
 
 def parseMastersthesis(mastersthesis):
+    if mastersthesis is None: return None
     schoolID = parseSchool(mastersthesis.find("school"))
     authorIDList = parseAuthors(mastersthesis.findall("author"))
     eeIDList = parseEes(mastersthesis.findall("ee"))
@@ -298,6 +305,7 @@ def parseMastersthesis(mastersthesis):
             createMastersthesisEeList(json.dumps(mastersthesisEeDict))
 
 def parseWww(www):
+    if www is None: return None
     citeIDList = parseCites(www.findall("cite"))
 
     wwwDict = {
@@ -322,6 +330,7 @@ def parseWww(www):
             createWwwCiteList(json.dumps(wwwCiteDict))
 
 def parseData(data):
+    if data is None: return None
     authorIDList = parseAuthors(data.findall("author"))
     eeIDList = parseEes(data.findall("ee"))
     dataDict = {
@@ -357,6 +366,7 @@ def parseData(data):
 
 
 def parseJournal(journal):
+    if journal is None: return None
     if getattr(journal, "text") is None:
         return None
     journalID = getJournalID(journal.text)
@@ -370,6 +380,7 @@ def parseJournal(journal):
     return journalID
 
 def parsePublisher(publisher):
+    if publisher is None: return None
     if getattr(publisher, "text") is None:
         return None
     publisherID = getPublisherID(publisher.text)
@@ -384,6 +395,7 @@ def parsePublisher(publisher):
 
 
 def parseAuthors(authors):
+    if authors is None: return None
     authorIDList = []
     for a in authors:
         orcid = a.get("orcid") or None
@@ -403,6 +415,7 @@ def parseAuthors(authors):
     return authorIDList or None
 
 def parseSchool(school):
+    if school is None: return None
     if getattr(school, "text") is None:
         return None  
     schoolID = getSchoolID(school.text)
@@ -416,6 +429,7 @@ def parseSchool(school):
     return schoolID
 
 def parseEes(ees):
+    if ees is None: return None
     eeIDList = []
     for ee in ees:
         link = getattr(ee, "text")
@@ -433,6 +447,7 @@ def parseEes(ees):
     return eeIDList or None
 
 def parseCites(cites):
+    if cites is None: return None
     citeIDList = []
     for c in cites:
         ref = getattr(c, "text")
@@ -451,6 +466,7 @@ def parseCites(cites):
 
 #TODO EEType is not from xml, is different depending on where the ee is added, bzt check if it is needed at all
 def parseEeType(eeType):
+    if eeType is None: return None
     if getattr(eeType, "text") is None:
         return None  
     eeTypeID = getEeTypeID(eeType.text)
@@ -465,6 +481,7 @@ def parseEeType(eeType):
 
 
 def parseEditors(editors):
+    if editors is None: return None
     editorIDList = []
     for e in editors:
         orcid = e.get("orcid") or None
