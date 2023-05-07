@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS author;
 CREATE TABLE author (
     ID serial PRIMARY KEY,
     orcId VARCHAR(255),
-    name VARCHAR(255),
+    name VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS cite;
@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS editor;
 CREATE TABLE editor (
     ID serial PRIMARY KEY,
     orcId VARCHAR(255),
-    name VARCHAR (255),
+    name VARCHAR (255)
 );
 
 DROP TABLE IF EXISTS ee;
