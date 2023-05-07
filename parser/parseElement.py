@@ -24,7 +24,7 @@ def parseArticle(article):
         "pages" : getattr(article.find("pages"),"text",""),
         "url" : getattr(article.find("url"),"text",""),
         "year" : getattr(article.find("year"),"text",""),
-        "journalid" : journalID or "",
+        "journalid" : journalID or -1,
         "pw" : pw
     }
     
@@ -95,7 +95,7 @@ def parseProceedings(proceedings):
         "title" : getattr(proceedings.find("title"), "text",""),
         "year" : getattr(proceedings.find("year"),"text",""),
         "url" : getattr(proceedings.find("url"),"text",""),
-        "publisherId": publisherID or "",
+        "publisherId": publisherID or -1,
         "isbn" : getattr(proceedings.find("isbn"), "text",""),
         "pw" : pw,
     }
@@ -130,7 +130,7 @@ def parseBook(book):
     bookDict = {
         "crossref" : getattr(book.find("crossref"), "text",""),
         "series" : getattr(book.find("series"), "text",""),
-        "schoolId" : schoolID or "",
+        "schoolId" : schoolID or -1,
         "title" : getattr(book.find("title"), "text",""),
         "note" : getattr(book.find("note"), "text",""),
         "volume" : getattr(book.find("volume"), "text",""),
@@ -230,8 +230,8 @@ def parsephdthesis(phdthesis):
         "volume" : getattr(phdthesis.find("volume"),"text",""),
         "year" : getattr(phdthesis.find("year"),"text",""),
         "month" : getattr(phdthesis.find("month"),"text",""),
-        "schoolId" : schoolID or "",
-        "publisherId": publisherID or "",
+        "schoolId" : schoolID or -1,
+        "publisherId": publisherID or -1,
         "pw" : pw
     }
     
@@ -265,12 +265,12 @@ def parseMastersthesis(mastersthesis):
         "title" : getattr(mastersthesis.find("title"),"text",""),
         "note" : getattr(mastersthesis.find("note"),"text",""),
         "year" : getattr(mastersthesis.find("year"),"text",""),
-        "schoolId" : schoolID or "",
+        "schoolId" : schoolID or -1,
         "pw" : pw
     }
     
     createMastersthesis(json.dumps(mastersthesisDict))
-    mastersthesisID = getMastersthesisID(mastersthesisDict["url"])
+    mastersthesisID = getMastersthesisID(mastersthesisDict.get("url"))
 
     if authorIDList and mastersthesisID:
         for a in authorIDList:
@@ -382,8 +382,8 @@ def parseAuthors(authors):
             authorID = getAuthorID(orcid, name)
             if authorID is None:
                 authorDict = {
-                    "orcid": orcid or "",
-                    "name": name or "",
+                    "orcid": orcid or -1,
+                    "name": name or -1,
                     "pw": pw
                 }
                 createAuthor(json.dumps(authorDict))
@@ -462,8 +462,8 @@ def parseEditors(editors):
             editorID = getEditorID(orcid, name)
             if editorID is None:
                 editorDict = {
-                    "name": name or "",
-                    "orcid": orcid or "",
+                    "name": name or -1,
+                    "orcid": orcid or -1,
                     "pw": pw
                 }
                 createEditor(json.dumps(editorDict))
