@@ -477,4 +477,8 @@ CREATE TABLE articleAuthorList(
     REFERENCES author(ID) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+INSERT INTO school (name) VALUES ('Not Available');
+INSERT INTO publisher (name) VALUES ('Not Available');
+INSERT INTO series (name) VALUES ('Not Available');
+INSERT INTO journal (name) VALUES ('Not Available');
 

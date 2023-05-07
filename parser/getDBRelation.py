@@ -193,7 +193,7 @@ def getSchoolID(school):
 
 def getSeriesID(series):
     conn = engine.connect()
-    query = text("SELECT * FROM serie WHERE name = :series")
+    query = text("SELECT * FROM series WHERE name = :series")
     query = query.bindparams(series=series)
     result = conn.execute(query)
     conn.close()

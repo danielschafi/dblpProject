@@ -101,10 +101,15 @@ def parseProceedings(proceedings):
         publisherID = parsePublisher(proceedings.find("publisher"))
         eeIDList = parseEes(proceedings.findall("ee"))
         editorIDList = parseEditors(proceedings.findall("editor"))
+        seriesID = parseSeries(proceedings.find("series"))
+
         
         # Haben (zumindest in den testdaten) noch mehr properties und ees
         proceedingsDict = {
             "title" : getattr(proceedings.find("title"), "text",""),
+            "booktitle" : getattr(proceedings.find("booktitle"), "text",""),
+            "series" : seriesID or 1,
+            "volume" : getattr(proceedings.find("volume"),"text",""),
             "year" : getattr(proceedings.find("year"),"text",""),
             "url" : getattr(proceedings.find("url"),"text",""),
             "isbn" : getattr(proceedings.find("isbn"), "text",""),
