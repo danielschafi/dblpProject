@@ -63,10 +63,10 @@ CREATE TABLE proceedings (
     url VARCHAR(255),
     publisherId int,
     isbn VARCHAR(255),
+    key VARCHAR(255),
     CONSTRAINT fkPublisher
     FOREIGN KEY(publisherId)
     REFERENCES publisher(ID)
-    key VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS proceedingsEeList;
