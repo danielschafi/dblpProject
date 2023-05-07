@@ -40,16 +40,7 @@ def getAuthorID(orcid,author):
         result = conn.execute(query)
         conn.close()
         for row in result:
-            if row[0] is None:
-                conn = engine.connect()
-                query = text("SELECT * FROM author WHERE name = :author")
-                query = query.bindparams(author=author)
-                result = conn.execute(query)
-                conn.close()
-                for row in result:
-                    return row[0]
-            else:
-                return None
+            return row[0]
     else:
         conn = engine.connect()
         query = text("SELECT * FROM author WHERE name = :author")
