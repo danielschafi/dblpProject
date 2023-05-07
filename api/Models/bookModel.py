@@ -23,9 +23,11 @@ class BookModel(db.Model):
     school = db.relationship('SchoolModel')
     seriesid = db.Column(db.Integer, db.ForeignKey('series.id'))
     series = db.relationship('SeriesModel')
+    publisherid = db.Column(db.Integer, db.ForeignKey('publisher.id'))
+    publisher = db.relationship('PublisherModel')
 
 
-    def __init__(self, crossref, title, note, volume, pages, year, isbn, key, schoolid, seriesid):
+    def __init__(self, crossref, title, note, volume, pages, year, isbn, key, schoolid, seriesid, publisherid):
         self.crossref = crossref
         self.title = title
         self.note = note
@@ -36,6 +38,7 @@ class BookModel(db.Model):
         self.isbn = isbn
         self.schoolid = schoolid
         self.seriesid = seriesid
+        self.publisherid = publisherid
 
 
     def to_json(self):
@@ -49,7 +52,8 @@ class BookModel(db.Model):
             "isbn": self.isbn,
             "key" : self.key,
             "school": self.school.to_json(),
-            "series": self.series.to_json()
+            "series": self.series.to_json(),
+            "publisher": self.publisher.to_json()
         }}
     
     def save(self):
@@ -74,3 +78,7 @@ class BookModel(db.Model):
     @classmethod
     def getBySeriesId(cls, mySeriesId):
         return cls.query.filter_by(seriesid=mySeriesId).all()
+    
+    @classmethod
+    def getByPublisherId(cls, myPublisherId):
+        return cls.query.filter_by(publisherid=myPublisherId).all()

@@ -234,7 +234,7 @@ CREATE TABLE masterthesisAuthorList(
 DROP TABLE IF EXISTS phdthesis;
 CREATE TABLE phdthesis (
     ID serial PRIMARY KEY,
-    series VARCHAR(255),
+    seriesId int,
     title VARCHAR(255),
     isbn VARCHAR(255),
     note VARCHAR(255),
@@ -249,6 +249,9 @@ CREATE TABLE phdthesis (
     CONSTRAINT fkPublisher
     FOREIGN KEY(publisherId)
     REFERENCES publisher(ID),
+    CONSTRAINT fkSeries
+    FOREIGN KEY(seriesId)
+    REFERENCES series(ID),
     CONSTRAINT fkSchool
     FOREIGN KEY(schoolId)
     REFERENCES school(ID)

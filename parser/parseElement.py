@@ -108,7 +108,7 @@ def parseProceedings(proceedings):
         proceedingsDict = {
             "title" : getattr(proceedings.find("title"), "text",""),
             "booktitle" : getattr(proceedings.find("booktitle"), "text",""),
-            "series" : seriesID or 1,
+            "seriesid" : seriesID or 1,
             "volume" : getattr(proceedings.find("volume"),"text",""),
             "year" : getattr(proceedings.find("year"),"text",""),
             "url" : getattr(proceedings.find("url"),"text",""),
@@ -250,11 +250,12 @@ def parsePhdthesis(phdthesis):
         if phdthesis is None: return None
         schoolID = parseSchool(phdthesis.find("school"))
         publisherID = parsePublisher(phdthesis.find("publisher"))
+        seriesID = parseSeries(phdthesis.find("series"))
         authorIDList = parseAuthors(phdthesis.findall("author"))
         eeIDList = parseEes(phdthesis.findall("ee"))
 
         phdthesisDict = {
-            "series" : getattr(phdthesis.find("series"),"text",""),
+            "series" : seriesID or 1,
             "title" : getattr(phdthesis.find("title"),"text",""),
             "isbn" : getattr(phdthesis.find("isbn"),"text",""),
             "note" : getattr(phdthesis.find("note"),"text",""),

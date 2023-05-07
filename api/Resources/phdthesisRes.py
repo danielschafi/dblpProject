@@ -8,6 +8,7 @@ from flask_restful import Resource, reqparse
 from Models.phdthesisModel import PhdthesisModel
 from Models.publisherModel import PublisherModel
 from Models.schoolModel import SchoolModel
+from Models.seriesModel import SeriesModel
 from pseudocode import create_response, getDelParser
 import os
 
@@ -49,6 +50,15 @@ class PhdthesisRes(Resource):
           return create_response({
               "message":f"Publisher with ID={data['publisherid']} not found"
               }, 400)
+      
+      series = SeriesModel.get(data["seriesid"])
+
+      if not series:
+            return create_response({
+                "message":f"Series with ID={data['seriesid']} not found"
+                }, 400)
+    
+
       #save object to db 
       phd.save()
       return create_response(phd.to_json(), 201)
@@ -75,10 +85,6 @@ class PhdthesisRes(Resource):
 def getPoParser():
     #returns a reqparser for the article post method
     parser = reqparse.RequestParser()
-    parser.add_argument("series",
-                        type=str,
-                        required=True,
-                        help="This field cannot be left blank")
     parser.add_argument("title",
                         type=str,
                         required=True,
@@ -120,6 +126,10 @@ def getPoParser():
                         required=True,
                         help="This field cannot be left blank")
     parser.add_argument("publisherid",
+                        type=int,
+                        required=True,
+                        help="This field cannot be left blank")
+    parser.add_argument("seriesid",
                         type=int,
                         required=True,
                         help="This field cannot be left blank")

@@ -10,7 +10,6 @@ class PhdthesisModel(db.Model):
 
     __tablename__ = "phdthesis"
     id = db.Column(db.Integer, primary_key=True)
-    series = db.Column(db.String(255))
     title = db.Column(db.String(255))
     isbn = db.Column(db.String(255))
     note = db.Column(db.String(255))
@@ -21,6 +20,9 @@ class PhdthesisModel(db.Model):
     month = db.Column(db.String(255))
     key = db.Column(db.String(255))
 
+    seriesid = db.Column(db.Integer, db.ForeignKey('series.id'))
+    series = db.relationship('SeriesModel')
+
     publisherid = db.Column(db.Integer, db.ForeignKey('publisher.id'))
     publisher = db.relationship('PublisherModel')
     
@@ -28,8 +30,7 @@ class PhdthesisModel(db.Model):
     school = db.relationship('SchoolModel')
 
 
-    def __init__(self, series, title, isbn, note, number, pages, volume, year, month, key,  publisherid, schoolid):
-        self.series = series
+    def __init__(self, title, isbn, note, number, pages, volume, year, month, key,  publisherid, schoolid, seriesid):
         self.title = title
         self.isbn = isbn
         self.note = note
@@ -41,10 +42,10 @@ class PhdthesisModel(db.Model):
         self.key = key
         self.publisherid = publisherid
         self.schoolid = schoolid
+        self.seriesid = seriesid
 
     def to_json(self):
         return {self.id: {
-            "series": self.series,
             "title": self.title,
             "isbn": self.isbn,
             "note": self.note,
@@ -55,7 +56,8 @@ class PhdthesisModel(db.Model):
             "month": self.month,
             "key" : self.key,
             "publisher": self.publisher.to_json(),
-            "school": self.school.to_json()
+            "school": self.school.to_json(),
+            "series": self.series.to_json()
         }}
     
     def save(self):
@@ -80,3 +82,7 @@ class PhdthesisModel(db.Model):
     @classmethod
     def getByPublisherId(cls, myPublisherId):
         return cls.query.filter_by(publisherid=myPublisherId).all()
+    
+    @classmethod
+    def getBySeriesId(cls, mySeriesId):
+        return cls.query.filter_by(seriesid=mySeriesId).all()
