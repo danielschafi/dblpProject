@@ -16,29 +16,28 @@ def parseXML():
             if element.tag == "article":
                 par.parseArticle(element)
 
-            # elif element.tag == "inproceedings":
-            #     par.parseInproceedings(element)
+            elif element.tag == "inproceedings":
+                par.parseInproceedings(element)
 
-            # elif element.tag == "proceedings":
-            #     par.parseProceedings(element)
+            elif element.tag == "proceedings":
+                par.parseProceedings(element)
 
-            # elif element.tag == "book":
-            #     par.parseBook(element)
+            elif element.tag == "book":
+                par.parseBook(element)
 
-            # elif element.tag == "incollection":
-            #     par.parseIncollection(element)
+            elif element.tag == "incollection":
+                par.parseIncollection(element)
 
-            # elif element.tag == "phdthesis":
-            #     par.parsePhdthesis(element)
+            elif element.tag == "phdthesis":
+                par.parsePhdthesis(element)
 
-            # elif element.tag == "mastersthesis":
-            #     par.parseMastersthesis(element)
+            elif element.tag == "mastersthesis":
+                par.parseMastersthesis(element)
 
-            # elif element.tag == "www":
-            #     par.parseWww(element)
+            elif element.tag == "www":
+                par.parseWww(element)
 
-            # elif element.tag == "data":
-            #     par.parseData(element)
+            elif element.tag == "data":
+                par.parseData(element)
                 
-            
 parseXML()
