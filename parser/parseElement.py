@@ -382,20 +382,22 @@ def parsePublisher(publisher):
         publisherID = getPublisherID(publisher.text)   
     return publisherID
 
+
 def parseAuthors(authors):
     authorIDList = []
     for a in authors:
-        key = getattr(a.get("key"), "text")
-        if key is not None:
-            authorID = getAuthorID(key)
+        orcid = getattr(a.get("orcid"), "text")
+        name = getattr(a , "text")
+        if orcid or name:
+            authorID = getAuthorID(orcid, name)
             if authorID is None:
                 authorDict = {
-                    "orcid":  getattr(a.get("orcid"), "text") or "",
-                    "name": getattr(a , "text") or "",
+                    "orcid": orcid or "",
+                    "name": name or "",
                     "pw": pw
                 }
                 createAuthor(json.dumps(authorDict))
-                authorIDList.append(getAuthorID(key))
+                authorIDList.append(getAuthorID(orcid, name))
             else:
                 authorIDList.append(authorID)
     return authorIDList or None
@@ -461,20 +463,22 @@ def parseEeType(eeType):
         eeTypeID = getEeTypeID(eeType.text)   
     return eeTypeID
 
+
 def parseEditors(editors):
     editorIDList = []
     for e in editors:
-        key = getattr(e.get("key"), "text")
-        if key is not None:
-            editorID = getEditorID(key)
+        orcid = getattr(e.get("orcid"), "text")
+        name = getattr(e , "text")
+        if orcid or name:
+            editorID = getEditorID(orcid, name)
             if editorID is None:
                 editorDict = {
-                    "name": getattr(e , "text") or "",
-                    "orcid": getattr(e.get("orcid"), "text") or "",
+                    "name": name or "",
+                    "orcid": orcid or "",
                     "pw": pw
                 }
                 createEditor(json.dumps(editorDict))
-                editorIDList.append(getEditorID(key))
+                editorIDList.append(getEditorID(orcid, name))
             else:
                 editorIDList.append(editorID)
     return editorIDList or None

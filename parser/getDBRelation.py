@@ -31,25 +31,64 @@ def getPublisherID(publisher):
         return row[0]
     return None
 
-def getAuthorID(author):
-    conn = engine.connect()
-    query = text("SELECT * FROM author WHERE key = :key")
-    query = query.bindparams(key=author)
-    result = conn.execute(query)
-    conn.close()
-    for row in result:
-        return row[0]
+
+def getAuthorID(orcid,author):
+    if orcid is not None:
+        conn = engine.connect()
+        query = text("SELECT * FROM author WHERE orcid = :orcid")
+        query = query.bindparams(orcid=orcid)
+        result = conn.execute(query)
+        conn.close()
+        for row in result:
+            if row[0] is None:
+                conn = engine.connect()
+                query = text("SELECT * FROM author WHERE name = :author")
+                query = query.bindparams(author=author)
+                result = conn.execute(query)
+                conn.close()
+                for row in result:
+                    return row[0]
+            else:
+                return None
+    else:
+        conn = engine.connect()
+        query = text("SELECT * FROM author WHERE name = :author")
+        query = query.bindparams(author=author)
+        result = conn.execute(query)
+        conn.close()
+        for row in result:
+            return row[0]
     return None
 
-def getEditorID(editor):
-    conn = engine.connect()
-    query = text("SELECT * FROM editor WHERE key = :key")
-    query = query.bindparams(key=editor)
-    result = conn.execute(query)
-    conn.close()
-    for row in result:
-        return row[0]
+
+def getEditorID(orcid,editor):
+    if orcid is not None:
+        conn = engine.connect()
+        query = text("SELECT * FROM editor WHERE orcid = :orcid")
+        query = query.bindparams(orcid=orcid)
+        result = conn.execute(query)
+        conn.close()
+        for row in result:
+            if row[0] is None:
+                conn = engine.connect()
+                query = text("SELECT * FROM editor WHERE name = :editor")
+                query = query.bindparams(editor=editor)
+                result = conn.execute(query)
+                conn.close()
+                for row in result:
+                    return row[0]
+            else:
+                return None
+    else:
+        conn = engine.connect()
+        query = text("SELECT * FROM editor WHERE name = :editor")
+        query = query.bindparams(editor=editor)
+        result = conn.execute(query)
+        conn.close()
+        for row in result:
+            return row[0]
     return None
+
 
 def getInproceedingsID(inproceedings):
     conn = engine.connect()
