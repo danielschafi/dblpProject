@@ -83,6 +83,10 @@ def getPoParser():
                         type=str,
                         required=True,
                         help="This field cannot be left blank")
+    parser.add_argument("key",
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank")
     parser.add_argument("pw",
                         type=str,
                         )

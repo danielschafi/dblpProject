@@ -24,12 +24,13 @@ def parseArticle(article):
         "pages" : getattr(article.find("pages"),"text",""),
         "url" : getattr(article.find("url"),"text",""),
         "year" : getattr(article.find("year"),"text",""),
+        "key" : getattr(article.get("key"), "text", ""),
         "journalid" : journalID or -1,
         "pw" : pw
     }
     
     createArticle(json.dumps(articleDict))
-    articleID = getArticleID(articleDict.get("url"))
+    articleID = getArticleID(getattr(article.get("key"), "text"))
 
     if authorIDList and articleID:
         for a in authorIDList:
@@ -60,13 +61,14 @@ def parseInproceedings(inproceedings):
         "booktitle" : getattr(inproceedings.find("booktitle"), "text",""),
         "url" : getattr(inproceedings.find("url"),"text",""),
         "pages" : getattr(inproceedings.find("pages"), "text",""),
+        "key" : getattr(inproceedings.get("key"), "text", ""),
         "pw" : pw
     }
     
-    
+    #TODO Adjust queries in get to search for key instead
     createInproceedings(json.dumps(inproceedingsDict))
-    inproceedingsID = getInproceedingsID(inproceedingsDict.get("url"))
-
+    inproceedingsID = getInproceedingsID(getattr(inproceedings.get("key"), "text"))
+    
     if authorIDList and inproceedingsID:
         for a in authorIDList:
             inproceedingsAuthorDict = {
@@ -97,11 +99,12 @@ def parseProceedings(proceedings):
         "url" : getattr(proceedings.find("url"),"text",""),
         "publisherId": publisherID or -1,
         "isbn" : getattr(proceedings.find("isbn"), "text",""),
+        "key" : getattr(proceedings.get("key"), "text", ""),
         "pw" : pw,
     }
     
     createProceedings(json.dumps(proceedingsDict))
-    proceedingsID = getProceedingsID(proceedingsDict.get("url"))
+    proceedingsID = getProceedingsID(getattr(proceedings.get("key"), "text"))
 
     if eeIDList and proceedingsID:
         for e in eeIDList:
@@ -136,11 +139,12 @@ def parseBook(book):
         "volume" : getattr(book.find("volume"), "text",""),
         "pages" : getattr(book.find("pages"), "text",""),
         "year" : getattr(book.find("year"), "text",""),
+        "key" : getattr(book.get("key"), "text", ""),
         "pw" : pw,
     }
     
     createBook(json.dumps(bookDict))
-    bookID = getBookID(bookDict.get("url"))
+    bookID = getBookID(getattr(book.get("key"), "text"))
 
     if eeIDList and bookID:
         for e in eeIDList:
@@ -169,7 +173,7 @@ def parseBook(book):
             }
             createBookAuthorList(json.dumps(bookAuthorDict))
                 
-def parseincollection(incollection):
+def parseIncollection(incollection):
     authorIDList = parseAuthors(incollection.findall("author"))
     eeIDList = parseEes(incollection.findall("ee"))
     citeIDList = parseCites(incollection.findall("cite"))
@@ -181,11 +185,12 @@ def parseincollection(incollection):
         "booktitle" : getattr(incollection.find("booktitle"), "text",""),
         "url" : getattr(incollection.find("url"), "text",""),
         "year" : getattr(incollection.find("year"), "text",""),
+        "key" : getattr(incollection.get("key"), "text", ""),
         "pw" : pw
     }
     
     createIncollection(json.dumps(incollectionDict))
-    incollectionID = getIncollectionID(incollectionDict.get("url"))
+    incollectionID = getIncollectionID(getattr(incollection.get("key"), "text"))
 
     if authorIDList and incollectionID:
         for a in authorIDList:
@@ -214,7 +219,7 @@ def parseincollection(incollection):
             }
             createIncollectionCiteList(json.dumps(incollectionCiteDict))
 
-def parsephdthesis(phdthesis):
+def parsePhdthesis(phdthesis):
     schoolID = parseSchool(phdthesis.find("school"))
     publisherID = parsePublisher(phdthesis.find("publisher"))
     authorIDList = parseAuthors(phdthesis.findall("author"))
@@ -230,13 +235,14 @@ def parsephdthesis(phdthesis):
         "volume" : getattr(phdthesis.find("volume"),"text",""),
         "year" : getattr(phdthesis.find("year"),"text",""),
         "month" : getattr(phdthesis.find("month"),"text",""),
+        "key" : getattr(phdthesis.get("key"), "text", ""),
         "schoolId" : schoolID or -1,
         "publisherId": publisherID or -1,
         "pw" : pw
     }
     
     createPhdthesis(json.dumps(phdthesisDict))
-    phdthesisID = getPhdthesisID(phdthesisDict.get("url"))
+    phdthesisID = getPhdthesisID(getattr(phdthesis.get("key"), "text"))
 
     if authorIDList and phdthesisID:
         for a in authorIDList:
@@ -265,12 +271,13 @@ def parseMastersthesis(mastersthesis):
         "title" : getattr(mastersthesis.find("title"),"text",""),
         "note" : getattr(mastersthesis.find("note"),"text",""),
         "year" : getattr(mastersthesis.find("year"),"text",""),
+        "key" : getattr(mastersthesis.get("key"), "text", ""),
         "schoolId" : schoolID or -1,
         "pw" : pw
     }
     
     createMastersthesis(json.dumps(mastersthesisDict))
-    mastersthesisID = getMastersthesisID(mastersthesisDict.get("url"))
+    mastersthesisID = getMastersthesisID(getattr(mastersthesis.get("key"), "text"))
 
     if authorIDList and mastersthesisID:
         for a in authorIDList:
@@ -298,11 +305,12 @@ def parseWww(www):
         "title" : getattr(www.find("title"),"text",""),
         "note" : getattr(www.find("note"),"text",""),
         "url" : getattr(www.find("url"),"text",""),
+        "key" : getattr(www.get("key"), "text", ""),
         "pw" : pw
     }
     
     createWWW(json.dumps(wwwDict))
-    wwwID = getWWWID(wwwDict.get("url"))
+    wwwID = getWwwID(getattr(www.get("key"), "text"))
 
     if citeIDList and wwwID:
         for c in citeIDList:
@@ -311,7 +319,7 @@ def parseWww(www):
                 "citeid" : c,
                 "pw" : pw
             }
-            createWWWCiteList(json.dumps(wwwCiteDict))
+            createWwwCiteList(json.dumps(wwwCiteDict))
 
 def parseData(data):
     authorIDList = parseAuthors(data.findall("author"))
@@ -323,10 +331,11 @@ def parseData(data):
         "number" : getattr(data.find("number"),"text",""),
         "month" : getattr(data.find("month"),"text",""),
         "year" : getattr(data.find("year"),"text",""),
+        "key" : getattr(data.get("key"), "text", ""),
         "pw" : pw
     }
     createData(json.dumps(dataDict))
-    dateID = getDataID(dataDict.get("url"))
+    dateID = getDataID(getattr(data.get("key"), "text"))
 
     if authorIDList and dateID:
         for a in authorIDList:

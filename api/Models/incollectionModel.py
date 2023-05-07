@@ -16,15 +16,17 @@ class IncollectionModel(db.Model):
     booktitle = db.Column(db.String(255))
     url = db.Column(db.String(255))
     year = db.Column(db.String(255))
+    key = db.Column(db.String(255))
 
 
-    def __init__(self, crossref, title, pages, booktitle, url, year):
+    def __init__(self, crossref, title, pages, booktitle, url, year, key):
         self.crossref = crossref
         self.title = title
         self.pages = pages
         self.booktitle = booktitle
         self.url = url
         self.year = year
+        self.key = key
         
 
     def to_json(self):
@@ -34,7 +36,8 @@ class IncollectionModel(db.Model):
             "pages": self.pages,
             "booktitle": self.booktitle,
             "url": self.url,
-            "year": self.year
+            "year": self.year,
+            "key" : self.key
         }}
     
     def save(self):

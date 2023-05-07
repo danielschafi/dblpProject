@@ -13,13 +13,15 @@ class ProceedingsModel(db.Model):
     year = db.Column(db.String(255))
     url = db.Column(db.String(255))
     isbn = db.Column(db.String(255))
+    key = db.Column(db.String(255))
     publisherid = db.Column(db.Integer(), db.ForeignKey("publisher.id"))
     publisher = db.relationship("PublisherModel")
 
-    def __init__(self, year, url, isbn, publisherid):
+    def __init__(self, year, url, isbn, key, publisherid):
         self.year = year
         self.url = url
         self.isbn = isbn
+        self.key = key
         self.publisherid = publisherid
 
     def to_json(self):
@@ -27,6 +29,7 @@ class ProceedingsModel(db.Model):
             "year": self.year,
             "url": self.url,
             "isbn": self.isbn,
+            "key" : self.key,
             "publisher": self.publisher.to_json()
         }}
     

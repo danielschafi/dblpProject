@@ -16,16 +16,18 @@ class ArticleModel(db.Model):
     pages = db.Column(db.String(255))
     url = db.Column(db.String(255))
     year = db.Column(db.String(255))
+    key = db.Column(db.String(255))
     journalid = db.Column(db.Integer, db.ForeignKey("journal.id"))
     journal = db.relationship("JournalModel")
 
-    def __init__(self, title, number, pages, url, year, journalid):
+    def __init__(self, title, number, pages, url, year, key, journalid):
         #self._id = _id
         self.title = title
         self.number = number
         self.pages = pages
         self.url = url
         self.year = year
+        self.key = key
         self.journalid = journalid
 
 
@@ -36,6 +38,7 @@ class ArticleModel(db.Model):
             "pages": self.pages,
             "url": self.url,
             "year": self.year,
+            "key" : self.key,
             "journal": self.journal.to_json()
         }}
     

@@ -16,15 +16,17 @@ class DataModel(db.Model):
     number = db.Column(db.String(255))
     month = db.Column(db.String(255))
     year = db.Column(db.String(255))
+    key = db.Column(db.String(255))
 
 
-    def __init__(self, crossref, title, note, number, month, year):
+    def __init__(self, crossref, title, note, number, month, year, key):
         self.crossref = crossref
         self.title = title
         self.note = note
         self.number = number
         self.month = month
         self.year = year
+        self.key = key
 
     def to_json(self):
         return {self.id: {
@@ -33,7 +35,8 @@ class DataModel(db.Model):
             "note": self.note,
             "number": self.number,
             "month": self.month,
-            "year": self.year
+            "year": self.year,
+            "key" : self.key
         }}
     
     def save(self):

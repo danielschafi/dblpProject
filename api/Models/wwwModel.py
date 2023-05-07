@@ -14,12 +14,14 @@ class WwwModel(db.Model):
     title = db.Column(db.String(255))
     note = db.Column(db.String(255))
     url = db.Column(db.String(255))
+    key = db.Column(db.String(255))
 
-    def __init__(self, crossref, title, note, url):
+    def __init__(self, crossref, title, note, url, key):
         self.crossref = crossref
         self.title = title
         self.note = note
         self.url = url
+        self.key = key
 
 
     def to_json(self):
@@ -27,7 +29,8 @@ class WwwModel(db.Model):
             "crossref": self.crossref,
             "title": self.title,
             "note": self.note,
-            "url": self.url
+            "url": self.url,
+            "key" : self.key
         }}
     
     def save(self):

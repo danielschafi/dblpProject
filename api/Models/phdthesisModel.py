@@ -19,6 +19,7 @@ class PhdthesisModel(db.Model):
     volume = db.Column(db.Integer)
     year = db.Column(db.String(255))
     month = db.Column(db.String(255))
+    key = db.Column(db.String(255))
 
     publisherid = db.Column(db.Integer, db.ForeignKey('publisher.id'))
     publisher = db.relationship('PublisherModel')
@@ -27,7 +28,7 @@ class PhdthesisModel(db.Model):
     school = db.relationship('SchoolModel')
 
 
-    def __init__(self, series, title, isbn, note, number, pages, volume, year, month, publisherid, schoolid):
+    def __init__(self, series, title, isbn, note, number, pages, volume, year, month, key,  publisherid, schoolid):
         self.series = series
         self.title = title
         self.isbn = isbn
@@ -37,6 +38,7 @@ class PhdthesisModel(db.Model):
         self.volume = volume
         self.year = year
         self.month = month
+        self.key = key
         self.publisherid = publisherid
         self.schoolid = schoolid
 
@@ -51,6 +53,7 @@ class PhdthesisModel(db.Model):
             "volume": self.volume,
             "year": self.year,
             "month": self.month,
+            "key" : self.key,
             "publisher": self.publisher.to_json(),
             "school": self.school.to_json()
         }}

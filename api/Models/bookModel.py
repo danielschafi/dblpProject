@@ -17,12 +17,13 @@ class BookModel(db.Model):
     volume = db.Column(db.String(255))
     pages = db.Column(db.String(255))
     year = db.Column(db.String(255))
+    key = db.Column(db.String(255))
     
     schoolid = db.Column(db.Integer, db.ForeignKey('school.id'))
     school = db.relationship('SchoolModel')
 
 
-    def __init__(self, crossref, series, title, note, volume, pages, year, schoolid):
+    def __init__(self, crossref, series, title, note, volume, pages, year, key, schoolid):
         self.crossref = crossref
         self.series = series
         self.title = title
@@ -30,6 +31,7 @@ class BookModel(db.Model):
         self.volume = volume
         self.pages = pages
         self.year = year
+        self.key = key
         self.schoolid = schoolid
 
     def to_json(self):
@@ -41,6 +43,7 @@ class BookModel(db.Model):
             "volume": self.volume,
             "pages": self.pages,
             "year": self.year,
+            "key" : self.key,
             "school": self.school.to_json()
         }}
     

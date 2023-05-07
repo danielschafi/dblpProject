@@ -13,15 +13,17 @@ class MasterthesisModel(db.Model):
     title = db.Column(db.String(255))
     note = db.Column(db.String(255))
     year = db.Column(db.String(255))
+    key = db.Column(db.String(255))
 
     schoolid = db.Column(db.Integer, db.ForeignKey('school.id'))
     school = db.relationship('SchoolModel')
 
 
-    def __init__(self, title, note, year, schoolid):
+    def __init__(self, title, note, year, key, schoolid):
         self.title = title
         self.note = note
         self.year = year
+        self.key = key
         self.schoolid = schoolid
 
 
@@ -30,6 +32,7 @@ class MasterthesisModel(db.Model):
             "title": self.title,
             "note": self.note,
             "year": self.year,
+            "key" : self.key,
             "school": self.school.to_json()
         }}
     

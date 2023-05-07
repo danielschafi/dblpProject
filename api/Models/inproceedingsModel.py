@@ -16,15 +16,17 @@ class InproceedingsModel(db.Model):
     booktitle = db.Column(db.String(255))
     url = db.Column(db.String(255))
     pages = db.Column(db.String(255))
+    key = db.Column(db.String(255))
 
 
-    def __init__(self, title, year, crossref, booktitle, url, pages):
+    def __init__(self, title, year, crossref, booktitle, url, pages, key):
         self.title = title
         self.year = year
         self.crossref = crossref
         self.booktitle = booktitle
         self.url = url
         self.pages = pages
+        self.key = key 
 
 
     def to_json(self):
@@ -34,7 +36,8 @@ class InproceedingsModel(db.Model):
             "crossref": self.crossref,
             "booktitle": self.booktitle,
             "url": self.url,
-            "pages": self.pages
+            "pages": self.pages,
+            "key" : self.key
         }}
     
     def save(self):

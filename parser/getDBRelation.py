@@ -147,7 +147,7 @@ def getMastersthesisID(mastersthesis):
         return row[0]
     return None
 
-def getWWWID(www):
+def getWwwID(www):
     conn = engine.connect()
     query = text("SELECT * FROM www WHERE url = :url")
     query = query.bindparams(url=www)
@@ -340,7 +340,7 @@ def createWWW(www):
     response = requests.post(url=url+"/www/1", data=www, headers=headers)
     return response.status_code
 
-def createWWWCiteList(wwwCite):
+def createWwwCiteList(wwwCite):
     response = requests.post(url=url+"/wwwcitelist/1", data=wwwCite, headers=headers)
     return response.status_code
 

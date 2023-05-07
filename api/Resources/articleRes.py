@@ -86,6 +86,10 @@ def getPoParser():
                         type=str,
                         required=True,
                         help="This field cannot be left blank")
+    parser.add_argument("key",
+                       type=str,
+                       required=True,
+                       help="This field cannot be left blank")
     parser.add_argument("journalid",
                         type=int,
                         required=True,
