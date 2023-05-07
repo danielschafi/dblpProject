@@ -232,7 +232,7 @@ CREATE TABLE phdthesis (
     volume int,
     year VARCHAR(25),
     month VARCHAR(25),
-    key VARCHAR(255)
+    key VARCHAR(255),
     publisherId int,
     schoolId int,
     CONSTRAINT fkPublisher
