@@ -19,12 +19,12 @@ def parseArticle(article):
     eeIDList = parseEes(article.findall("ee"))
     
     articleDict = {
-        "title" : getattr(article.find("title"), "text"),
-        "number" : getattr(article.find("number"),"text"),
-        "pages" : getattr(article.find("pages"),"text"),
-        "url" : getattr(article.find("url"),"text"),
-        "year" : getattr(article.find("year"),"text"),
-        "journalid" : journalID,
+        "title" : getattr(article.find("title"), "text",""),
+        "number" : getattr(article.find("number"),"text",""),
+        "pages" : getattr(article.find("pages"),"text",""),
+        "url" : getattr(article.find("url"),"text",""),
+        "year" : getattr(article.find("year"),"text",""),
+        "journalid" : journalID or "",
         "pw" : pw
     }
     
@@ -54,12 +54,12 @@ def parseInproceedings(inproceedings):
     eeIDList = parseEes(inproceedings.findall("ee"))
     
     inproceedingsDict = {
-        "title" : getattr(inproceedings.find("title"),"text"),
-        "year" : getattr(inproceedings.find("year") , "text"),
-        "crossref" : getattr(inproceedings.find("crossref"), "text"),
-        "booktitle" : getattr(inproceedings.find("booktitle"), "text"),
-        "url" : getattr(inproceedings.find("url"),"text"),
-        "pages" : getattr(inproceedings.find("pages"), "text"),
+        "title" : getattr(inproceedings.find("title"),"text",""),
+        "year" : getattr(inproceedings.find("year") , "text",""),
+        "crossref" : getattr(inproceedings.find("crossref"), "text",""),
+        "booktitle" : getattr(inproceedings.find("booktitle"), "text",""),
+        "url" : getattr(inproceedings.find("url"),"text",""),
+        "pages" : getattr(inproceedings.find("pages"), "text",""),
         "pw" : pw
     }
     
@@ -92,11 +92,11 @@ def parseProceedings(proceedings):
     
     # Haben (zumindest in den testdaten) noch mehr properties und ees
     proceedingsDict = {
-        "title" : getattr(proceedings.find("title"), "text"),
-        "year" : getattr(proceedings.find("year"),"text"),
-        "url" : getattr(proceedings.find("url"),"text"),
-        "publisherId": publisherID,
-        "isbn" : getattr(proceedings.find("isbn"), "text"),
+        "title" : getattr(proceedings.find("title"), "text",""),
+        "year" : getattr(proceedings.find("year"),"text",""),
+        "url" : getattr(proceedings.find("url"),"text",""),
+        "publisherId": publisherID or "",
+        "isbn" : getattr(proceedings.find("isbn"), "text",""),
         "pw" : pw,
     }
     
@@ -128,14 +128,14 @@ def parseBook(book):
     editorIDList = parseEditors(book.findall("editor"))
     
     bookDict = {
-        "crossref" : getattr(book.find("crossref"), "text"),
-        "series" : getattr(book.find("series"), "text"),
-        "schoolId" : schoolID,
-        "title" : getattr(book.find("title"), "text"),
-        "note" : getattr(book.find("note"), "text"),
-        "volume" : getattr(book.find("volume"), "text"),
-        "pages" : getattr(book.find("pages"), "text"),
-        "year" : getattr(book.find("year"), "text"),
+        "crossref" : getattr(book.find("crossref"), "text",""),
+        "series" : getattr(book.find("series"), "text",""),
+        "schoolId" : schoolID or "",
+        "title" : getattr(book.find("title"), "text",""),
+        "note" : getattr(book.find("note"), "text",""),
+        "volume" : getattr(book.find("volume"), "text",""),
+        "pages" : getattr(book.find("pages"), "text",""),
+        "year" : getattr(book.find("year"), "text",""),
         "pw" : pw,
     }
     
@@ -175,12 +175,12 @@ def parseincollection(incollection):
     citeIDList = parseCites(incollection.findall("cite"))
 
     incollectionDict = {
-        "crossref" : getattr(incollection.find("crossref"), "text"),
-        "title" : getattr(incollection.find("title"), "text"),
-        "pages" : getattr(incollection.find("pages"), "text"),
-        "booktitle" : getattr(incollection.find("booktitle"), "text"),
-        "url" : getattr(incollection.find("url"), "text"),
-        "year" : getattr(incollection.find("year"), "text"),
+        "crossref" : getattr(incollection.find("crossref"), "text",""),
+        "title" : getattr(incollection.find("title"), "text",""),
+        "pages" : getattr(incollection.find("pages"), "text",""),
+        "booktitle" : getattr(incollection.find("booktitle"), "text",""),
+        "url" : getattr(incollection.find("url"), "text",""),
+        "year" : getattr(incollection.find("year"), "text",""),
         "pw" : pw
     }
     
@@ -221,17 +221,17 @@ def parsephdthesis(phdthesis):
     eeIDList = parseEes(phdthesis.findall("ee"))
 
     phdthesisDict = {
-        "series" : getattr(phdthesis.find("series"),"text"),
-        "title" : getattr(phdthesis.find("title"),"text"),
-        "isbn" : getattr(phdthesis.find("isbn"),"text"),
-        "note" : getattr(phdthesis.find("note"),"text"),
-        "number" : getattr(phdthesis.find("number"),"text"),
-        "pages" : getattr(phdthesis.find("pages"),"text"),
-        "volume" : getattr(phdthesis.find("volume"),"text"),
-        "year" : getattr(phdthesis.find("year"),"text"),
-        "month" : getattr(phdthesis.find("month"),"text"),
-        "schoolId" : schoolID,
-        "publisherId": publisherID,
+        "series" : getattr(phdthesis.find("series"),"text",""),
+        "title" : getattr(phdthesis.find("title"),"text",""),
+        "isbn" : getattr(phdthesis.find("isbn"),"text",""),
+        "note" : getattr(phdthesis.find("note"),"text",""),
+        "number" : getattr(phdthesis.find("number"),"text",""),
+        "pages" : getattr(phdthesis.find("pages"),"text",""),
+        "volume" : getattr(phdthesis.find("volume"),"text",""),
+        "year" : getattr(phdthesis.find("year"),"text",""),
+        "month" : getattr(phdthesis.find("month"),"text",""),
+        "schoolId" : schoolID or "",
+        "publisherId": publisherID or "",
         "pw" : pw
     }
     
@@ -262,10 +262,10 @@ def parseMastersthesis(mastersthesis):
     eeIDList = parseEes(mastersthesis.findall("ee"))
 
     mastersthesisDict = {
-        "title" : getattr(mastersthesis.find("title"),"text"),
-        "note" : getattr(mastersthesis.find("note"),"text"),
-        "year" : getattr(mastersthesis.find("year"),"text"),
-        "schoolId" : schoolID,
+        "title" : getattr(mastersthesis.find("title"),"text",""),
+        "note" : getattr(mastersthesis.find("note"),"text",""),
+        "year" : getattr(mastersthesis.find("year"),"text",""),
+        "schoolId" : schoolID or "",
         "pw" : pw
     }
     
@@ -294,10 +294,10 @@ def parseWww(www):
     citeIDList = parseCites(www.findall("cite"))
 
     wwwDict = {
-        "crossref" : getattr(www.find("crossref"),"text"),
-        "title" : getattr(www.find("title"),"text"),
-        "note" : getattr(www.find("note"),"text"),
-        "url" : getattr(www.find("url"),"text"),
+        "crossref" : getattr(www.find("crossref"),"text",""),
+        "title" : getattr(www.find("title"),"text",""),
+        "note" : getattr(www.find("note"),"text",""),
+        "url" : getattr(www.find("url"),"text",""),
         "pw" : pw
     }
     
@@ -317,12 +317,12 @@ def parseData(data):
     authorIDList = parseAuthors(data.findall("author"))
     eeIDList = parseEes(data.findall("ee"))
     dataDict = {
-        "crossref" : getattr(data.find("crossref"),"text"),
-        "title" : getattr(data.find("title"),"text"),
-        "note" : getattr(data.find("note"),"text"),
-        "number" : getattr(data.find("number"),"text"),
-        "month" : getattr(data.find("month"),"text"),
-        "year" : getattr(data.find("year"),"text"),
+        "crossref" : getattr(data.find("crossref"),"text",""),
+        "title" : getattr(data.find("title"),"text",""),
+        "note" : getattr(data.find("note"),"text",""),
+        "number" : getattr(data.find("number"),"text",""),
+        "month" : getattr(data.find("month"),"text",""),
+        "year" : getattr(data.find("year"),"text",""),
         "pw" : pw
     }
     createData(json.dumps(dataDict))
@@ -348,109 +348,128 @@ def parseData(data):
 
 
 def parseJournal(journal):
-    journalID = getJournalID(getattr(journal, "text"))
+    if getattr(journal, "text") is None:
+        return None
+    journalID = getJournalID(journal, "text")
     if journalID is None:
         journalDict = {
-            "name" : getattr(journal, "text"),
+            "name" : journal.text,
             "pw" : 1234
         }
         createJournal(json.dumps(journalDict))
-        journalID = getJournalID(getattr(journal,"text"))   
+        journalID = getJournalID(journal.text)   
     return journalID
 
 def parsePublisher(publisher):
-    publisherID = getPublisherID(getattr(publisher,"text"))
+    if getattr(publisher, "text") is None:
+        return None
+    publisherID = getPublisherID(publisher.text)
     if publisherID is None:
         publisherDict = {
-            "name" : getattr(publisher, "text"),
+            "name" : publisher.text,
             "pw" : pw
         }
         createPublisher(json.dumps(publisherDict))
-        publisherID = getPublisherID(getattr(publisher,"text"))   
+        publisherID = getPublisherID(publisher.text)   
     return publisherID
 
 def parseAuthors(authors):
     authorIDList = []
     for a in authors:
-        authorID = getAuthorID(getattr(a.get("orcid"), "text"), getattr(a , "text"))
-        if authorID is None:
-            authorDict = {
-                "orcid": getattr(a.get("orcid"), "text"),
-                "name": getattr(a , "text"),
-                "pw": pw
-            }
-            createAuthor(json.dumps(authorDict))
-            authorIDList.append(getAuthorID(getattr(a.get("orcid"), "text"), getattr(a , "text")))
-        else:
-            authorIDList.append(authorID)
+        orcid = getattr(a.get("orcid"), "text")
+        name = getattr(a , "text")
+        if orcid or name:
+            authorID = getAuthorID(orcid, name)
+            if authorID is None:
+                authorDict = {
+                    "orcid": orcid or "",
+                    "name": name or "",
+                    "pw": pw
+                }
+                createAuthor(json.dumps(authorDict))
+                authorIDList.append(getAuthorID(orcid, name))
+            else:
+                authorIDList.append(authorID)
     return authorIDList or None
 
 def parseSchool(school):
-    schoolID = getSchoolID(getattr(school,"text"))
+    if getattr(school, "text") is None:
+        return None  
+    schoolID = getSchoolID(school.text)
     if schoolID is None:
         schoolDict = {
-            "name" : getattr(school,"text"),
+            "name" : school.text,
             "pw" : 1234
         }
         createSchool(json.dumps(schoolDict))
-        schoolID = getSchoolID(getattr(school,"text"))   
+        schoolID = getSchoolID(school.text)   
     return schoolID
 
 def parseEes(ees):
     eeIDList = []
     for ee in ees:
-        eeID = getEeID(getattr(ee, "text"))
-        if eeID is None:
-            eeDict = {
-                "link": getattr(ee,"text"),
-                "pw": pw
-            }
-            createEe(json.dumps(eeDict))
-            eeIDList.append(getEeID(getattr(ee, "text")))
-        else:
-            eeIDList.append(eeID)
+        link = getattr(ee, "text")
+        if link is not None:
+            eeID = getEeID(link)
+            if eeID is None:
+                eeDict = {
+                    "link": link,
+                    "pw": pw
+                }
+                createEe(json.dumps(eeDict))
+                eeIDList.append(getEeID(link))
+            else:
+                eeIDList.append(eeID)
     return eeIDList or None
 
 def parseCites(cites):
     citeIDList = []
     for c in cites:
-        citeID = getCiteID(getattr(c, "text"))
-        if citeID is None:
-            citeDict = {
-                "ref": getattr(c, "text"),
-                "pw": pw
-            }
-            createCite(json.dumps(citeDict))
-            citeIDList.append(getCiteID(getattr(c, "text")))
-        else:
-            citeIDList.append(citeID)
+        ref = getattr(c, "text")
+        if ref is not None:
+            citeID = getCiteID(ref)
+            if citeID is None:
+                citeDict = {
+                    "ref": ref,
+                    "pw": pw
+                }
+                createCite(json.dumps(citeDict))
+                citeIDList.append(getCiteID(ref))
+            else:
+                citeIDList.append(citeID)
     return citeIDList or None
 
+#TODO EEType is not from xml, is different depending on where the ee is added
 def parseEeType(eeType):
-    eeTypeID = getEeTypeID(getattr(eeType, "text"))
+    if getattr(eeType, "text") is None:
+        return None  
+    eeTypeID = getEeTypeID(eeType.text)
     if eeTypeID is None:
         eeTypeDict = {
-            "type" : getattr(eeType,"text"),
+            "type" : eeType.text,
             "pw" : 1234
         }
         createEeType(json.dumps(eeTypeDict))
-        eeTypeID = getEeTypeID(getattr(eeType, "text"))   
+        eeTypeID = getEeTypeID(eeType.text)   
     return eeTypeID
 
 def parseEditors(editors):
     editorIDList = []
     for e in editors:
-        editorID = getEditorID(e.get("orcid"), getattr(e,"text"))
-        if editorID is None:
-            editorDict = {
-                "name": getattr(e, "text"),
-                "orcid": e.get("orcid"),
-                "pw": pw
-            }
-            createEditor(json.dumps(editorDict))
-            editorIDList.append(getEditorID(e.get("orcid"), getattr(e, "text")))
-        else:
-            editorIDList.append(editorID)
+        orcid = getattr(e.get("orcid"), "text")
+        name = getattr(e , "text")
+        if orcid or name:
+            editorID = getEditorID(orcid, name)
+            if editorID is None:
+                editorDict = {
+                    "name": name or "",
+                    "orcid": orcid or "",
+                    "pw": pw
+                }
+                createEditor(json.dumps(editorDict))
+                editorIDList.append(getEditorID(orcid, name))
+            else:
+                editorIDList.append(editorID)
     return editorIDList or None
             
     # if eeIDList:
