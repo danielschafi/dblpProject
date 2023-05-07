@@ -3,7 +3,8 @@ DROP TABLE IF EXISTS author;
 CREATE TABLE author (
     ID serial PRIMARY KEY,
     orcId VARCHAR(255),
-    name VARCHAR(255)
+    name VARCHAR(255),
+    key VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS cite;
@@ -16,7 +17,8 @@ DROP TABLE IF EXISTS editor;
 CREATE TABLE editor (
     ID serial PRIMARY KEY,
     orcId VARCHAR(255),
-    name VARCHAR (255)
+    name VARCHAR (255),
+    key VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS ee;
@@ -66,6 +68,7 @@ CREATE TABLE proceedings (
     CONSTRAINT fkPublisher
     FOREIGN KEY(publisherId)
     REFERENCES publisher(ID)
+    key VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS proceedingsEeList;
@@ -102,7 +105,8 @@ CREATE TABLE inproceedings (
     crossref VARCHAR(255),
     booktitle VARCHAR(255),
     url VARCHAR(255),
-    pages VARCHAR(255) 
+    pages VARCHAR(255),
+    key VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS inproceedingsEeList;
@@ -141,7 +145,8 @@ CREATE TABLE data (
     note VARCHAR(255),
     number VARCHAR(255),
     month VARCHAR(25),
-    year VARCHAR(25)
+    year VARCHAR(25),
+    key VARCHAR(255)
 );
 
 
@@ -180,6 +185,7 @@ CREATE TABLE masterthesis (
     note VARCHAR(255),
     -- authorListId int,
     year VARCHAR(25),
+    key VARCHAR(255),
     schoolId int,
     CONSTRAINT fkSchool
     FOREIGN KEY(schoolId)
@@ -228,6 +234,7 @@ CREATE TABLE phdthesis (
     volume int,
     year VARCHAR(25),
     month VARCHAR(25),
+    key VARCHAR(255)
     publisherId int,
     schoolId int,
     CONSTRAINT fkPublisher
@@ -273,7 +280,8 @@ CREATE TABLE incollection (
     pages VARCHAR(25),
     booktitle VARCHAR(255),
     url VARCHAR(255),
-    year VARCHAR(25)    
+    year VARCHAR(25),
+    key VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS incollectionEeList;
@@ -327,6 +335,7 @@ CREATE TABLE book (
     volume VARCHAR(255),
     pages VARCHAR(25),
     year VARCHAR(25),
+    key VARCHAR(255),
     CONSTRAINT fkSchool
     FOREIGN KEY(schoolId)
     REFERENCES school(ID)
@@ -378,7 +387,8 @@ CREATE TABLE www (
     crossref VARCHAR(255),
     title VARCHAR(255),
     note VARCHAR(255),
-    url VARCHAR(255)    
+    url VARCHAR(255),
+    key VARCHAR(255)
 );
 
 DROP TABLE IF EXISTS wwwCiteList;
@@ -403,6 +413,7 @@ CREATE TABLE article (
     pages VARCHAR(255),
     url VARCHAR(255),
     year VARCHAR(255),
+    key VARCHAR(255),
     CONSTRAINT fkJournal
     FOREIGN KEY(journalId)
     REFERENCES journal(ID)
