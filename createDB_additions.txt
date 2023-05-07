@@ -1,0 +1,46 @@
+Tables and their added Attributes
+-------------------------------------
+
+
+## article
+volume VARCHAR(255),
+
+
+
+## proceedings
+booktitle VARCHAR(255),
+
+seriesId int,
+    CONSTRAINT fkSeries
+    FOREIGN KEY(seriesId)
+    REFERENCES series(ID)
+
+
+## book
+isbn VARCHAR(255),
+
+series to seriesId int,
+    CONSTRAINT fkSeries
+    FOREIGN KEY(seriesId)
+    REFERENCES series(ID)
+
+
+publisherId int,
+    CONSTRAINT fkPublisher
+    FOREIGN KEY(publisherId)
+    REFERENCES publisher(ID),
+
+
+## www
+---
+
+## wwwAuthorList
+ID serial PRIMARY KEY,
+wwwId int,
+authorId int,
+
+
+
+## series
+ID serial PRIMARY KEY,
+name VARCHAR(255)

@@ -51,6 +51,12 @@ CREATE TABLE publisher (
     name VARCHAR(255)
 );
 
+DROP TABLE IF EXISTS series;
+CREATE TABLE series (
+    ID serial PRIMARY KEY,
+    name VARCHAR(255)
+);
+
 
 
 
@@ -59,14 +65,20 @@ DROP TABLE IF EXISTS proceedings;
 CREATE TABLE proceedings (
     ID serial PRIMARY KEY,
     title VARCHAR(255),
+    booktitle VARCHAR(255),
     year VARCHAR(25),
     url VARCHAR(255),
     publisherId int,
+    seriesId int,
     isbn VARCHAR(255),
+    volume VARCHAR(255),
     key VARCHAR(255),
     CONSTRAINT fkPublisher
     FOREIGN KEY(publisherId)
-    REFERENCES publisher(ID)
+    REFERENCES publisher(ID),
+    CONSTRAINT fkSeries
+    FOREIGN KEY(seriesId)
+    REFERENCES series(ID)
 );
 
 DROP TABLE IF EXISTS proceedingsEeList;
@@ -181,7 +193,6 @@ CREATE TABLE masterthesis (
     ID serial PRIMARY KEY,
     title VARCHAR(255),
     note VARCHAR(255),
-    -- authorListId int,
     year VARCHAR(25),
     key VARCHAR(255),
     schoolId int,
@@ -326,17 +337,25 @@ DROP TABLE IF EXISTS book;
 CREATE TABLE book (
     ID serial PRIMARY KEY,
     crossref VARCHAR(255),
-    series VARCHAR(255),
+    seriesId int,
     schoolId int,
+    publisherId int,
     title VARCHAR(255),
     note VARCHAR(255),
     volume VARCHAR(255),
     pages VARCHAR(25),
     year VARCHAR(25),
+    isbn VARCHAR(255),
     key VARCHAR(255),
     CONSTRAINT fkSchool
     FOREIGN KEY(schoolId)
-    REFERENCES school(ID)
+    REFERENCES school(ID),
+    CONSTRAINT fkPublisher
+    FOREIGN KEY(publisherId)
+    REFERENCES publisher(ID),
+    CONSTRAINT fkSeries
+    FOREIGN KEY(seriesId)
+    REFERENCES series(ID)
 );
 
 
@@ -389,6 +408,20 @@ CREATE TABLE www (
     key VARCHAR(255)
 );
 
+DROP TABLE IF EXISTS wwwAuthorList;
+CREATE TABLE wwwAuthorList(
+    ID serial PRIMARY KEY,
+    wwwId int,
+    authorId int,
+    CONSTRAINT fkWww
+    FOREIGN KEY(wwwId)
+    REFERENCES www(ID) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fkAuthor
+    FOREIGN KEY(authorId)
+    REFERENCES author(ID) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+
 DROP TABLE IF EXISTS wwwCiteList;
 CREATE TABLE wwwCiteList(
     ID serial PRIMARY KEY,
@@ -411,6 +444,7 @@ CREATE TABLE article (
     pages VARCHAR(255),
     url VARCHAR(255),
     year VARCHAR(255),
+    volume VARCHAR(25),
     key VARCHAR(255),
     CONSTRAINT fkJournal
     FOREIGN KEY(journalId)
