@@ -318,15 +318,15 @@ def createPhdthesisEeList(phdthesisEe):
 
 
 def createMastersthesis(mastersthesis):
-    response = requests.post(url=url+"/mastersthesis/1", data=mastersthesis, headers=headers)
+    response = requests.post(url=url+"/masterthesis/1", data=mastersthesis, headers=headers)
     return response.status_code
 
 def createMastersthesisAuthorList(mastersthesisAuthor):
-    response = requests.post(url=url+"/mastersthesisauthorlist/1", data=mastersthesisAuthor, headers=headers)
+    response = requests.post(url=url+"/masterthesisauthorlist/1", data=mastersthesisAuthor, headers=headers)
     return response.status_code
 
 def createMastersthesisEeList(mastersthesisEe):
-    response = requests.post(url=url+"/mastersthesiseelist/1", data=mastersthesisEe, headers=headers)
+    response = requests.post(url=url+"/masterthesiseelist/1", data=mastersthesisEe, headers=headers)
     return response.status_code
 
 
