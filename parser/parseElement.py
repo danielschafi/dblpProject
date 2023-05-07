@@ -254,8 +254,8 @@ def parsePhdthesis(phdthesis):
             "year" : getattr(phdthesis.find("year"),"text",""),
             "month" : getattr(phdthesis.find("month"),"text",""),
             "key" : phdthesis.get("key"),
-            "schoolId" : schoolID or 1,
-            "publisherId": publisherID or 1,
+            "schoolid" : schoolID or 1,
+            "publisherid": publisherID or 1,
             "pw" : pw
         }
         
@@ -293,7 +293,7 @@ def parseMastersthesis(mastersthesis):
             "note" : getattr(mastersthesis.find("note"),"text",""),
             "year" : getattr(mastersthesis.find("year"),"text",""),
             "key" : mastersthesis.get("key"),
-            "schoolId" : schoolID or 1,
+            "schoolid" : schoolID or 1,
             "pw" : pw
         }
         
