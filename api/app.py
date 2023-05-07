@@ -31,6 +31,7 @@ from Resources.bookAuthorListRes import BookAuthorListRes as BALR
 from Resources.bookEditorListRes import BookEditorListRes as BELR
 from Resources.bookEeListRes import BookEeListRes as BEELR
 from Resources.dataAuthorListRes import DataAuthorListRes as DALR
+from Resources.dataEeListRes import DataEeListRes as DELR
 from Resources.incollectionRes import IncollectionRes
 from Resources.incollectionAuthorListRes import IncollectionAuthorListRes as IALR
 from Resources.incollectionCiteListRes import IncollectionCiteListRes as ICLR
@@ -81,6 +82,7 @@ api.add_resource(JournalRes, "/api/journal/<int:_id>")
 api.add_resource(DataRes, "/api/data/<int:_id>")
 api.add_resource(EditorRes, "/api/editor/<int:_id>")
 api.add_resource(DALR, "/api/dataauthorlist/<int:_id>")
+api.add_resource(DELR, "/api/dataeelist/<int:_id>")
 
 api.add_resource(ProceedingsRes, "/api/proceedings/<int:_id>")
 api.add_resource(PLR, "/api/proceedingseelist/<int:_id>")

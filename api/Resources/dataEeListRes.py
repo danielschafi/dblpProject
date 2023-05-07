@@ -11,7 +11,7 @@ from Models.eeModel import EeModel
 from pseudocode import create_response, getDelParser
 import os
 
-class DataAuthorListRes(Resource):
+class DataEeListRes(Resource):
 
     def get(self, _id):
         #gets DALM with DALM.id = id from db
