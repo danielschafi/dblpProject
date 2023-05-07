@@ -15,7 +15,7 @@ class PhdthesisModel(db.Model):
     note = db.Column(db.String(255))
     number = db.Column(db.String(255))
     pages = db.Column(db.String(255))
-    volume = db.Column(db.Integer)
+    volume = db.Column(db.String(255))
     year = db.Column(db.String(255))
     month = db.Column(db.String(255))
     key = db.Column(db.String(255))

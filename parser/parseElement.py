@@ -255,7 +255,7 @@ def parsePhdthesis(phdthesis):
         eeIDList = parseEes(phdthesis.findall("ee"))
 
         phdthesisDict = {
-            "series" : seriesID or 1,
+            "seriesid" : seriesID or 1,
             "title" : getattr(phdthesis.find("title"),"text",""),
             "isbn" : getattr(phdthesis.find("isbn"),"text",""),
             "note" : getattr(phdthesis.find("note"),"text",""),

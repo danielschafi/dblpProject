@@ -66,7 +66,7 @@ CREATE TABLE proceedings (
     ID serial PRIMARY KEY,
     title VARCHAR(255),
     booktitle VARCHAR(255),
-    year VARCHAR(25),
+    year VARCHAR(255),
     url VARCHAR(255),
     publisherId int,
     seriesId int,
@@ -155,7 +155,7 @@ CREATE TABLE data (
     note VARCHAR(255),
     number VARCHAR(255),
     month VARCHAR(25),
-    year VARCHAR(25),
+    year VARCHAR(255),
     key VARCHAR(255)
 );
 
@@ -193,7 +193,7 @@ CREATE TABLE masterthesis (
     ID serial PRIMARY KEY,
     title VARCHAR(255),
     note VARCHAR(255),
-    year VARCHAR(25),
+    year VARCHAR(255),
     key VARCHAR(255),
     schoolId int,
     CONSTRAINT fkSchool
@@ -239,9 +239,9 @@ CREATE TABLE phdthesis (
     isbn VARCHAR(255),
     note VARCHAR(255),
     number VARCHAR(255),
-    pages VARCHAR(25),
-    volume int,
-    year VARCHAR(25),
+    pages VARCHAR(255),
+    volume VARCHAR(255),
+    year VARCHAR(255),
     month VARCHAR(25),
     key VARCHAR(255),
     publisherId int,
@@ -289,10 +289,10 @@ CREATE TABLE incollection (
     ID serial PRIMARY KEY,
     crossref VARCHAR(255),
     title VARCHAR(255),
-    pages VARCHAR(25),
+    pages VARCHAR(255),
     booktitle VARCHAR(255),
     url VARCHAR(255),
-    year VARCHAR(25),
+    year VARCHAR(255),
     key VARCHAR(255)
 );
 
@@ -346,8 +346,8 @@ CREATE TABLE book (
     title VARCHAR(255),
     note VARCHAR(255),
     volume VARCHAR(255),
-    pages VARCHAR(25),
-    year VARCHAR(25),
+    pages VARCHAR(255),
+    year VARCHAR(255),
     isbn VARCHAR(255),
     key VARCHAR(255),
     CONSTRAINT fkSchool

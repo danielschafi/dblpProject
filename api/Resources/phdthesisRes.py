@@ -106,7 +106,7 @@ def getPoParser():
                         required=True,
                         help="This field cannot be left blank")
     parser.add_argument("volume",
-                        type=int,
+                        type=str,
                         required=True,
                         help="This field cannot be left blank")
     parser.add_argument("year",
