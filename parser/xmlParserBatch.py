@@ -72,9 +72,11 @@ def parseXML():
     #        pass
 
     ###TEST DATA
-    parse_xml_chunkwise("testData.xml", 10000)
+    parse_xml_chunkwise("dblp.xml", 10000)
 
 if __name__ == "__main__":
     parseXML()
 
+
+#TO CREATE CHUNKS DO THIS:
 #run python xml_split.py -o xml_chunks -M 1024 dblp.xml
