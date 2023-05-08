@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, text
 import json
 
 url = "http://127.0.0.1:5000/api"
-headers = {'Content-type': 'application/json'}
+headers = {'Content-type': 'application/json', 'Connection': 'keep-alive'}
 
 # create a database engine
 engine = create_engine('postgresql://postgres:1234@localhost/dblp')
