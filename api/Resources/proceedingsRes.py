@@ -95,6 +95,14 @@ def getPoParser():
                         type=str,
                         required=True,
                         help="This field cannot be left blank")
+    parser.add_argument("title",
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank")
+    parser.add_argument("volume",
+                        type=str,
+                        required=True,
+                        help="This field cannot be left blank")
     parser.add_argument("publisherid",
                         type=int,
                         required=True,
