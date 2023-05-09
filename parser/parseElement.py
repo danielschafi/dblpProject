@@ -78,21 +78,23 @@ def parseInproceedings(inproceedings):
         
         if authorIDList and inproceedingsID:
             for a in authorIDList:
-                inproceedingsAuthorDict = {
-                    "inproceedingsid" : inproceedingsID,
-                    "authorid" : a,
-                    "pw" : pw
-                }
-                createInproceedingsAuthorList(json.dumps(inproceedingsAuthorDict))
+                if a != None:
+                    inproceedingsAuthorDict = {
+                        "inproceedingsid" : inproceedingsID,
+                        "authorid" : a,
+                        "pw" : pw
+                    }
+                    createInproceedingsAuthorList(json.dumps(inproceedingsAuthorDict))
 
         if eeIDList and inproceedingsID:
             for e in eeIDList:
-                inproceedingsEeDict = {
-                    "inproceedingsid" : inproceedingsID,
-                    "eeid" : e,
-                    "pw" : pw
-                }
-                createInproceedingsEeList(json.dumps(inproceedingsEeDict))
+                if e != None:
+                    inproceedingsEeDict = {
+                        "inproceedingsid" : inproceedingsID,
+                        "eeid" : e,
+                        "pw" : pw
+                    }
+                    createInproceedingsEeList(json.dumps(inproceedingsEeDict))
 
 def parseProceedings(proceedings):
     proceedingsID = getProceedingsID(proceedings.get("key"))
@@ -123,21 +125,22 @@ def parseProceedings(proceedings):
 
         if eeIDList and proceedingsID:
             for e in eeIDList:
-                proceedingsEeDict = {
-                    "proceedingsid" : proceedingsID,
-                    "eeid" : e,
-                    "pw" : pw
-                }
-                createProceedingsEeList(json.dumps(proceedingsEeDict))
-
+                if e != None:
+                    proceedingsEeDict = {
+                        "proceedingsid" : proceedingsID,
+                        "eeid" : e,
+                        "pw" : pw
+                    }
+                    createProceedingsEeList(json.dumps(proceedingsEeDict))
         if editorIDList and proceedingsID:
             for e in editorIDList:
-                proceedingsEditorDict = {
-                    "proceedingsid" : proceedingsID,
-                    "editorid" : e,
-                    "pw" : pw
-                }
-                createProceedingsEditorList(json.dumps(proceedingsEditorDict))
+                if e != None:
+                    proceedingsEditorDict = {
+                        "proceedingsid" : proceedingsID,
+                        "editorid" : e,
+                        "pw" : pw
+                    }
+                    createProceedingsEditorList(json.dumps(proceedingsEditorDict))
 
 def parseBook(book):
     bookID = getBookID(book.get("key"))
@@ -170,30 +173,33 @@ def parseBook(book):
 
         if eeIDList and bookID:
             for e in eeIDList:
-                bookEeDict = {
-                    "bookid" : bookID,
-                    "eeid" : e,
-                    "pw" : pw
-                }
-                createBookEeList(json.dumps(bookEeDict))
+                if e != None:
+                    bookEeDict = {
+                        "bookid" : bookID,
+                        "eeid" : e,
+                        "pw" : pw
+                    }
+                    createBookEeList(json.dumps(bookEeDict))
 
         if editorIDList and bookID:
             for e in editorIDList:
-                bookEditorDict = {
-                    "bookid" : bookID,
-                    "editorid" : e,
-                    "pw" : pw
-                }
-                createBookEditorList(json.dumps(bookEditorDict))
+                if e != None:
+                    bookEditorDict = {
+                        "bookid" : bookID,
+                        "editorid" : e,
+                        "pw" : pw
+                    }
+                    createBookEditorList(json.dumps(bookEditorDict))
         
         if authorIDList and bookID:
             for a in authorIDList:
-                bookAuthorDict = {
-                    "bookid" : bookID,
-                    "authorid" : a,
-                    "pw" : pw
-                }
-                createBookAuthorList(json.dumps(bookAuthorDict))
+                if a != None:
+                    bookAuthorDict = {
+                        "bookid" : bookID,
+                        "authorid" : a,
+                        "pw" : pw
+                    }
+                    createBookAuthorList(json.dumps(bookAuthorDict))
                 
 def parseIncollection(incollection):
     incollectionID = getIncollectionID(incollection.get("key"))
@@ -219,30 +225,33 @@ def parseIncollection(incollection):
 
         if authorIDList and incollectionID:
             for a in authorIDList:
-                incollectionAuthorDict = {
-                    "incollectionid" : incollectionID,
-                    "authorid" : a,
-                    "pw" : pw
-                }
-                createIncollectionAuthorList(json.dumps(incollectionAuthorDict))
+                if a != None:
+                    incollectionAuthorDict = {
+                        "incollectionid" : incollectionID,
+                        "authorid" : a,
+                        "pw" : pw
+                    }
+                    createIncollectionAuthorList(json.dumps(incollectionAuthorDict))
 
         if eeIDList and incollectionID:
             for e in eeIDList:
-                incollectionEeDict = {
-                    "incollectionid" : incollectionID,
-                    "eeid" : e,
-                    "pw" : pw
-                }
-                createIncollectionEeList(json.dumps(incollectionEeDict))
+                if e != None:
+                    incollectionEeDict = {
+                        "incollectionid" : incollectionID,
+                        "eeid" : e,
+                        "pw" : pw
+                    }
+                    createIncollectionEeList(json.dumps(incollectionEeDict))
 
         if citeIDList and incollectionID:
             for c in citeIDList:
-                incollectionCiteDict = {
-                    "incollectionid" : incollectionID,
-                    "citeid" : c,
-                    "pw" : pw
-                }
-                createIncollectionCiteList(json.dumps(incollectionCiteDict))
+                if c != None:
+                    incollectionCiteDict = {
+                        "incollectionid" : incollectionID,
+                        "citeid" : c,
+                        "pw" : pw
+                    }
+                    createIncollectionCiteList(json.dumps(incollectionCiteDict))
 
 def parsePhdthesis(phdthesis):
     phdthesisID = getPhdthesisID(phdthesis.get("key"))
@@ -275,21 +284,23 @@ def parsePhdthesis(phdthesis):
 
         if authorIDList and phdthesisID:
             for a in authorIDList:
-                phdthesisAuthorDict = {
-                    "phdthesisid" : phdthesisID,
-                    "authorid" : a,
-                    "pw" : pw
-                }
-                createPhdthesisAuthorList(json.dumps(phdthesisAuthorDict))
+                if a != None:
+                    phdthesisAuthorDict = {
+                        "phdthesisid" : phdthesisID,
+                        "authorid" : a,
+                        "pw" : pw
+                    }
+                    createPhdthesisAuthorList(json.dumps(phdthesisAuthorDict))
 
         if eeIDList and phdthesisID:
             for e in eeIDList:
-                phdthesisEeDict = {
-                    "phdthesisid" : phdthesisID,
-                    "eeid" : e,
-                    "pw" : pw
-                }
-                createPhdthesisEeList(json.dumps(phdthesisEeDict))
+                if e != None:
+                    phdthesisEeDict = {
+                        "phdthesisid" : phdthesisID,
+                        "eeid" : e,
+                        "pw" : pw
+                    }
+                    createPhdthesisEeList(json.dumps(phdthesisEeDict))
 
 def parseMastersthesis(mastersthesis):
     mastersthesisID = getMastersthesisID(mastersthesis.get("key"))
@@ -313,20 +324,22 @@ def parseMastersthesis(mastersthesis):
 
         if authorIDList and mastersthesisID:
             for a in authorIDList:
-                mastersthesisAuthorDict = {
-                    "masterthesisid" : mastersthesisID,
-                    "authorid" : a,
-                    "pw" : pw
-                }
+                if a != None:
+                    mastersthesisAuthorDict = {
+                        "masterthesisid" : mastersthesisID,
+                        "authorid" : a,
+                        "pw" : pw
+                    }
                 createMastersthesisAuthorList(json.dumps(mastersthesisAuthorDict))
 
         if eeIDList and mastersthesisID:
             for e in eeIDList:
-                mastersthesisEeDict = {
-                    "masterthesisid" : mastersthesisID,
-                    "eeid" : e,
-                    "pw" : pw
-                }
+                if e != None:
+                    mastersthesisEeDict = {
+                        "masterthesisid" : mastersthesisID,
+                        "eeid" : e,
+                        "pw" : pw
+                    }
                 createMastersthesisEeList(json.dumps(mastersthesisEeDict))
 
 def parseWww(www):
@@ -350,21 +363,23 @@ def parseWww(www):
 
         if citeIDList and wwwID:
             for c in citeIDList:
-                wwwCiteDict = {
-                    "wwwid" : wwwID,
-                    "citeid" : c,
-                    "pw" : pw
-                }
-                createWwwCiteList(json.dumps(wwwCiteDict))
+                if c != None:
+                    wwwCiteDict = {
+                        "wwwid" : wwwID,
+                        "citeid" : c,
+                        "pw" : pw
+                    }
+                    createWwwCiteList(json.dumps(wwwCiteDict))
         
         if authorIDList and wwwID:
             for a in authorIDList:
-                wwwAuthorDict = {
-                    "wwwid" : wwwID,
-                    "authorid" : a,
-                    "pw" : pw
-                }
-                createWwwAuthorList(json.dumps(wwwAuthorDict))
+                if  a != None:
+                    wwwAuthorDict = {
+                        "wwwid" : wwwID,
+                        "authorid" : a,
+                        "pw" : pw
+                    }
+                    createWwwAuthorList(json.dumps(wwwAuthorDict))
 
 def parseData(data):
     dataID = getDataID(data.get("key"))
@@ -387,21 +402,23 @@ def parseData(data):
 
         if authorIDList and dateID:
             for a in authorIDList:
-                dataAuthorDict = {
-                    "dataid" : dateID,
-                    "authorid" : a,
-                    "pw" : pw
-                }
-                createDataAuthorList(json.dumps(dataAuthorDict))
+                if a != None:
+                    dataAuthorDict = {
+                        "dataid" : dateID,
+                        "authorid" : a,
+                        "pw" : pw
+                    }
+                    createDataAuthorList(json.dumps(dataAuthorDict))
 
         if eeIDList and dateID:
             for e in eeIDList:
-                dataEeDict = {
-                    "dataid" : dateID,
-                    "eeid" : e,
-                    "pw" : pw
-                }
-                createDataEeList(json.dumps(dataEeDict))
+                if e != None:
+                    dataEeDict = {
+                        "dataid" : dateID,
+                        "eeid" : e,
+                        "pw" : pw
+                    }
+                    createDataEeList(json.dumps(dataEeDict))
 
 
 def parseJournal(journal):
