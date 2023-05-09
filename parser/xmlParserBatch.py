@@ -14,25 +14,82 @@ url = "http://127.0.0.1:5000/api"
 tags = ["article", "inproceedings", "proceedings", "book", "incollection", "phdthesis", "mastersthesis", "www", "data"]
 
 
+limit = 10
+fullECount = 0
+eLimits = {
+    "article" : limit,
+    "inproceedings" : limit,
+    "proceedings" : limit,
+    "book" : limit,
+    "incollection" : limit,
+    "phdthesis" : limit,
+    "mastersthesis" : limit,
+    "www" : limit,
+    "data" : limit,
+    }
+
+eCounts = {
+    "article" : 0,
+    "inproceedings" : 0,
+    "proceedings" : 0,
+    "book" : 0,
+    "incollection" : 0,
+    "phdthesis" : 0,
+    "mastersthesis" : 0,
+    "www" : 0,
+    "data" : 0 
+    }
+
 def parseElement(element):
-    if element.tag == "article":
+    if element.tag == "article" and eCounts["article"] < eLimits["article"]:
         par.parseArticle(element)
-    elif element.tag == "inproceedings":
+        eCounts["article"] +=1
+        if eCounts["article"] == eLimits["article"] : fullCount += 1
+        
+    elif element.tag == "inproceedings" and eCounts["inproceedings"] < eLimits["inproceedings"]:
         par.parseInproceedings(element)
-    elif element.tag == "proceedings":
+        eCounts["inproceedings"] +=1
+        if eCounts["inproceedings"] == eLimits["inproceedings"] : fullCount += 1
+
+    elif element.tag == "proceedings" and eCounts["proceedings"] < eLimits["proceedings"]:
         par.parseProceedings(element)
-    elif element.tag == "book":
+        eCounts["proceedings"] +=1
+        if eCounts["proceedings"] == eLimits["proceedings"] : fullCount += 1
+
+    elif element.tag == "book" and eCounts["book"] < eLimits["book"]:
         par.parseBook(element)
-    elif element.tag == "incollection":
+        eCounts["book"] +=1
+        if eCounts["book"] == eLimits["book"] : fullCount += 1
+        
+    elif element.tag == "incollection" and eCounts["incollection"] < eLimits["incollection"]:
         par.parseIncollection(element)
-    elif element.tag == "phdthesis":
+        eCounts["incollection"] +=1
+        if eCounts["incollection"] == eLimits["incollection"] : fullCount += 1
+        
+    elif element.tag == "phdthesis" and eCounts["phdthesis"] < eLimits["phdthesis"]:
         par.parsePhdthesis(element)
-    elif element.tag == "mastersthesis":
+        eCounts["phdthesis"] +=1
+        if eCounts["phdthesis"] == eLimits["phdthesis"] : fullCount += 1
+        
+    elif element.tag == "mastersthesis" and eCounts["mastersthesis"] < eLimits["mastersthesis"]:
         par.parseMastersthesis(element)
-    elif element.tag == "www":
+        eCounts["mastersthesis"] +=1
+        if eCounts["mastersthesis"] == eLimits["mastersthesis"] : fullCount += 1
+        
+    elif element.tag == "www" and eCounts["www"] < eLimits["www"]:
         par.parseWww(element)
-    elif element.tag == "data":
+        eCounts["www"] +=1
+        if eCounts["www"] == eLimits["www"] : fullCount += 1
+        
+    elif element.tag == "data" and eCounts["data"] < eLimits["data"]:
         par.parseData(element)
+        eCounts["data"] +=1
+        if eCounts["data"] == eLimits["data"] : fullCount += 1
+        
+    if fullECount >= len(tags):
+        print("Parsing finished")
+        
+    
 
 def process_chunk(chunk):
     for element in chunk:
