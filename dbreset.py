@@ -22,6 +22,8 @@ cursor.execute("""
 # commit the changes and close the cursor and connection
 conn.commit()
 
+conn.autocommit = True
+
 
 # drop the dblp database
 cursor.execute("DROP DATABASE IF EXISTS dblp")
