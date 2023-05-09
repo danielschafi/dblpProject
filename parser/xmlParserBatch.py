@@ -15,7 +15,7 @@ tags = ["article", "inproceedings", "proceedings", "book", "incollection", "phdt
 
 
 limit = 10
-fullECount = 0
+
 eLimits = {
     "article" : limit,
     "inproceedings" : limit,
@@ -37,56 +37,57 @@ eCounts = {
     "phdthesis" : 0,
     "mastersthesis" : 0,
     "www" : 0,
-    "data" : 0 
+    "data" : 0,
+    "fullECount" : 0
     }
 
 def parseElement(element):
     if element.tag == "article" and eCounts["article"] < eLimits["article"]:
         par.parseArticle(element)
         eCounts["article"] +=1
-        if eCounts["article"] == eLimits["article"] : fullECount = fullECount + 1
+        if eCounts["article"] == eLimits["article"] : eCounts["fullECount"] += 1
         
     elif element.tag == "inproceedings" and eCounts["inproceedings"] < eLimits["inproceedings"]:
         par.parseInproceedings(element)
         eCounts["inproceedings"] +=1
-        if eCounts["inproceedings"] == eLimits["inproceedings"] : fullECount = fullECount + 1
+        if eCounts["inproceedings"] == eLimits["inproceedings"] : eCounts["fullECount"] += 1
 
     elif element.tag == "proceedings" and eCounts["proceedings"] < eLimits["proceedings"]:
         par.parseProceedings(element)
         eCounts["proceedings"] +=1
-        if eCounts["proceedings"] == eLimits["proceedings"] : fullECount = fullECount + 1
+        if eCounts["proceedings"] == eLimits["proceedings"] : eCounts["fullECount"] += 1
 
     elif element.tag == "book" and eCounts["book"] < eLimits["book"]:
         par.parseBook(element)
         eCounts["book"] +=1
-        if eCounts["book"] == eLimits["book"] : fullECount = fullECount + 1
+        if eCounts["book"] == eLimits["book"] : eCounts["fullECount"] += 1
         
     elif element.tag == "incollection" and eCounts["incollection"] < eLimits["incollection"]:
         par.parseIncollection(element)
         eCounts["incollection"] +=1
-        if eCounts["incollection"] == eLimits["incollection"] : fullECount = fullECount + 1
+        if eCounts["incollection"] == eLimits["incollection"] : eCounts["fullECount"] += 1
         
     elif element.tag == "phdthesis" and eCounts["phdthesis"] < eLimits["phdthesis"]:
         par.parsePhdthesis(element)
         eCounts["phdthesis"] +=1
-        if eCounts["phdthesis"] == eLimits["phdthesis"] : fullECount = fullECount + 1
+        if eCounts["phdthesis"] == eLimits["phdthesis"] : eCounts["fullECount"] += 1
         
     elif element.tag == "mastersthesis" and eCounts["mastersthesis"] < eLimits["mastersthesis"]:
         par.parseMastersthesis(element)
         eCounts["mastersthesis"] +=1
-        if eCounts["mastersthesis"] == eLimits["mastersthesis"] : fullCount += 1
+        if eCounts["mastersthesis"] == eLimits["mastersthesis"] : eCounts["fullECount"] += 1
         
     elif element.tag == "www" and eCounts["www"] < eLimits["www"]:
         par.parseWww(element)
         eCounts["www"] +=1
-        if eCounts["www"] == eLimits["www"] : fullECount = fullECount + 1
+        if eCounts["www"] == eLimits["www"] : eCounts["fullECount"] += 1
         
     elif element.tag == "data" and eCounts["data"] < eLimits["data"]:
         par.parseData(element)
         eCounts["data"] +=1
-        if eCounts["data"] == eLimits["data"] : fullECount = fullECount + 1
+        if eCounts["data"] == eLimits["data"] : eCounts["fullECount"] += 1
         
-    if fullECount >= len(tags):
+    if eCounts["fullECount"]  >= len(tags):
         print("Parsing finished")
         
     
