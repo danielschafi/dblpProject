@@ -15,16 +15,20 @@ class ProceedingsModel(db.Model):
     isbn = db.Column(db.String(255))
     booktitle = db.Column(db.String(255))
     key = db.Column(db.String(255))
+    title = db.Column(db.String(255))
+    volume = db.Column(db.String(255))
     publisherid = db.Column(db.Integer(), db.ForeignKey("publisher.id"))
     publisher = db.relationship("PublisherModel")
     seriesid = db.Column(db.Integer(), db.ForeignKey("series.id"))
     series = db.relationship("SeriesModel")
 
-    def __init__(self, year, url, isbn, booktitle, key, publisherid, seriesid):
+    def __init__(self, year, url, isbn, booktitle, key, title, volume, publisherid, seriesid):
         self.year = year
         self.url = url
         self.isbn = isbn
         self.booktitle = booktitle
+        self.title = title
+        self.volume = volume
         self.key = key
         self.publisherid = publisherid
         self.seriesid = seriesid
@@ -36,6 +40,8 @@ class ProceedingsModel(db.Model):
             "url": self.url,
             "isbn": self.isbn,
             "booktitle" : self.booktitle,
+            "title" : self.title,
+            "volume" : self.volume,
             "key" : self.key,
             "publisher": self.publisher.to_json(),
             "series": self.series.to_json()
