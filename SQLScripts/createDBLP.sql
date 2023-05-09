@@ -2,39 +2,39 @@
 DROP TABLE IF EXISTS author;
 CREATE TABLE author (
     ID serial PRIMARY KEY,
-    orcId VARCHAR(255),
-    name VARCHAR(255)
+    orcId TEXT,
+    name TEXT
 );
 
 DROP TABLE IF EXISTS cite;
 CREATE TABLE cite (
     ID serial PRIMARY KEY,
-    ref VARCHAR(255)
+    ref TEXT
 );
 
 DROP TABLE IF EXISTS editor;
 CREATE TABLE editor (
     ID serial PRIMARY KEY,
-    orcId VARCHAR(255),
+    orcId TEXT,
     name VARCHAR (255)
 );
 
 DROP TABLE IF EXISTS ee;
 CREATE TABLE ee (
     ID serial PRIMARY KEY,
-    link VARCHAR(255)
+    link TEXT
 );
 
 DROP TABLE IF EXISTS eeType;
 CREATE TABLE eeType (
     ID serial PRIMARY KEY,
-    type VARCHAR(255)
+    type TEXT
 );
 
 DROP TABLE IF EXISTS journal;
 CREATE TABLE journal (
     ID serial PRIMARY KEY,
-    name VARCHAR(255)
+    name TEXT
 );
 
 
@@ -42,19 +42,19 @@ CREATE TABLE journal (
 DROP TABLE IF EXISTS school;
 CREATE TABLE school (
     ID serial PRIMARY KEY,
-    name VARCHAR(255)  
+    name TEXT  
 );
 
 DROP TABLE IF EXISTS publisher;
 CREATE TABLE publisher (
     ID serial PRIMARY KEY,
-    name VARCHAR(255)
+    name TEXT
 );
 
 DROP TABLE IF EXISTS series;
 CREATE TABLE series (
     ID serial PRIMARY KEY,
-    name VARCHAR(255)
+    name TEXT
 );
 
 
@@ -64,15 +64,15 @@ CREATE TABLE series (
 DROP TABLE IF EXISTS proceedings;
 CREATE TABLE proceedings (
     ID serial PRIMARY KEY,
-    title VARCHAR(255),
-    booktitle VARCHAR(255),
-    year VARCHAR(255),
-    url VARCHAR(255),
+    title TEXT,
+    booktitle TEXT,
+    year TEXT,
+    url TEXT,
     publisherId int,
     seriesId int,
-    isbn VARCHAR(255),
-    volume VARCHAR(255),
-    key VARCHAR(255),
+    isbn TEXT,
+    volume TEXT,
+    key TEXT,
     CONSTRAINT fkPublisher
     FOREIGN KEY(publisherId)
     REFERENCES publisher(ID),
@@ -110,13 +110,13 @@ CREATE TABLE proceedingsEditorList(
 DROP TABLE IF EXISTS inproceedings;
 CREATE TABLE inproceedings (
     ID serial PRIMARY KEY,
-    title VARCHAR(255),
-    year VARCHAR(255),
-    crossref VARCHAR(255),
-    booktitle VARCHAR(255),
-    url VARCHAR(255),
-    pages VARCHAR(255),
-    key VARCHAR(255)
+    title TEXT,
+    year TEXT,
+    crossref TEXT,
+    booktitle TEXT,
+    url TEXT,
+    pages TEXT,
+    key TEXT
 );
 
 DROP TABLE IF EXISTS inproceedingsEeList;
@@ -150,13 +150,13 @@ CREATE TABLE inproceedingsAuthorList(
 DROP TABLE IF EXISTS data;
 CREATE TABLE data (
     ID serial PRIMARY KEY,
-    crossref VARCHAR(255),
-    title VARCHAR(255),
-    note VARCHAR(255),
-    number VARCHAR(255),
+    crossref TEXT,
+    title TEXT,
+    note TEXT,
+    number TEXT,
     month VARCHAR(25),
-    year VARCHAR(255),
-    key VARCHAR(255)
+    year TEXT,
+    key TEXT
 );
 
 
@@ -191,10 +191,10 @@ CREATE TABLE dataAuthorList(
 DROP TABLE IF EXISTS masterthesis;
 CREATE TABLE masterthesis (
     ID serial PRIMARY KEY,
-    title VARCHAR(255),
-    note VARCHAR(255),
-    year VARCHAR(255),
-    key VARCHAR(255),
+    title TEXT,
+    note TEXT,
+    year TEXT,
+    key TEXT,
     schoolId int,
     CONSTRAINT fkSchool
     FOREIGN KEY(schoolId)
@@ -235,15 +235,15 @@ DROP TABLE IF EXISTS phdthesis;
 CREATE TABLE phdthesis (
     ID serial PRIMARY KEY,
     seriesId int,
-    title VARCHAR(255),
-    isbn VARCHAR(255),
-    note VARCHAR(255),
-    number VARCHAR(255),
-    pages VARCHAR(255),
-    volume VARCHAR(255),
-    year VARCHAR(255),
+    title TEXT,
+    isbn TEXT,
+    note TEXT,
+    number TEXT,
+    pages TEXT,
+    volume TEXT,
+    year TEXT,
     month VARCHAR(25),
-    key VARCHAR(255),
+    key TEXT,
     publisherId int,
     schoolId int,
     CONSTRAINT fkPublisher
@@ -287,13 +287,13 @@ CREATE TABLE phdthesisAuthorList(
 DROP TABLE IF EXISTS incollection;
 CREATE TABLE incollection (
     ID serial PRIMARY KEY,
-    crossref VARCHAR(255),
-    title VARCHAR(255),
-    pages VARCHAR(255),
-    booktitle VARCHAR(255),
-    url VARCHAR(255),
-    year VARCHAR(255),
-    key VARCHAR(255)
+    crossref TEXT,
+    title TEXT,
+    pages TEXT,
+    booktitle TEXT,
+    url TEXT,
+    year TEXT,
+    key TEXT
 );
 
 DROP TABLE IF EXISTS incollectionEeList;
@@ -339,17 +339,17 @@ CREATE TABLE incollectionCiteList(
 DROP TABLE IF EXISTS book;
 CREATE TABLE book (
     ID serial PRIMARY KEY,
-    crossref VARCHAR(255),
+    crossref TEXT,
     seriesId int,
     schoolId int,
     publisherId int,
-    title VARCHAR(255),
-    note VARCHAR(255),
-    volume VARCHAR(255),
-    pages VARCHAR(255),
-    year VARCHAR(255),
-    isbn VARCHAR(255),
-    key VARCHAR(255),
+    title TEXT,
+    note TEXT,
+    volume TEXT,
+    pages TEXT,
+    year TEXT,
+    isbn TEXT,
+    key TEXT,
     CONSTRAINT fkSchool
     FOREIGN KEY(schoolId)
     REFERENCES school(ID),
@@ -404,11 +404,11 @@ CREATE TABLE bookEditorList(
 DROP TABLE IF EXISTS www;
 CREATE TABLE www (
     ID serial PRIMARY KEY,
-    crossref VARCHAR(255),
-    title VARCHAR(255),
-    note VARCHAR(255),
-    url VARCHAR(255),
-    key VARCHAR(255)
+    crossref TEXT,
+    title TEXT,
+    note TEXT,
+    url TEXT,
+    key TEXT
 );
 
 DROP TABLE IF EXISTS wwwAuthorList;
@@ -443,12 +443,12 @@ CREATE TABLE article (
     ID serial PRIMARY KEY,
     journalId int,
     title VARCHAR (255),
-    number VARCHAR(255),
-    pages VARCHAR(255),
-    url VARCHAR(255),
-    year VARCHAR(255),
+    number TEXT,
+    pages TEXT,
+    url TEXT,
+    year TEXT,
     volume VARCHAR(25),
-    key VARCHAR(255),
+    key TEXT,
     CONSTRAINT fkJournal
     FOREIGN KEY(journalId)
     REFERENCES journal(ID)

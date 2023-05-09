@@ -25,7 +25,7 @@ eLimits = {
     "phdthesis" : limit,
     "mastersthesis" : limit,
     "www" : limit,
-    "data" : limit,
+    "data" : 4,
     }
 
 eCounts = {
