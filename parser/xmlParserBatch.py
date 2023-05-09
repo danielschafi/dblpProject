@@ -89,6 +89,7 @@ def parseElement(element):
         
     if eCounts["fullECount"]  >= len(tags):
         print("Parsing finished")
+        exit()
         
     
 
