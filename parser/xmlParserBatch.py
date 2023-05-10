@@ -13,8 +13,10 @@ url = "http://127.0.0.1:5000/api"
 
 tags = ["article", "inproceedings", "proceedings", "book", "incollection", "phdthesis", "mastersthesis", "www", "data"]
 
-
-limit = 10
+# Define limits for each tag to Import
+# 100 takes a time about 2:20 minutes
+# 1000 takes a time about 7:30 minutes
+limit = 1000
 
 eLimits = {
     "article" : limit,
@@ -94,7 +96,7 @@ def parseElement(element):
     
 
 def process_chunk(chunk):
-    for element in chunk:
+    for element in tqdm(chunk):
         parseElement(element)
 
 def parse_xml_chunkwise(xml_file_path, chunk_size):
@@ -121,12 +123,13 @@ def parallel_parse_xml_chunkwise(suffix):
     parse_xml_chunkwise("xml_chunks/" + "{:04d}".format(suffix) + "/dblp.xml", 10000)
     print("part %d Done" % suffix)
 
+
 def parseXML():
     # get number of xml files in xml_chunks folder
     num_xml_files = len(os.listdir("xml_chunks"))
     cores = 10
 
-    #with mp.Pool(cores) as pool:
+    # with mp.Pool(cores) as pool:
     #    for _ in tqdm(pool.imap_unordered(parallel_parse_xml_chunkwise, range(num_xml_files)), total=num_xml_files):
     #        pass
 
