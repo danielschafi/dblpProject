@@ -6,3 +6,5 @@ numba
 lxml
 tqdm
 requests
+matplotlib
+pandas
