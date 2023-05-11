@@ -1,5 +1,13 @@
 import pandas as pd
 import os
+import requests
+import json
+
+URL = "http://127.0.0.1:5000/api"
+URL_TAILS = [
+    
+    "phdthesis"
+]
 
 def main():
     #read dataframe
@@ -15,11 +23,21 @@ def splitFile(top10):
         pwd = os.path.join(os.getcwd(), "aufgabenblatt_5", f"{keyword}.csv")
         #Get Occurences-ID from db (TypeOfResource, id)
         ids = [("master",1),("master",2),("master",3),("phd",4)]#TODO
+        print(getId(keyword, URL_TAILS[0]))
         #saveFile
         saveFile(ids,pwd)
 
-def getId(keyword):
-    pass
+def getId(keyword, tail):
+
+    payload = {"keyword":keyword}
+    headers = {"Content-Type": "application/json"}
+
+    response = requests.get(f"{URL}/{tail}/10", headers=headers, json=payload)
+    if response.status_code == 200:
+        data = json.loads(response.content)
+        return data
+    else:
+        print(response.status_code)
 
 def saveFile(payload,path, header="table,id"):
     with open(path, "w", encoding="utf-8") as file:
