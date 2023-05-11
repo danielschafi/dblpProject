@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import requests
 import json
+from tqdm import tqdm
 
 URL = "http://127.0.0.1:5000/api"
 URL_TAILS = [
@@ -15,17 +16,21 @@ def main():
     df = pd.read_csv(pwd)
     #get Top ten keywords
     top10 = df.nlargest(10, "occurence")
+    print(top10)
     splitFile(top10)
     
 def splitFile(top10):
-    for row in range(len(top10)):
+    for row in tqdm(range(len(top10))):
         keyword = top10.iloc[row,0]
         pwd = os.path.join(os.getcwd(), "aufgabenblatt_5", f"{keyword}.csv")
         #Get Occurences-ID from db (TypeOfResource, id)
-        ids = [("master",1),("master",2),("master",3),("phd",4)]#TODO
-        print(getId(keyword, URL_TAILS[0]))
+        keywordIds = []
+        for tail in URL_TAILS:
+            ids = getId(keyword, tail)
+            for _id in ids:
+                keywordIds.append((tail, _id))
         #saveFile
-        saveFile(ids,pwd)
+        saveFile(keywordIds,pwd)
 
 def getId(keyword, tail):
 

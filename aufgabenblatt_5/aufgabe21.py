@@ -34,7 +34,7 @@ def main():
     for i in tqdm(range(NUMBER_OF_DATA)):
         for tail in URL_TAILS:
             data = getTitle(f"{URL}/{tail}/{i}", i)
-            #get keywords in masterthesis
+            #get keywords in tail-table
             if data:
                 keywords = getKeywords(data)
                 #add keywords to keywordSearch or
@@ -56,12 +56,14 @@ def getKeywords(title):
     # Tag the words with their parts of speech
     tagged_words = nltk.pos_tag(words)
     # Extract the keywords(Nouns) based on their parts of speech
-    keywords = [word for word, pos in tagged_words if pos in ['NN', 'NNS', 'NNP', 'NNPS']]
+    keywords = [word.lower() for word, pos in tagged_words if pos in ['NN', 'NNS', 'NNP', 'NNPS']]
     return keywords
 
 def getTitle(url, _id):
     #Makes Get Request to API and extracts title
-    data = requests.get(url)
+    payload = {"keyssword":"placeholder"}
+    headers = {"Content-Type": "application/json"}
+    data = requests.get(url, headers=headers, json=payload)
     payload = None
     if data.status_code == 200:
         payload = json.loads(data.content)
