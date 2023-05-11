@@ -128,5 +128,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+/aufgabenblatt_5/*.csv
 dblp.xml 
 xml_chunks/

@@ -86,3 +86,11 @@ class PhdthesisModel(db.Model):
     @classmethod
     def getBySeriesId(cls, mySeriesId):
         return cls.query.filter_by(seriesid=mySeriesId).all()
+    
+    @classmethod
+    def getByKeyword(cls, keyword):
+        results = cls.query.filter(cls.title.contains(keyword)).all()
+        ids = []
+        for result in results:
+            ids.append(result.id)
+        return ids

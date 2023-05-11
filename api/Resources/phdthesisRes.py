@@ -16,6 +16,11 @@ class PhdthesisRes(Resource):
 
     def get(self, _id):
         #gets phdthesis with phdthesis.id = id from db
+        parser = getGetParser()
+        data = parser.parse_args()
+        if data.get("keyword"):
+            _ids = PhdthesisModel.getByKeyword(data["keyword"])
+            return create_response(_ids, 200)
         phdthesis = PhdthesisModel.get(_id)
         if phdthesis:
             return create_response(phdthesis.to_json(), 200)
@@ -82,6 +87,8 @@ class PhdthesisRes(Resource):
 
 
 
+
+
 def getPoParser():
     #returns a reqparser for the article post method
     parser = reqparse.RequestParser()
@@ -136,4 +143,10 @@ def getPoParser():
     parser.add_argument("pw",
                         type=str,
                         )
+    return parser
+
+def getGetParser():
+    parser = reqparse.RequestParser()
+    parser.add_argument("keyword",
+                        type=str,)
     return parser

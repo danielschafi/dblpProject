@@ -53,3 +53,4 @@ class MasterthesisModel(db.Model):
     @classmethod
     def getBySchoolId(cls, mySchoolId):
         return cls.query.filter_by(schoolid=mySchoolId).all()
+    
