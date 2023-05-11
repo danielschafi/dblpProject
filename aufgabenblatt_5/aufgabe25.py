@@ -21,13 +21,11 @@ def main():
     top100 = df.nlargest(100, "occurence").reset_index()
     print(top100)
     #create keyword - parring
-    x = np.arange(0,100)
-    y = np.arange(0,100)
     numberOfOccurences = np.zeros((100,100))
     #call API for all IDs with parring
     for tail in URL_TAILS:
-        for i in tqdm(x):
-            for j in y:
+        for i in tqdm(range(100)):
+            for j in range(100):
                 numberOfOccurences[i,j] += getOccurences(top100.iloc[i,1], top100.iloc[j,1], tail)
     #create plot
     barchart3D(numberOfOccurences)
