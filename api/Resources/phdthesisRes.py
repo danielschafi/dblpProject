@@ -19,6 +19,9 @@ class PhdthesisRes(Resource):
         parser = getGetParser()
         data = parser.parse_args()
         if data.get("keyword"):
+            if data.get("keywordTwo"):
+                _ids = PhdthesisModel.getByDoubleKeyword(data["keyword"], data["keywordTwo"])
+                return create_response(_ids, 200)
             _ids = PhdthesisModel.getByKeyword(data["keyword"])
             return create_response(_ids, 200)
         phdthesis = PhdthesisModel.get(_id)
@@ -148,5 +151,7 @@ def getPoParser():
 def getGetParser():
     parser = reqparse.RequestParser()
     parser.add_argument("keyword",
+                        type=str,)
+    parser.add_argument("keywordTwo",
                         type=str,)
     return parser

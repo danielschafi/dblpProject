@@ -94,3 +94,11 @@ class PhdthesisModel(db.Model):
         for result in results:
             ids.append(result.id)
         return ids
+    
+    @classmethod
+    def getByDoubleKeyword(cls, keyword, keywordTwo):
+        results = cls.query.filter(cls.title.contains(keyword), cls.title.contains(keywordTwo)).all()
+        ids = []
+        for result in results:
+            ids.append(result.id)
+        return ids

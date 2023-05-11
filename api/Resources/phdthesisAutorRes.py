@@ -14,6 +14,14 @@ import os
 class PhdthesisAuthorListRes(Resource):
 
     def get(self, _id):
+        parser = getGetParser()
+        data = parser.parse_args()
+        if data.get("authorId"):
+            authors = PALM.getByAuthorId(data["authorId"])
+            return_value = []
+            for author in authors:
+                return_value.append(author.to_json())
+            return create_response(return_value, 200)
         #gets palm with palm.id = id from db
         palm = PALM.get(_id)
         if palm:
@@ -74,4 +82,10 @@ def getPoParser():
     parser.add_argument("pw",
                         type=str,
                         )
+    return parser
+
+def getGetParser():
+    parser = reqparse.RequestParser()
+    parser.add_argument("authorId",
+                        type=str,)
     return parser
