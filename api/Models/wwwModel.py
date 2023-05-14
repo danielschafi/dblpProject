@@ -46,3 +46,12 @@ class WwwModel(db.Model):
         #Get always filters by primary_key
         #None if id not found
         return cls.query.filter_by(id=myId).first()
+    
+    
+    @classmethod
+    def getNodesKeyword(cls, keyword):
+        results = cls.query.filter(cls.title.contains(keyword)).all()
+        ids = []
+        for result in results:
+            ids.append(result.id)
+        return ids

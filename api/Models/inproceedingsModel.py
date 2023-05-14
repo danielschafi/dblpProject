@@ -5,6 +5,7 @@ Notes: -
 """
 
 from db import db
+from sqlalchemy import or_
 
 class InproceedingsModel(db.Model):
 
@@ -54,3 +55,11 @@ class InproceedingsModel(db.Model):
         #Gets inproceedings with inproceedings.id = myId from db
         #None, if inproceedings not found
         return cls.query.filter_by(id=myId).first()
+    
+    @classmethod
+    def getNodesKeyword(cls, keyword):
+        results = cls.query.filter(or_(cls.title.contains(keyword), cls.booktitle.contains(keyword))).all()
+        ids = []
+        for result in results:
+            ids.append(result.id)
+        return ids

@@ -15,7 +15,9 @@ from Models.dataModel import DataModel
 from Models.masterthesisModel import MasterthesisModel
 from Models.schoolModel import SchoolModel
 from Models.incollectionModel import IncollectionModel
+from Models.inproceedingsModel import InproceedingsModel
 from Models.proceedingsModel import ProceedingsModel
+from Models.wwwModel import WwwModel
 from pseudocode import create_response
 import os
 
@@ -39,17 +41,20 @@ class KeywordRes(Resource):
         datas = self.getData(kword=keyword)
         #get incollections with keyword in title or booktitle
         incollections = self.getIncollections(kword=keyword)
-        #get inprocceedings with keyword in title
-        inproceedings = []
+        #get inprocceedings with keyword in title or booktitle
+        inproceedings = self.getInproceedings(kword=keyword)
         #get masterthesis with keyword in title
         masterthesi = self.getMasterThesis(kword=keyword,
                                            schoolsList=schools)
-        #get proceedings with keyword in title
+        #get proceedings with keyword in title or booktitle
         proceedings = self.getProceedings(kword=keyword,
                                           publishersList=publishers,
                                           seriesList=series)
         #get www model with keyword in title
+        #TODO: WWWS Title are all Home Page?
         wwws = []
+        #wwws = self.getWWW(kword=keyword)
+        
         #get books with keyword in title
         books = self.getBooks(kword=keyword,
                               schoolsList=schools,
@@ -67,7 +72,8 @@ class KeywordRes(Resource):
                                + len(schools) + len(series)
                                + len(journals) + len(articles)
                                + len(datas) + len(masterthesi)
-                               + len(books) + len(incollections)),
+                               + len(books) + len(incollections)
+                               + len(inproceedings) + len(wwws)),
                 "phdthesis": phdThesis,
                 "publishers": publishers,
                 "schools": schools,
@@ -78,7 +84,9 @@ class KeywordRes(Resource):
                 "masterthesi": masterthesi,
                 "books": books,
                 "incollections": incollections,
-                "proceedings": proceedings
+                "proceedings": proceedings,
+                "inproceedings": inproceedings,
+                "www": wwws
            }, 200
         )
 
@@ -119,7 +127,14 @@ class KeywordRes(Resource):
         seriesList.extend(seriesIds)
         publishersList.extend(publishersIds)
         return proceedingsIds
-
+    
+    def getInproceedings(self, kword):
+        inproceedingsIds = InproceedingsModel.getNodesKeyword(kword)
+        return inproceedingsIds
+    
+    def getWWW(self, kword):
+        wwwIds = WwwModel.getNodesKeyword(kword)
+        return wwwIds
 
     
 
