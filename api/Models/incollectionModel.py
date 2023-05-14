@@ -3,7 +3,7 @@ Author: GroupName
 created: April 2022
 Notes: -
 """
-
+from sqlalchemy import or_
 from db import db
 
 class IncollectionModel(db.Model):
@@ -54,3 +54,11 @@ class IncollectionModel(db.Model):
         #Gets incollection with incollection.id = myId from db
         #None, if incollection not found
         return cls.query.filter_by(id=myId).first()
+    
+    @classmethod
+    def getNodesKeyword(cls, keyword):
+        results = cls.query.filter(or_(cls.title.contains(keyword), cls.booktitle.contains(keyword))).all()
+        ids = []
+        for result in results:
+            ids.append(result.id)
+        return ids

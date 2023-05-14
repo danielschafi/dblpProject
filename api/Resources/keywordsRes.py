@@ -14,6 +14,7 @@ from Models.articleModel import ArticleModel
 from Models.dataModel import DataModel
 from Models.masterthesisModel import MasterthesisModel
 from Models.schoolModel import SchoolModel
+from Models.incollectionModel import IncollectionModel
 from pseudocode import create_response
 import os
 
@@ -36,7 +37,7 @@ class KeywordRes(Resource):
         #Get data with keyword in title
         datas = self.getData(kword=keyword)
         #get incollections with keyword in title
-        incollections = []
+        incollections = self.getIncollections(kword=keyword)
         #get inprocceedings with keyword in title
         inproceedings = []
         #get masterthesis with keyword in title
@@ -63,7 +64,7 @@ class KeywordRes(Resource):
                                + len(schools) + len(series)
                                + len(journals) + len(articles)
                                + len(datas) + len(masterthesi)
-                               + len(books)),
+                               + len(books) + len(incollections)),
                 "phdthesis": phdThesis,
                 "publishers": publishers,
                 "schools": schools,
@@ -72,7 +73,8 @@ class KeywordRes(Resource):
                 "articles": articles,
                 "datas": datas,
                 "masterthesi": masterthesi,
-                "books": books
+                "books": books,
+                "incollections": incollections
            }, 200
         )
 
@@ -91,6 +93,10 @@ class KeywordRes(Resource):
     def getData(self, kword):
         dataIds = DataModel.getNodesKeyword(kword)
         return dataIds
+    
+    def getIncollections(self, kword):
+        incollectionIds = IncollectionModel.getNodesKeyword(kword)
+        return incollectionIds
     
     def getMasterThesis(self, kword, schoolsList):
         masterThesisIds, schoolsIds = MasterthesisModel.getNodesKeyword(kword)
