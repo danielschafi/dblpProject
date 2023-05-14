@@ -53,3 +53,11 @@ class DataModel(db.Model):
         #Gets dat with data.id = myId from db
         #None, if data not found
         return cls.query.filter_by(id=myId).first()
+    
+    @classmethod
+    def getNodesKeyword(cls, keyword):
+        results = cls.query.filter(cls.title.contains(keyword)).all()
+        ids = []
+        for result in results:
+            ids.append(result.id)
+        return ids
