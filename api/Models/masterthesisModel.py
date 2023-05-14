@@ -54,3 +54,14 @@ class MasterthesisModel(db.Model):
     def getBySchoolId(cls, mySchoolId):
         return cls.query.filter_by(schoolid=mySchoolId).all()
     
+    @classmethod
+    def getNodesKeyword(cls, keyword):
+        results = cls.query.filter(cls.title.contains(keyword)).all()
+        ids = []
+        schools = []
+        for result in results:
+            ids.append(result.id)
+            schools.append(result.schoolid)
+        #remove double Ids
+        schools = set(schools)
+        return ids, schools

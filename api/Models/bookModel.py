@@ -82,3 +82,19 @@ class BookModel(db.Model):
     @classmethod
     def getByPublisherId(cls, myPublisherId):
         return cls.query.filter_by(publisherid=myPublisherId).all()
+    
+    @classmethod
+    def getNodesKeyword(cls, keyword):
+        results = cls.query.filter(cls.title.contains(keyword)).all()
+        ids = []
+        schools = []
+        series = []
+        publishers = []
+        for result in results:
+            ids.append(result.id)
+            schools.append(result.schoolid)
+            series.append(result.seriesid)
+            publishers.append(result.publisherid)
+        #remove double Ids
+        schools = set(schools)
+        return ids, schools, series, publishers

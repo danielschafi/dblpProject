@@ -12,6 +12,8 @@ from Models.seriesModel import SeriesModel
 from Models.phdthesisModel import PhdthesisModel
 from Models.articleModel import ArticleModel
 from Models.dataModel import DataModel
+from Models.masterthesisModel import MasterthesisModel
+from Models.schoolModel import SchoolModel
 from pseudocode import create_response
 import os
 
@@ -38,10 +40,17 @@ class KeywordRes(Resource):
         #get inprocceedings with keyword in title
         inproceedings = []
         #get masterthesis with keyword in title
-        masterthesi = []
+        masterthesi = self.getMasterThesis(kword=keyword,
+                                           schoolsList=schools)
         #get proceedings with keyword in title
         proceedings = []
         #get www model with keyword in title
+        wwws = []
+        #get books with keyword in title
+        books = self.getBooks(kword=keyword,
+                              schoolsList=schools,
+                              seriesList=series,
+                              publishersList=publishers)
         publishers = list(set(publishers))
         authors = list(set(authors))
         schools = list(set(schools))
@@ -52,15 +61,18 @@ class KeywordRes(Resource):
             {
                 "numberOfNodes": (len(phdThesis) + len(publishers)
                                + len(schools) + len(series)
-                               +len(journals) + len(articles)
-                               + len(datas)),
+                               + len(journals) + len(articles)
+                               + len(datas) + len(masterthesi)
+                               + len(books)),
                 "phdthesis": phdThesis,
                 "publishers": publishers,
                 "schools": schools,
                 "series": series,
                 "journals": journals,
                 "articles": articles,
-                "datas": datas
+                "datas": datas,
+                "masterthesi": masterthesi,
+                "books": books
            }, 200
         )
 
@@ -79,6 +91,18 @@ class KeywordRes(Resource):
     def getData(self, kword):
         dataIds = DataModel.getNodesKeyword(kword)
         return dataIds
+    
+    def getMasterThesis(self, kword, schoolsList):
+        masterThesisIds, schoolsIds = MasterthesisModel.getNodesKeyword(kword)
+        schoolsList.extend(schoolsIds)
+        return masterThesisIds
+    
+    def getBooks(self, kword, schoolsList, seriesList, publishersList):
+        booksIds, schoolsIds, seriesIds, publishersIds = BookModel.getNodesKeyword(kword)
+        schoolsList.extend(schoolsIds)
+        seriesList.extend(seriesIds)
+        publishersList.extend(publishersIds)
+        return booksIds
 
 
     
