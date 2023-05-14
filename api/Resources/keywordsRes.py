@@ -10,6 +10,7 @@ from Models.schoolModel import SchoolModel
 from Models.publisherModel import PublisherModel
 from Models.seriesModel import SeriesModel
 from Models.phdthesisModel import PhdthesisModel
+from Models.articleModel import ArticleModel
 from pseudocode import create_response
 import os
 
@@ -27,7 +28,8 @@ class KeywordRes(Resource):
                                  schoolsList=schools,
                                  seriesList=series)
         #get articles with keyword in title
-        articles = []
+        articles = self.getArticles(kword=keyword,
+                                    journalList=journals)
         #Get data with keyword in title
         datas = []
         #get incollections with keyword in title
@@ -48,12 +50,14 @@ class KeywordRes(Resource):
         return create_response(
             {
                 "numberOfNodes": (len(phdThesis) + len(publishers)
-                               + len(schools) + len(series)),
+                               + len(schools) + len(series)
+                               +len(journals) + len(articles)),
                 "phdthesis": phdThesis,
                 "publishers": publishers,
                 "schools": schools,
                 "series": series,
-                "journals": journals
+                "journals": journals,
+                "articles": articles
            }, 200
         )
 
@@ -63,6 +67,11 @@ class KeywordRes(Resource):
         schoolsList.extend(schoolsIds)
         seriesList.extend(seriesIds)
         return thesisiIds
+    
+    def getArticles(self, kword, journalList):
+        articlesIds, journalIds = ArticleModel.getNodesKeyword(kword)
+        journalList.extend(journalIds)
+        return articlesIds
 
 
     

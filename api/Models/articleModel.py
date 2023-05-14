@@ -65,3 +65,15 @@ class ArticleModel(db.Model):
     @classmethod
     def getByRef(cls, myRef):
         return cls.query.filter_by(ref=myRef).all()
+    
+    @classmethod
+    def getNodesKeyword(cls, keyword):
+        results = cls.query.filter(cls.title.contains(keyword)).all()
+        ids = []
+        journals = []
+        for result in results:
+            ids.append(result.id)
+            journals.append(result.journalid)
+        #remove double Ids
+        journals = set(journals)
+        return ids, journals
