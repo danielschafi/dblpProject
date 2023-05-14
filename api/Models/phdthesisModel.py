@@ -102,3 +102,21 @@ class PhdthesisModel(db.Model):
         for result in results:
             ids.append(result.id)
         return ids
+    
+    @classmethod
+    def getNodesKeyword(cls, keyword):
+        results = cls.query.filter(cls.title.contains(keyword)).all()
+        ids = []
+        publishers = []
+        schools = []
+        series = []
+        for result in results:
+            ids.append(result.id)
+            publishers.append(result.publisherid)
+            schools.append(result.schoolid)
+            series.append(result.seriesid)
+        #remove double Ids
+        publishers = set(publishers)
+        schools = set(schools)
+        series = set(series)
+        return ids, publishers, schools, series
