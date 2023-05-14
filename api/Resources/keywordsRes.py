@@ -15,6 +15,7 @@ from Models.dataModel import DataModel
 from Models.masterthesisModel import MasterthesisModel
 from Models.schoolModel import SchoolModel
 from Models.incollectionModel import IncollectionModel
+from Models.proceedingsModel import ProceedingsModel
 from pseudocode import create_response
 import os
 
@@ -36,7 +37,7 @@ class KeywordRes(Resource):
                                     journalList=journals)
         #Get data with keyword in title
         datas = self.getData(kword=keyword)
-        #get incollections with keyword in title
+        #get incollections with keyword in title or booktitle
         incollections = self.getIncollections(kword=keyword)
         #get inprocceedings with keyword in title
         inproceedings = []
@@ -44,7 +45,9 @@ class KeywordRes(Resource):
         masterthesi = self.getMasterThesis(kword=keyword,
                                            schoolsList=schools)
         #get proceedings with keyword in title
-        proceedings = []
+        proceedings = self.getProceedings(kword=keyword,
+                                          publishersList=publishers,
+                                          seriesList=series)
         #get www model with keyword in title
         wwws = []
         #get books with keyword in title
@@ -74,7 +77,8 @@ class KeywordRes(Resource):
                 "datas": datas,
                 "masterthesi": masterthesi,
                 "books": books,
-                "incollections": incollections
+                "incollections": incollections,
+                "proceedings": proceedings
            }, 200
         )
 
@@ -109,6 +113,12 @@ class KeywordRes(Resource):
         seriesList.extend(seriesIds)
         publishersList.extend(publishersIds)
         return booksIds
+    
+    def getProceedings(self, kword, seriesList, publishersList):
+        proceedingsIds, seriesIds, publishersIds = ProceedingsModel.getNodesKeyword(kword)
+        seriesList.extend(seriesIds)
+        publishersList.extend(publishersIds)
+        return proceedingsIds
 
 
     

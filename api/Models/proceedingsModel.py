@@ -5,6 +5,7 @@ Notes: -
 """
 
 from db import db
+from sqlalchemy import or_
 
 class ProceedingsModel(db.Model):
 
@@ -68,3 +69,17 @@ class ProceedingsModel(db.Model):
     @classmethod
     def getBySeries(cls, mySeries):
         return cls.query.filter_by(series=mySeries).all()
+
+    @classmethod
+    def getNodesKeyword(cls, keyword):
+        results = cls.query.filter(or_(cls.title.contains(keyword), cls.booktitle.contains(keyword))).all()
+        ids = []
+        publishers = []
+        series = []
+        for result in results:
+            ids.append(result.id)
+            publishers.append(result.publisherid)
+            series.append(result.seriesid)
+        publishers = set(publishers)
+        series = set(series)
+        return ids, series, publishers
