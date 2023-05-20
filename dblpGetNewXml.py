@@ -67,13 +67,9 @@ with gzip.open(dblpgzDest, 'rb') as gz_file:
 logger.info("dblp.xml.gz file finished unzipping")
 
 
-logger.info("dblp.xml file started splitting into chunks")
-xml_split.main(dblpDest, outputDirChunks)
-logger.info("dblp.xml file finished splitting into chunks")
-
 
 logger.info("started parsing dblp.xml and inserting into database")
 # Parse, insert into database
-dblpParser.parseXML(outputDirChunks)
+dblpParser.parseXML(dblpDest)
 
 logger.info("finished parsing dblp.xml and inserting into database")

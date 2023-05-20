@@ -127,8 +127,8 @@ def parallel_parse_xml_chunkwise(suffix):
     print("part %d Done" % suffix)
 
 
-def parseXML():
-    parse_xml_chunkwise("dblp.xml", 10000)
+def parseXML(dblpXmlPath = "dblp.xml"):
+    parse_xml_chunkwise(dblpXmlPath, 10000)
 
 if __name__ == "__main__":
     parseXML()
