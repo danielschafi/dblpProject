@@ -7,6 +7,8 @@ import plotly.graph_objects as go
 import pandas as pd
 import networkx as nx
 
+import networkGraph 
+
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP, dbc.icons.FONT_AWESOME])
 
@@ -73,44 +75,8 @@ def render_page_content(pathname):
             html.H1("Network Graph", className="display-4"),
             html.Hr(),
             #plot network graph 2d with connections
-            dcc.Graph(
-                id="network-graph",
-                figure={
-                    "data": [
-                        go.Scatter(
-                            x=[1, 2, 3, 4],
-                            y=[2, 3, 1, 4],
-                            mode="markers",
-                            marker=dict(
-                                size=10,
-                                color=[0, 1, 2, 3],
-                                colorscale="Viridis",
-                                opacity=0.8,
-                            ),
-                            text=["Node 1", "Node 2", "Node 3", "Node 4"],
-                            hoverinfo="text",
-                        ),
-                        go.Scatter(
-                            #get all connections
-                            x=[1, 2, 3, 4, 1, 2, 3, 4, 1, 4],
-                            y=[2, 3, 1, 4, 2, 3, 1, 4, 2, 3],
-                            mode="lines",
-                            line=dict(
-                                color="rgb(125,125,125)",
-                                width=2,
-                            ),
-                        ),
-                    ],
-                    "layout": go.Layout(
-                        title="Network Graph",
-                        showlegend=False,
-                        hovermode="closest",
-                        xaxis=dict(showgrid=False, zeroline=False),
-                        yaxis=dict(showgrid=False, zeroline=False),
-                        margin=dict(b=20, l=5, r=5, t=40),
-                    ),
-                },
-            ),
+            html.Div([networkGraph.networkGraph(app)]),
+            
         ], className="p-5 bg-light rounded-3"),
         ])
     elif pathname == "/page-1":
