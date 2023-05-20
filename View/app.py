@@ -84,7 +84,7 @@ def render_page_content(pathname):
             #split page in 2 X 2
             html.Div([
                 html.Div([
-                    html.h1("Number of publications per year", className="display-4"),
+                    html.H1("Number of publications per year", className="display-4"),
                     html.Hr(),
                     #plot bar chart with number of publications per year
                     dcc.Graph(
@@ -109,7 +109,7 @@ def render_page_content(pathname):
                     ),
                 ], className="p-5 bg-light rounded-3"),
                 html.Div([
-                    html.h1("Number of publications per year", className="display-4"),
+                    html.H1("Number of publications per year", className="display-4"),
                     html.Hr(),
                     # plot line chart with number of publications per year
                     dcc.Graph(
