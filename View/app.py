@@ -1,19 +1,16 @@
 import dash
 import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html
+import plotly.io as pio
+import plotly.io._templates as templates
 import plotly.graph_objects as go
+import pandas as pd
 import networkx as nx
-import requests
-
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
-
-def get_api_data():
-    url = 'https://api.example.com/data'
-    response = requests.get(url)
-    data = response.json()
-    return data
 
 
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP, dbc.icons.FONT_AWESOME])
+
+# the style arguments for the sidebar. We use position:fixed and a fixed width
 SIDEBAR_STYLE = {
     "position": "fixed",
     "top": 0,
@@ -24,7 +21,8 @@ SIDEBAR_STYLE = {
     "background-color": "#f8f9fa",
 }
 
-
+# the styles for the main content position it to the right of the sidebar and
+# add some padding.
 CONTENT_STYLE = {
     "margin-left": "18rem",
     "margin-right": "2rem",
@@ -33,16 +31,17 @@ CONTENT_STYLE = {
 
 sidebar = html.Div(
     [
-        html.Img(src="/assets/DBLP_Logo.png", height="80px"),
+        html.Img(src=app.get_asset_url('DBLP_Logo.png'), style={'width':'100%'}),
+        html.H2("Sidebar", className="display-4"),
         html.Hr(),
         html.P(
-            "Welcome to our Dashboard DBLP ", className="lead"
+            "Welcome to our dashboard about the DBLP dataset", className="lead"
         ),
         dbc.Nav(
             [
-                dbc.NavLink("Home", href="/", active="exact"),
-                dbc.NavLink("Page 1", href="/page-1", active="exact"),
-                dbc.NavLink("Page 2", href="/page-2", active="exact"),
+                dbc.NavLink([html.I(className="fas fa-home"), " Overview"], href="/", active="exact"),
+                dbc.NavLink([html.I(className="fas fa-chart-bar"), " Analyse"], href="/page-1", active="exact"),
+                dbc.NavLink([html.I(className="fas fa-cog"), " Settings"], href="/page-2", active="exact"),
             ],
             vertical=True,
             pills=True,
@@ -52,54 +51,7 @@ sidebar = html.Div(
 )
 
 
-G = nx.DiGraph()
-G.add_edges_from([(0, 1), (1, 2), (2, 3), (3, 1)])
-pos = nx.spring_layout(G)
-
-
-fig = go.Figure()
-
-
-node_x = []
-node_y = []
-node_text = []
-for node in G.nodes:
-    x, y = pos[node]
-    node_x.append(x)
-    node_y.append(y)
-    node_text.append(str(node))
-fig.add_trace(go.Scatter(
-    x=node_x,
-    y=node_y,
-    mode='markers',
-    marker=dict(size=30, color='blue'),
-    text=node_text,
-    hoverinfo='text'
-))
-
-edge_x = []
-edge_y = []
-for edge in G.edges:
-    x0, y0 = pos[edge[0]]
-    x1, y1 = pos[edge[1]]
-    edge_x.append(x0)
-    edge_x.append(x1)
-    edge_x.append(None)
-    edge_y.append(y0)
-    edge_y.append(y1)
-    edge_y.append(None)
-fig.add_trace(go.Scatter(
-    x=edge_x,
-    y=edge_y,
-    mode='lines',
-    line=dict(color='black', width=1)
-))
-
-content = html.Div(id="page-content", style=CONTENT_STYLE, children=[
-    html.H1("Home Page", className="display-4"),
-    html.Hr(),
-    dcc.Graph(figure=fig),
-])
+content = html.Div(id="page-content", style=CONTENT_STYLE)
 
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
@@ -107,9 +59,117 @@ app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname == "/":
-        return content
+        return html.Div([
+        html.Div([
+            html.H1("Overview", className="display-4"),
+            html.Hr(),
+            html.P(
+                "Welcome to our dashboard about the DBLP dataset", className="lead"
+            ),
+            html.P(
+                "This dashboard is made by: Adrian Joost, Daniel Schafhäutle, Sangeeths Chandrakumar")
+        ], className="p-5 bg-light rounded-3"),
+        html.Div([
+            html.H1("Network Graph", className="display-4"),
+            html.Hr(),
+            #plot network graph 2d with connections
+            dcc.Graph(
+                id="network-graph",
+                figure={
+                    "data": [
+                        go.Scatter(
+                            x=[1, 2, 3, 4],
+                            y=[2, 3, 1, 4],
+                            mode="markers",
+                            marker=dict(
+                                size=10,
+                                color=[0, 1, 2, 3],
+                                colorscale="Viridis",
+                                opacity=0.8,
+                            ),
+                            text=["Node 1", "Node 2", "Node 3", "Node 4"],
+                            hoverinfo="text",
+                        ),
+                        go.Scatter(
+                            #get all connections
+                            x=[1, 2, 3, 4, 1, 2, 3, 4, 1, 4],
+                            y=[2, 3, 1, 4, 2, 3, 1, 4, 2, 3],
+                            mode="lines",
+                            line=dict(
+                                color="rgb(125,125,125)",
+                                width=2,
+                            ),
+                        ),
+                    ],
+                    "layout": go.Layout(
+                        title="Network Graph",
+                        showlegend=False,
+                        hovermode="closest",
+                        xaxis=dict(showgrid=False, zeroline=False),
+                        yaxis=dict(showgrid=False, zeroline=False),
+                        margin=dict(b=20, l=5, r=5, t=40),
+                    ),
+                },
+            ),
+        ], className="p-5 bg-light rounded-3"),
+        ])
     elif pathname == "/page-1":
-        return html.P("This is the content of page 1. Yay!")
+        return html.Div([
+            #split page in 2 X 2
+            html.Div([
+                html.Div([
+                    html.h1("Number of publications per year", className="display-4"),
+                    html.Hr(),
+                    #plot bar chart with number of publications per year
+                    dcc.Graph(
+                        id="bar-chart",
+                        figure={
+                            "data": [
+                                go.Bar(
+                                    x=[1, 2, 3, 4],
+                                    y=[2, 3, 1, 4],
+                                    marker=dict(
+                                        color="rgb(255, 0, 0)",
+                                    ),
+                                ),
+                            ],
+                            "layout": go.Layout(
+                                title="Bar Chart",
+                                xaxis={"title": "X Axis"},
+                                yaxis={"title": "Y Axis"},
+                                hovermode="closest",
+                            ),
+                        },
+                    ),
+                ], className="p-5 bg-light rounded-3"),
+                html.Div([
+                    html.h1("Number of publications per year", className="display-4"),
+                    html.Hr(),
+                    # plot line chart with number of publications per year
+                    dcc.Graph(
+                        id="line-chart",
+                        figure={
+                            "data": [
+                                go.Scatter(
+                                    x=[1, 2, 3, 4],
+                                    y=[2, 3, 1, 4],
+                                    mode="lines+markers",
+                                    marker=dict(
+                                        color="rgb(255, 0, 0)",
+                                    ),
+                                ),
+                            ],
+                            "layout": go.Layout(
+                                title="Line Chart",
+                                xaxis={"title": "X Axis"},
+                                yaxis={"title": "Y Axis"},
+                                hovermode="closest",
+                            ),
+                        },
+                    ),
+                ], className="p-5 bg-light rounded-3"),
+        ], className="p-5 bg-light rounded-3")
+        ], className="p-5 bg-light rounded-3")
     elif pathname == "/page-2":
         return html.P("Oh cool, this is page 2!")
     # If the user tries to reach a different page, return a 404 message
