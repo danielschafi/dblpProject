@@ -134,3 +134,4 @@ xml_chunks/
 *.gz
 *dblp.xml
 *dblp.dtd
+*.sample_networkGraphData.csv
