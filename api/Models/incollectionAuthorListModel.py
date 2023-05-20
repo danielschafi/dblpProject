@@ -44,7 +44,7 @@ class IncollectionAuthorListModel(db.Model):
     
     @classmethod
     def getByAuthorId(cls, myAuthorId):
-        return cls.query.filter_by(eeid=myAuthorId).all()
+        return cls.query.filter_by(authorid=myAuthorId).all()
     
     @classmethod
     def getByIncollectionId(cls, myIncollectionId):
