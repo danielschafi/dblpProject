@@ -16,7 +16,6 @@ logger = logging.getLogger(__name__)
 
 # Remove old files
 outputDir = "newData"
-outputDirChunks = f"{outputDir}/xml_chunks"
 
 if os.path.exists(outputDir):
     shutil.rmtree(outputDir)
@@ -24,13 +23,13 @@ if os.path.exists(outputDir):
 logger.info(f"Old files and directory removed from directory: {outputDir}")
 
 # Create destination folders
-if not os.path.exists(outputDirChunks):
-    os.makedirs(outputDirChunks)
+if not os.path.exists(outputDir):
+    os.makedir(outputDir)
 
 else:
     exit()
  
-logger.info(f"Folders for new Data created: {outputDirChunks}")
+logger.info(f"Folders for new Data created: {outputDir}")
 
 
 
