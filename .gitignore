@@ -131,3 +131,6 @@ dmypy.json
 /aufgabenblatt_5/*.csv
 dblp.xml 
 xml_chunks/
+*.gz
+*dblp.xml
+*dblp.dtd

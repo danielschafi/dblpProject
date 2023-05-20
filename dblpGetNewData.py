@@ -24,7 +24,7 @@ logger.info(f"Old files and directory removed from directory: {outputDir}")
 
 # Create destination folders
 if not os.path.exists(outputDir):
-    os.makedir(outputDir)
+    os.makedirs(outputDir)
 
 else:
     exit()
