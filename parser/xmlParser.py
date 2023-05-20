@@ -43,7 +43,10 @@ eCounts = {
     "fullECount" : 0
     }
 
-def parseElement(element):
+def parseElement(element, startDate="2023-01-01", endDate="2023-12-31"):
+    mDate = element.get("mDate")
+    if mDate is not None and startDate <= mDate <= endDate:
+        return
     if element.tag == "article" and eCounts["article"] < eLimits["article"]:
         par.parseArticle(element)
         eCounts["article"] +=1
