@@ -24,8 +24,8 @@ for n in range(1, max_dist + 1):
         newNodeCount = rd.randint(1,max_nodes_per_node) if n == 1 else rd.randint(0,max_nodes_per_node)
         
         for _ in range(newNodeCount):
-            line = f"Id_{count}, Id_{rd.choice(prev_nodes)}, {n},"
-            data += line + "\n"
+            line = f"Id_{count},Id_{rd.choice(prev_nodes)},{n},\n"
+            data += line
             newNodes.append(count)
             count += 1
 
@@ -34,7 +34,7 @@ for n in range(1, max_dist + 1):
 
 
 with open(filepath, "w") as sampleData:
-    sampleData.writelines("Id, previous, distance,\n")
-    sampleData.writelines("id_0, , 0,\n")
+    sampleData.writelines("Id,Previous,Distance,\n")
+    sampleData.writelines("Id_0,,0,\n")
 
     sampleData.writelines(data)
