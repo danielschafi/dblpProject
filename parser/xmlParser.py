@@ -128,15 +128,6 @@ def parallel_parse_xml_chunkwise(suffix):
 
 
 def parseXML():
-    # get number of xml files in xml_chunks folder
-    num_xml_files = len(os.listdir("xml_chunks"))
-    cores = 10
-
-    # with mp.Pool(cores) as pool:
-    #    for _ in tqdm(pool.imap_unordered(parallel_parse_xml_chunkwise, range(num_xml_files)), total=num_xml_files):
-    #        pass
-
-    ###TEST DATA
     parse_xml_chunkwise("dblp.xml", 10000)
 
 if __name__ == "__main__":
