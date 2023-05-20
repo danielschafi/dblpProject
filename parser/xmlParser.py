@@ -137,7 +137,8 @@ def parseXML():
     #        pass
 
     ###TEST DATA
-    parse_xml_chunkwise("dblp.xml", 10000)
+    for i in range(0, num_xml_files-1):
+        parse_xml_chunkwise("xml_chunks/" + "{:04d}".format(i) + "/dblp.xml", 10000)
 
 if __name__ == "__main__":
     parseXML()
