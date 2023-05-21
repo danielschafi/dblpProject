@@ -22,6 +22,7 @@ class RelationshipRes(Resource):
     "series", "proceedings", "inproceedings",
     "data", "masterthesis", "phdthesis",
     "incollection", "book", "www", "article",
+    "ee"
     )
 
 
@@ -63,6 +64,8 @@ class RelationshipRes(Resource):
             relations = RelationshipRes.getWwwRel(data["id"])
         elif table == self.TABLE_NAMES[15]:
             relations = RelationshipRes.getArticleRel(data["id"])
+        elif table == self.TABLE_NAMES[16]:
+            relations = RelationshipRes.getEeRel(data["id"])
         else:
             return create_response({"message":f"Table {data['table']} does not exist"}, 400)
         if relations:
@@ -466,6 +469,62 @@ class RelationshipRes(Resource):
         returnValue["ee"] = ids
         return returnValue
 
+    @classmethod
+    def getEeRel(cls, _id):
+        ee = Models.EeModel.get(_id)
+        if not ee:
+            return None
+        returnValue = {}
+        #Get article
+        nodes = Models.ArticleEeListModel.getByEeId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.articleid)
+        returnValue["article"] = ids
+        #Get book
+        nodes = Models.BookEeListModel.getByEeId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.bookid)
+        returnValue["book"] = ids
+        #Get Data
+        nodes = Models.DataEeListModel.getByEeId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.dataid)
+        returnValue["data"] = ids
+        #Get incollection
+        nodes = Models.IncollectionEeListModel.getByEeId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.incollectionid)
+        returnValue["incollection"] = ids
+        #Get inproceedings
+        nodes = Models.InproceedingsEeListModel.getByEeId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.inproceedingsid)
+        returnValue["inproceedings"] = ids
+        #Get mastersthesis
+        nodes = Models.MasterthesisEeListModel.getByEeId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.masterthesisid)
+        returnValue["masterthesis"] = ids
+        #Get phd
+        nodes = Models.PhdthesisEeListModel.getByEeId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.phdthesisid)
+        returnValue["phdthesis"] = ids
+        #Get proceedings
+        nodes = Models.ProceedingsEeListModel.getByEeId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.proceedingsid)
+        returnValue["proceedings"] = ids
+
+        return returnValue
 
         
 
