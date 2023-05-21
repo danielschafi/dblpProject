@@ -53,6 +53,8 @@ class RelationshipRes(Resource):
             relations = RelationshipRes.getDataRel(data["id"])
         elif table == self.TABLE_NAMES[10]:
             relations = RelationshipRes.getMasterthesisRel(data["id"])
+        elif table == self.TABLE_NAMES[11]:
+            relations = RelationshipRes.getPhdthesisRel(data["id"])
         else:
             return create_response({"message":f"Table {data['table']} does not exist"}, 400)
         if relations:
@@ -334,6 +336,31 @@ class RelationshipRes(Resource):
             ids.append(node.eeid)
             returnValue["ee"] = ids
         return returnValue
+    
+    @classmethod
+    def getPhdthesisRel(cls, _id):
+        thesis = Models.PhdthesisModel.get(_id)
+        if not thesis:
+            return None
+        returnValue = {}
+        returnValue["school"] = thesis.schoolid
+        returnValue["series"] = thesis.seriesid
+        returnValue["publisher"] = thesis.publisherid
+        #Get Authors
+        nodes = Models.PhdthesisAuthorListModel.getByPhdthesisId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.authorid)
+        returnValue["author"] = ids
+        #get EE
+        nodes = Models.PhdthesisEeListModel.getByPhdthesisId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.eeid)
+            returnValue["ee"] = ids
+
+        return returnValue
+
 
 
 
