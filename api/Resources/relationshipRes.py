@@ -39,6 +39,8 @@ class RelationshipRes(Resource):
             relations = RelationshipRes.getEditorRel(data["id"])
         elif table == self.TABLE_NAMES[3]:
             relations = RelationshipRes.getJournalRel(data["id"])
+        elif table == self.TABLE_NAMES[4]:
+            relations = RelationshipRes.getSchoolRel(data["id"])
         else:
             return create_response({"message":f"Table {data['table']} does not exist"}, 400)
         if relations:
@@ -141,7 +143,7 @@ class RelationshipRes(Resource):
         #getProceedings | from here we ninja-code for simplicity...
         proceedings = Models.ProceedingsEditorListModel.getByEditorId(_id)
         a = []
-        for n in a:
+        for n in proceedings:
             a.append(n.bookid)
         returnValue["proceeding"] = a
         
@@ -154,13 +156,39 @@ class RelationshipRes(Resource):
         if not journal:
             return None
         returnValue = {}
-        proceedings = Models.ProceedingsEditorListModel.getByEditorId(_id)
-        a = []
-        for n in a:
-            a.append(n.bookid)
-        returnValue["proceeding"] = a
+        #getArticles
+        nodes = Models.ArticleModel.getByJournalId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.id)
+        returnValue["article"] = ids
         return returnValue
 
+    @classmethod
+    def getSchoolRel(cls, _id):
+        school = Models.SchoolModel.get(_id)
+        if not school:
+            return None
+        returnValue = {}
+        #getBooks
+        nodes = Models.BookModel.getBySchoolId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.id)
+        returnValue["book"] = ids
+        #getMasterthesis
+        nodes = Models.MasterthesisModel.getBySchoolId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.id)
+        returnValue["masterthesis"] = ids
+        #getPHDThesis
+        nodes = Models.PhdthesisModel.getBySchoolId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.id)
+        returnValue["phdthesis"] = ids
+        return returnValue
 
 def getGetParser():
     #returns a reqparser for the article post method
