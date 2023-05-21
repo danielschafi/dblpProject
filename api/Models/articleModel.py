@@ -63,6 +63,10 @@ class ArticleModel(db.Model):
         return cls.query.filter_by(id=myId).first()
     
     @classmethod
+    def getByJournalId(cls, myId):
+        return cls.query.filter_by(journalid=myId).all()
+    
+    @classmethod
     def getByRef(cls, myRef):
         return cls.query.filter_by(ref=myRef).all()
     

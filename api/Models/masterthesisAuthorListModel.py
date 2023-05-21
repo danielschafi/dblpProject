@@ -47,5 +47,5 @@ class MasterthesisAuthorListModel(db.Model):
         return cls.query.filter_by(authorid=myAuthorId).all()
     
     @classmethod
-    def getByPhdthesisId(cls, myMasterthesisID):
+    def getByMastersthesisId(cls, myMasterthesisID):
         return cls.query.filter_by(masterthesisid=myMasterthesisID).all()
