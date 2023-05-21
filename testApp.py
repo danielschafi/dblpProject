@@ -40,18 +40,17 @@ def networkGraph(app):
     node_trace = go.Scatter(
         x=node_x,
         y=node_y,
-        mode="markers+text",
+        mode="markers",
         marker=dict(
             size=10,
             color=df["Color"],
             opacity=0.8,
             ),
-
+        text=[f"{node['Id']}" for _, node in df.iterrows()],
+        hoverinfo="text",
     )
     """
-    text=[f"{node['Id']}" for _, node in df.iterrows()],
-    hoverinfo="text",
-    textposition="bottom center"
+
     """
     # Trace for edges
     edge_x = []
@@ -66,7 +65,7 @@ def networkGraph(app):
     edge_trace = go.Scatter(
         x=edge_x,
         y=edge_y,
-        mode="lines+text",
+        mode="lines",
         line=dict(
             width=2,
         )
