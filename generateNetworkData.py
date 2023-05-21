@@ -1,7 +1,7 @@
 import random as rd
 
 
-max_dist = 3
+max_dist = 6
 filepath = "sample_networkGraphData.csv"
 
 max_nodes_per_node = 5
@@ -35,6 +35,6 @@ for n in range(1, max_dist + 1):
 
 with open(filepath, "w") as sampleData:
     sampleData.writelines("Id,Previous,Distance,\n")
-    sampleData.writelines("Id_0,,0,\n")
+    sampleData.writelines("Id_0,Id_0,0,\n")
 
     sampleData.writelines(data)

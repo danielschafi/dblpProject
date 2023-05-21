@@ -27,10 +27,10 @@ def networkGraph(app):
         return colors[distance]
     df["Color"] = df["Distance"].apply(colFunc)
     
-    G = nx.from_pandas_edgelist(df, source="Id", target="Previous", edge_attr=True)    
+    G = nx.from_pandas_edgelist(df, source="Previous", target="Id", edge_attr=True)    
     
     #Node positions
-    pos=nx.fruchterman_reingold_layout(G)
+    pos=nx.kamada_kawai_layout(G)
     
     node_x = [pos[cord][0] for cord in list(G.nodes())]
     node_y = [pos[cord][1] for cord in list(G.nodes())]
@@ -40,16 +40,19 @@ def networkGraph(app):
     node_trace = go.Scatter(
         x=node_x,
         y=node_y,
-        mode="markers",
+        mode="markers+text",
         marker=dict(
             size=10,
             color=df["Color"],
             opacity=0.8,
             ),
-        text=[f"Dist: {node['Distance']} | From: {node['Id']} | To: {node['Previous']}" for _, node in df.iterrows()],
-        hoverinfo="text",
+
     )
-    
+    """
+    text=[f"{node['Id']}" for _, node in df.iterrows()],
+    hoverinfo="text",
+    textposition="bottom center"
+    """
     # Trace for edges
     edge_x = []
     edge_y = []
@@ -63,11 +66,11 @@ def networkGraph(app):
     edge_trace = go.Scatter(
         x=edge_x,
         y=edge_y,
-        mode="lines",
+        mode="lines+text",
         line=dict(
             width=2,
         )
-    )
+        )
     
 
     
@@ -79,7 +82,10 @@ def networkGraph(app):
                     hovermode="closest",
                     margin=dict(b=20, l=5, r=5, t=40),
                     xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                    yaxis=dict(showgrid=False, zeroline=False, showticklabels=False)
+                    yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                    autosize=False,
+                    width=1000,
+                    height=1000
                 )
 )
     
