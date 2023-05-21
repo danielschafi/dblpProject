@@ -43,6 +43,12 @@ class RelationshipRes(Resource):
             relations = RelationshipRes.getSchoolRel(data["id"])
         elif table == self.TABLE_NAMES[5]:
             relations = RelationshipRes.getPublisherRel(data["id"])
+        elif table == self.TABLE_NAMES[6]:
+            relations = RelationshipRes.getSeriesRel(data["id"])
+        elif table == self.TABLE_NAMES[7]:
+            relations = RelationshipRes.getProceedingsRel(data["id"])
+        elif table == self.TABLE_NAMES[8]:
+            relations = RelationshipRes.getInproceedingsRel(data["id"])
         else:
             return create_response({"message":f"Table {data['table']} does not exist"}, 400)
         if relations:
@@ -216,6 +222,70 @@ class RelationshipRes(Resource):
         for node in nodes:
             ids.append(node.id)
         returnValue["proceeding"] = ids
+        return returnValue
+    
+    @classmethod
+    def getSeriesRel(cls, _id):
+        series = Models.SeriesModel.get(_id)
+        if not series:
+            return None
+        returnValue = {}
+        #getBooks
+        nodes = Models.BookModel.getBySeriesId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.id)
+        returnValue["book"] = ids
+        #getPhd
+        nodes = Models.PhdthesisModel.getBySeriesId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.id)
+        returnValue["phdthesis"] = ids
+        return returnValue
+    
+    @classmethod
+    def getProceedingsRel(cls, _id):
+        proc = Models.ProceedingsModel.get(_id)
+        if not proc:
+            return None
+        returnValue = {}
+        #get Ee
+        nodes = Models.ProceedingsEeListModel.getByProceedingsId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.eeid)
+        returnValue["ee"] = ids
+        #get Editor
+        nodes = Models.ProceedingsEditorListModel.getByProceedingsId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.editorid)
+        returnValue["editor"] = ids
+        #add publisher
+        returnValue["publisher"] = proc.publisherid
+        #add series
+        returnValue["series"] = proc.seriesid
+        return returnValue
+    
+    @classmethod
+    def getInproceedingsRel(cls, _id):
+        inproc = Models.InproceedingsModel.get(_id)
+        if not inproc:
+            return None
+        returnValue = {}
+        #get autor
+        nodes = Models.InproceedingsAuthorListModel.getByInproceedingsId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.authorid)
+        returnValue["author"] = ids
+        #get EEs
+        nodes = Models.InproceedingsEeListModel.getByInproceedingsId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.eeid)
+        returnValue["ee"] = ids
         return returnValue
     
 def getGetParser():
