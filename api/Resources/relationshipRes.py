@@ -61,6 +61,8 @@ class RelationshipRes(Resource):
             relations = RelationshipRes.getBookRel(data["id"])
         elif table == self.TABLE_NAMES[14]:
             relations = RelationshipRes.getWwwRel(data["id"])
+        elif table == self.TABLE_NAMES[15]:
+            relations = RelationshipRes.getArticleRel(data["id"])
         else:
             return create_response({"message":f"Table {data['table']} does not exist"}, 400)
         if relations:
@@ -443,6 +445,26 @@ class RelationshipRes(Resource):
         returnValue["cite"] = ids
         return returnValue
 
+    @classmethod
+    def getArticleRel(cls, _id):
+        article = Models.ArticleModel.get(_id)
+        if not article:
+            return None
+        returnValue = {}
+        returnValue["journal"] = article.journalid
+        #Get Authors
+        nodes = Models.ArticleAuthorListModel.getByArticleId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.authorid)
+        returnValue["author"] = ids
+        #Get Ee
+        nodes = Models.ArticleEeListModel.getByArticleId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.eeid)
+        returnValue["ee"] = ids
+        return returnValue
 
 
         
