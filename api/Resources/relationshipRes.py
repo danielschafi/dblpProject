@@ -35,7 +35,10 @@ class RelationshipRes(Resource):
             relations = RelationshipRes.getAuthorRel(data["id"])
         elif table == self.TABLE_NAMES[1]:
             relations = RelationshipRes.getCiteRel(data["id"])
-        
+        elif table == self.TABLE_NAMES[2]:
+            relations = RelationshipRes.getEditorRel(data["id"])
+        elif table == self.TABLE_NAMES[3]:
+            relations = RelationshipRes.getJournalRel(data["id"])
         else:
             return create_response({"message":f"Table {data['table']} does not exist"}, 400)
         if relations:
@@ -114,13 +117,48 @@ class RelationshipRes(Resource):
         incolsIds = []
         for incol in incols:
             incolsIds.append(incol.incollectionid)
-        returnValue["Incollections"] = incolsIds
+        returnValue["Incollection"] = incolsIds
         #getWwws
         wwws = Models.WwwCiteListModel.getByCiteId(_id)
         wwwIds = []
         for a in wwws:
             wwwIds.append(a.wwwid)
         returnValue["www"] = wwwIds
+        return returnValue
+
+    @classmethod
+    def getEditorRel(cls, _id):
+        editor = Models.EditorModel.get(_id)
+        if not editor:
+            return None
+        returnValue = {}
+        #getBooks
+        books = Models.BookEditorListModel.getByEditorId(_id)
+        booksIds = []
+        for book in books:
+            booksIds.append(book.bookid)
+        returnValue["book"] = booksIds
+        #getProceedings | from here we ninja-code for simplicity...
+        proceedings = Models.ProceedingsEditorListModel.getByEditorId(_id)
+        a = []
+        for n in a:
+            a.append(n.bookid)
+        returnValue["proceeding"] = a
+        
+
+        return returnValue
+
+    @classmethod
+    def getJournalRel(cls, _id):
+        journal = Models.JournalModel.get(_id)
+        if not journal:
+            return None
+        returnValue = {}
+        proceedings = Models.ProceedingsEditorListModel.getByEditorId(_id)
+        a = []
+        for n in a:
+            a.append(n.bookid)
+        returnValue["proceeding"] = a
         return returnValue
 
 
