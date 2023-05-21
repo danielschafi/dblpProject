@@ -4,7 +4,7 @@ from Models.articleModel import ArticleModel
 from Models.authorModel import AuthorModel
 from Models.bookAuthorListModel import BookAuthorListModel
 from Models.bookEditorListModel import BookEditorListModel
-from Models.bookEditorListModel import BookEditorListModel
+from Models.bookEeListModel import BookEeListModel
 from Models.bookModel import BookModel
 from Models.citeModel import CiteModel
 from Models.dataAuthorListModel import DataAuthorListModel
