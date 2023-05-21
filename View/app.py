@@ -75,7 +75,8 @@ def render_page_content(pathname):
             html.H1("Network Graph", className="display-4"),
             html.Hr(),
             #plot network graph 2d with connections
-            html.Div([networkGraph.networkGraph(app)]),
+            dcc.Graph(id="network-graph",
+                       figure=networkGraph.networkGraph(app))
             
         ], className="p-5 bg-light rounded-3"),
         ])
