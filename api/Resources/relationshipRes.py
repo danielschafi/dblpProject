@@ -59,6 +59,8 @@ class RelationshipRes(Resource):
             relations = RelationshipRes.getIncollectionRel(data["id"])
         elif table == self.TABLE_NAMES[13]:
             relations = RelationshipRes.getBookRel(data["id"])
+        elif table == self.TABLE_NAMES[14]:
+            relations = RelationshipRes.getWwwRel(data["id"])
         else:
             return create_response({"message":f"Table {data['table']} does not exist"}, 400)
         if relations:
@@ -421,6 +423,25 @@ class RelationshipRes(Resource):
         returnValue["ee"] = ids
         return returnValue
 
+    @classmethod
+    def getWwwRel(cls, _id):
+        www = Models.WwwModel.get(_id)
+        if not www:
+            return None
+        returnValue = {}
+        #Get Authors
+        nodes = Models.WwwAuthorListModel.getByWwwId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.authorid)
+        returnValue["author"] = ids
+        #Get Cite
+        nodes = Models.WwwCiteListModel.getByWwwId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.citeid)
+        returnValue["cite"] = ids
+        return returnValue
 
 
 

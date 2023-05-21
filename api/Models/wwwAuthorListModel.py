@@ -47,5 +47,5 @@ class WwwAuthorListModel(db.Model):
         return cls.query.filter_by(authorid=myAuthorId).all()
     
     @classmethod
-    def getByPhdthesisId(cls, myWwwID):
+    def getByWwwId(cls, myWwwID):
         return cls.query.filter_by(wwwid=myWwwID).all()
