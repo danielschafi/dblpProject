@@ -67,6 +67,10 @@ class ProceedingsModel(db.Model):
         return cls.query.filter_by(ref=myRef).all()
     
     @classmethod
+    def getByPublisherId(cls, myPublisherId):
+        return cls.query.filter_by(publisherid=myPublisherId).all()
+    
+    @classmethod
     def getBySeries(cls, mySeries):
         return cls.query.filter_by(series=mySeries).all()
 

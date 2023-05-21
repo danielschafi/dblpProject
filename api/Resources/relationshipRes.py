@@ -41,6 +41,8 @@ class RelationshipRes(Resource):
             relations = RelationshipRes.getJournalRel(data["id"])
         elif table == self.TABLE_NAMES[4]:
             relations = RelationshipRes.getSchoolRel(data["id"])
+        elif table == self.TABLE_NAMES[5]:
+            relations = RelationshipRes.getPublisherRel(data["id"])
         else:
             return create_response({"message":f"Table {data['table']} does not exist"}, 400)
         if relations:
@@ -190,6 +192,32 @@ class RelationshipRes(Resource):
         returnValue["phdthesis"] = ids
         return returnValue
 
+    @classmethod
+    def getPublisherRel(cls, _id):
+        publisher = Models.PublisherModel.get(_id)
+        if not publisher:
+            return None
+        returnValue = {}
+        #getBooks
+        nodes = Models.BookModel.getByPublisherId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.id)
+        returnValue["book"] = ids
+        #getPhds
+        nodes = Models.PhdthesisModel.getByPublisherId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.id)
+        returnValue["phdthesis"] = ids
+        #getProceedings
+        nodes = Models.ProceedingsModel.getByPublisherId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.id)
+        returnValue["proceeding"] = ids
+        return returnValue
+    
 def getGetParser():
     #returns a reqparser for the article post method
     parser = reqparse.RequestParser()
