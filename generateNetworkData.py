@@ -1,7 +1,7 @@
 import random as rd
 
 
-max_dist = 5
+max_dist = 3
 filepath = "sample_networkGraphData.csv"
 
 max_nodes_per_node = 5
