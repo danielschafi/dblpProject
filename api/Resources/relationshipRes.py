@@ -55,6 +55,10 @@ class RelationshipRes(Resource):
             relations = RelationshipRes.getMasterthesisRel(data["id"])
         elif table == self.TABLE_NAMES[11]:
             relations = RelationshipRes.getPhdthesisRel(data["id"])
+        elif table == self.TABLE_NAMES[12]:
+            relations = RelationshipRes.getIncollectionRel(data["id"])
+        elif table == self.TABLE_NAMES[13]:
+            relations = RelationshipRes.getBookRel(data["id"])
         else:
             return create_response({"message":f"Table {data['table']} does not exist"}, 400)
         if relations:
@@ -360,6 +364,67 @@ class RelationshipRes(Resource):
             returnValue["ee"] = ids
 
         return returnValue
+    
+    @classmethod
+    def getIncollectionRel(cls, _id):
+        incol = Models.IncollectionModel.get(_id)
+        if not incol:
+            return None
+        returnValue = {}
+        #Get Authors
+        nodes = Models.IncollectionAuthorListModel.getByIncollectionId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.authorid)
+        returnValue["author"] = ids
+        #get EE
+        nodes = Models.IncollectionEeListModel.getByIncollectionId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.eeid)
+        returnValue["ee"] = ids
+        #Get Cites
+        nodes = Models.IncollectionCiteListModel.getByIncollectionId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.citeid)
+        returnValue["cite"] = ids
+        return returnValue
+    
+    @classmethod
+    def getBookRel(cls, _id):
+        book = Models.BookModel.get(_id)
+        if not book:
+            return None
+        returnValue = {}
+        #add stuff
+        returnValue["school"] = book.schoolid
+        returnValue["series"] = book.seriesid
+        returnValue["publisher"] = book.publisherid
+        #Get Authors
+        nodes = Models.BookAuthorListModel.getByBookId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.authorid)
+        returnValue["author"] = ids
+        #Get Editor
+        nodes = Models.BookEditorListModel.getByBookId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.editorid)
+        returnValue["editor"] = ids
+        #Get Ee
+        nodes = Models.BookEeListModel.getByBookId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.eeid)
+        returnValue["ee"] = ids
+        return returnValue
+
+
+
+
+        
 
 
 
