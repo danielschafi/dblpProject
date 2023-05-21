@@ -104,16 +104,23 @@ class RelationshipRes(Resource):
 
     @classmethod    
     def getCiteRel(cls, _id):
+        #returns all Ids of Nodes as dict connected to this table with id. If return = None, Node does not exist
         cite = Models.citeModel.CiteModel.get(_id)
         if not cite:
             return None
         returnValue = {}
-        #getArticles
-        articles = Models.ArticleAuthorListModel.getByAuthorId(_id)
-        articlesIds = []
-        for article in articles:
-            articlesIds.append(article.articleid)
-        returnValue["article"] = articlesIds
+        #getIncollections
+        incols = Models.IncollectionCiteListModel.getByCiteId(_id)
+        incolsIds = []
+        for incol in incols:
+            incolsIds.append(incol.incollectionid)
+        returnValue["Incollections"] = incolsIds
+        #getWwws
+        wwws = Models.WwwCiteListModel.getByCiteId(_id)
+        wwwIds = []
+        for a in wwws:
+            wwwIds.append(a.wwwid)
+        returnValue["www"] = wwwIds
         return returnValue
 
 

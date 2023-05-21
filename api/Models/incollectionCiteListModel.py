@@ -44,7 +44,7 @@ class IncollectionCiteListModel(db.Model):
     
     @classmethod
     def getByCiteId(cls, myCiteId):
-        return cls.query.filter_by(citeId=myCiteId).all()
+        return cls.query.filter_by(citeid=myCiteId).all()
     
     @classmethod
     def getByIncollectionId(cls, myIncollectionId):
