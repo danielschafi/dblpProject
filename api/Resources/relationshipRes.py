@@ -49,6 +49,8 @@ class RelationshipRes(Resource):
             relations = RelationshipRes.getProceedingsRel(data["id"])
         elif table == self.TABLE_NAMES[8]:
             relations = RelationshipRes.getInproceedingsRel(data["id"])
+        elif table == self.TABLE_NAMES[9]:
+            relations = RelationshipRes.getDataRel(data["id"])
         else:
             return create_response({"message":f"Table {data['table']} does not exist"}, 400)
         if relations:
@@ -288,6 +290,29 @@ class RelationshipRes(Resource):
         returnValue["ee"] = ids
         return returnValue
     
+    @classmethod
+    def getDataRel(cls, _id):
+        data = Models.DataModel.get(_id)
+        if not data:
+            return None
+        returnValue = {}
+        #get autohors
+        nodes = Models.DataAuthorListModel.getByDataId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.authorid)
+        returnValue["author"] = ids
+        #get EEs
+        nodes = Models.DataEeListModel.getByDataId(_id)
+        ids = []
+        for node in nodes:
+            ids.append(node.eeid)
+        returnValue["ee"] = ids
+        
+
+        return returnValue
+
+
 def getGetParser():
     #returns a reqparser for the article post method
     parser = reqparse.RequestParser()
