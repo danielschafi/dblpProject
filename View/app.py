@@ -57,6 +57,12 @@ content = html.Div(id="page-content", style=CONTENT_STYLE)
 
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
+@app.callback(Output('output-div', 'children'), [Input('export-button', 'n_clicks')])
+def export_data(n_clicks):
+    if n_clicks is not None and n_clicks > 0:
+        # Perform your export action here
+        # Replace this line with your desired export logic
+        return f"Export button clicked {n_clicks} times"
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
@@ -138,7 +144,99 @@ def render_page_content(pathname):
         ], className="p-5 bg-light rounded-3")
         ], className="p-5 bg-light rounded-3")
     elif pathname == "/page-2":
-        return html.P("Oh cool, this is page 2!")
+        return html.Div([
+                html.H1("Settings", className="display-4"),
+                html.Hr(),
+                html.P("Here you can set which year of the DBLP dataset you want to import"),
+                html.Div([
+                    dbc.Row([
+                        dbc.Col(
+                            html.Label("Select Year:"),
+                            className="mr-1"
+                        ),
+                        dbc.Col(
+                            dcc.Dropdown(
+                                id='year-dropdown',
+                                options=[
+                                    {'label': '2000', 'value': '2000'},
+                                    {'label': '2001', 'value': '2001'},
+                                    {'label': '2002', 'value': '2002'},
+                                    {'label': '2003', 'value': '2003'},
+                                    {'label': '2004', 'value': '2004'},
+                                    {'label': '2005', 'value': '2005'},
+                                    {'label': '2006', 'value': '2006'},
+                                    {'label': '2007', 'value': '2007'},
+                                    {'label': '2008', 'value': '2008'},
+                                    {'label': '2009', 'value': '2009'},
+                                    {'label': '2010', 'value': '2010'},
+                                    {'label': '2011', 'value': '2011'},
+                                    {'label': '2012', 'value': '2012'},
+                                    {'label': '2013', 'value': '2013'},
+                                    {'label': '2014', 'value': '2014'},
+                                    {'label': '2015', 'value': '2015'},
+                                    {'label': '2016', 'value': '2016'},
+                                    {'label': '2017', 'value': '2017'},
+                                    {'label': '2018', 'value': '2018'},
+                                    {'label': '2019', 'value': '2019'},
+                                    {'label': '2020', 'value': '2020'}
+                                ],
+                                value='2000'
+                            ),
+                            className="mr-1"
+                        ),
+                        dbc.Col(
+                            html.Label("Select Entries:"),
+                            className="mr-1"
+                        ),
+                        dbc.Col(
+                            # input field for anzahl entries
+                            dcc.Input(
+                                id="input-anzahl",
+                                type="number",
+                                placeholder="Anzahl",
+                                min=1,
+                                max=1000,
+                                step=1,
+                                value=10,
+                            ),
+                            className="mr-1"
+                        ),
+                        dbc.Col(
+                            html.Label("Select Art:"),
+                            className="mr-1"
+                        ),
+                        dbc.Col(
+                            #select art of publication
+                            dcc.Dropdown(
+                                id='art-dropdown',
+                                options=[
+                                    {'label': 'Article', 'value': 'article'},
+                                    {'label': 'Inproceedings', 'value': 'inproceedings'},
+                                    {'label': 'Proceedings', 'value': 'proceedings'},
+                                    {'label': 'Book', 'value': 'book'},
+                                    {'label': 'Incollection', 'value': 'incollection'},
+                                    {'label': 'Phdthesis', 'value': 'phdthesis'},
+                                    {'label': 'Mastersthesis', 'value': 'mastersthesis'},
+                                    {'label': 'Www', 'value': 'www'}
+                                ],
+                                value='article'
+                            ),
+                            className="mr-1"
+                        ), 
+                    ], className="p-5 bg-light rounded-3"),
+                ], className="p-5 bg-light rounded-3"),
+                html.Div([
+                    dbc.Row([
+                        dbc.Col(
+                            dbc.Button("Export", id="export-button", color="primary", className="col-6")
+                        ),
+                        dbc.Col(
+                            dbc.Button("Import", color="primary", className="col-6")
+                        ),
+                    ]),
+                ], className="p-5 bg-light rounded-3"),
+                html.Div(id="output-div"),
+            ], className="p-5 bg-light rounded-3")
     # If the user tries to reach a different page, return a 404 message
     return html.Div(
         [
