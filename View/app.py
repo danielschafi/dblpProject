@@ -1,11 +1,16 @@
 import dash
 import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html
+from flask import send_file
 import plotly.io as pio
 import plotly.io._templates as templates
 import plotly.graph_objects as go
 import pandas as pd
 import networkx as nx
+import csv
+import io
+import base64
+import requests
 
 import networkGraph 
 
@@ -60,9 +65,26 @@ app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 @app.callback(Output('output-div', 'children'), [Input('export-button', 'n_clicks')])
 def export_data(n_clicks):
     if n_clicks is not None and n_clicks > 0:
-        # Perform your export action here
-        # Replace this line with your desired export logic
-        return f"Export button clicked {n_clicks} times"
+        data = [
+            {'Name': 'John', 'Age': 25, 'City': 'New York'},
+            {'Name': 'Jane', 'Age': 30, 'City': 'Los Angeles'},
+            {'Name': 'Sam', 'Age': 35, 'City': 'Chicago'}
+        ]
+
+        # do a api call to get the data
+        # data = api_call()
+        
+        # Create a CSV string from the data
+        csv_string = io.StringIO()
+        writer = csv.DictWriter(csv_string, fieldnames=data[0].keys())
+        writer.writeheader()
+        writer.writerows(data)
+        
+        # Encode the CSV string to base64
+        encoded_csv = base64.b64encode(csv_string.getvalue().encode()).decode()
+        
+        # Create the download link and redirect the browser
+        return dcc.Location(href=f"data:text/csv;base64,{encoded_csv}", id='download-link', refresh=True)
 
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
