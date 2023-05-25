@@ -5,9 +5,13 @@ Notes: -
 """
 
 from db import db
-import datetime
+from datetime import datetime
 
-class SearchOrder(db.Model):
+class SearchOrderModel(db.Model):
+
+    STATUS_SETUP = 0
+    STATUS_PROCESSING = 1
+    STATUS_FINISHED = 2
 
     __tablename__ = "search_order"
     id = db.Column(db.Integer, primary_key=True)
@@ -16,12 +20,16 @@ class SearchOrder(db.Model):
     keyword = db.String(255)
     start_node = db.String(255)
     email = db.String(255)
+    max_distance = db.Column(db.Integer)
     creation_time = db.Column(db.Integer)
 
-    def __init__(self, keyword, start_node, email):
+    def __init__(self, keyword, start_node, email, max_distance):
         self.keyword = keyword
         self.start_node = start_node
         self.email = email
+        self.max_distance = max_distance
+        self.has_finished = 0
+        self.current_status = SearchOrderModel.STATUS_SETUP
         self.creation_time = datetime.now().timestamp()
 
     def to_json(self):

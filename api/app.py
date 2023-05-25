@@ -52,6 +52,7 @@ from Resources.wwwCiteListRes import WwwCiteListRes as WCLR
 from Resources.wwwAuthorListRes import WwwAuthorListRes as WALR
 from Resources.keywordsRes import KeywordRes
 from Resources.relationshipRes import RelationshipRes
+from Resources.searchOrderRes import SearchOrderRes
 
 
 app = Flask(__name__)
@@ -127,6 +128,7 @@ api.add_resource(WALR, "/api/wwwauthorlist/<int:_id>")
 
 api.add_resource(KeywordRes, "/api/keyword/<string:keyword>")
 api.add_resource(RelationshipRes, "/api/relationship")
+api.add_resource(SearchOrderRes, "/api/searchorder/<int:_id>")
 
 
 
