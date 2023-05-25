@@ -103,11 +103,19 @@ def render_page_content(pathname):
             html.H1("Network Graph", className="display-4"),
             html.Hr(),
             #plot network graph 2d with connections
-            dcc.Graph(id="network-graph",
-                       figure=networkGraph.networkGraph(app))
+            dcc.Graph(id="network-distance-graph",
+                       figure=networkGraph.networkDistanceGraph(app))
             
         ], className="p-5 bg-light rounded-3"),
-        ])
+        html.Div([
+            html.Hr(),
+            #plot network graph 2d with connections
+            dcc.Graph(id="network-distance-bar",
+                       figure=networkGraph.networkDistanceBar(app))
+            
+        ], className="p-5 bg-light rounded-3"),
+        ]),
+        
     elif pathname == "/page-1":
         return html.Div([
             #split page in 2 X 2
