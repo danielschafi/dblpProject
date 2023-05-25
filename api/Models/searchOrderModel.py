@@ -17,9 +17,9 @@ class SearchOrderModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     current_status = db.Column(db.Integer)
     has_finished = db.Column(db.Integer)
-    keyword = db.String(255)
-    start_node = db.String(255)
-    email = db.String(255)
+    keyword = db.Column(db.String(255))
+    start_node = db.Column(db.String(255))
+    email = db.Column(db.String(255))
     max_distance = db.Column(db.Integer)
     creation_time = db.Column(db.Integer)
 
@@ -39,7 +39,7 @@ class SearchOrderModel(db.Model):
             "keyword": self.keyword,
             "start_node": self.start_node,
             "email": self.email,
-            "creation_time": self.creation_time
+            "creation_time": int(self.creation_time)
         }}
     
     def save(self):
