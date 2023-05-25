@@ -480,6 +480,18 @@ CREATE TABLE articleAuthorList(
     REFERENCES author(ID) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS search_order;
+CREATE TABLE search_order(
+    ID serial PRIMARY KEY,
+    currentStatus int,
+    hasFinished int,
+    keyword TEXT,
+    startNode TEXT,
+    email TEXT,
+    maxDistance int,
+    creationTime int
+);
+
 INSERT INTO school (name) VALUES ('Not Available');
 INSERT INTO publisher (name) VALUES ('Not Available');
 INSERT INTO series (name) VALUES ('Not Available');
