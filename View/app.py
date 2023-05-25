@@ -86,6 +86,9 @@ def export_data(n_clicks):
         # Create the download link and redirect the browser
         return dcc.Location(href=f"data:text/csv;base64,{encoded_csv}", id='download-link', refresh=True)
 
+
+# @app.callback(Output(component_id="network-distance-graph", component_property="figure"), Input(component_id=))
+
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname == "/":
@@ -99,25 +102,47 @@ def render_page_content(pathname):
             html.P(
                 "This dashboard is made by: Adrian Joost, Daniel Schafhäutle, Sangeeths Chandrakumar")
         ], className="p-5 bg-light rounded-3"),
-        html.Div([
+        dbc.Row([
             html.H1("Network Graph", className="display-4"),
             html.Hr(),
-            #plot network graph 2d with connections
-            dcc.Graph(id="network-distance-graph",
-                       figure=networkGraph.networkDistanceGraph(app))
             
-        ], className="p-5 bg-light rounded-3"),
-        html.Div([
-            html.Hr(),
-            #plot network graph 2d with connections
-            dcc.Graph(id="network-distance-bar",
-                       figure=networkGraph.networkDistanceBar(app))
+            dbc.Col([
+                dbc.Col([
+                dcc.Graph(id="network-distance-graph",
+                          figure=networkGraph.networkDistanceGraph(app))
+                ]),
+                dcc.Graph(id="network-distance-bar", 
+                          figure=networkGraph.networkDistanceBar(app))
+
+            ], width=9),
+            
+            dbc.Col([
+                # Add Controls / Parameters here
+                html.Label("Stat 1"),
+                html.Label("Stat 2"),
+                html.Label("Stat 3")
+            ], width=3)
             
         ], className="p-5 bg-light rounded-3"),
         ]),
         
     elif pathname == "/page-1":
         return html.Div([
+            # Add search for order / idk here
+            # Post request to get data with keyword, table etc. return orderId with email. 
+            # set data to work with (set orderId)
+            # add counts of keywords, by table, other groupings maybe
+            
+            
+            # make "global" textbox for orderId, available everywhere
+            # filter for keyword etc on another site (Settings?, nah....Data idk)
+            # maybe show settings on other relevant sites , but as info only (readonly)
+            
+            # add caching of plots
+            # Graph needs to come from callback
+            
+            
+            
             #split page in 2 X 2
             html.Div([
                 html.Div([
