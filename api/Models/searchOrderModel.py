@@ -5,19 +5,33 @@ Notes: -
 """
 
 from db import db
+import datetime
 
 class SearchOrder(db.Model):
 
     __tablename__ = "search_order"
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255))
+    current_status = db.Column(db.Integer)
+    has_finished = db.Column(db.Integer)
+    keyword = db.String(255)
+    start_node = db.String(255)
+    email = db.String(255)
+    creation_time = db.Column(db.Integer)
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, keyword, start_node, email):
+        self.keyword = keyword
+        self.start_node = start_node
+        self.email = email
+        self.creation_time = datetime.now().timestamp()
 
     def to_json(self):
         return {self.id: {
-            "name": self.name
+            "current_status": self.current_status,
+            "has_finished": self.has_finished,
+            "keyword": self.keyword,
+            "start_node": self.start_node,
+            "email": self.email,
+            "creation_time": self.creation_time
         }}
     
     def save(self):
@@ -35,5 +49,5 @@ class SearchOrder(db.Model):
         return cls.query.filter_by(id=myId).first()
     
     @classmethod
-    def getByName(cls, myName):
-        return cls.query.filter_by(name=myName).all()
+    def getByKeyword(cls, myKeyword):
+        return cls.query.filter_by(keyword=myKeyword).all()

@@ -36,3 +36,4 @@ from Models.seriesModel import SeriesModel
 from Models.wwwModel import WwwModel
 from Models.wwwCiteListModel import WwwCiteListModel
 from Models.wwwAuthorListModel import WwwAuthorListModel
+from Models.searchOrderModel import SearchOrder
