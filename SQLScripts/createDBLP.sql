@@ -492,6 +492,19 @@ CREATE TABLE search_order(
     creation_time int
 );
 
+DROP TABLE IF EXISTS connect;
+CREATE TABLE connect(
+    id int,
+    tablename TEXT,
+    precedent_node TEXT,
+    visited int,
+    queued int,
+    orderid int,
+    distance int,
+    PRIMARY KEY(id, tablename, orderid),
+    FOREIGN KEY (orderid) REFERENCES search_order(ID) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 INSERT INTO school (name) VALUES ('Not Available');
 INSERT INTO publisher (name) VALUES ('Not Available');
 INSERT INTO series (name) VALUES ('Not Available');
