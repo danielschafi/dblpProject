@@ -483,13 +483,13 @@ CREATE TABLE articleAuthorList(
 DROP TABLE IF EXISTS search_order;
 CREATE TABLE search_order(
     ID serial PRIMARY KEY,
-    currentStatus int,
-    hasFinished int,
+    current_status int,
+    has_finished int,
     keyword TEXT,
-    startNode TEXT,
+    start_node TEXT,
     email TEXT,
-    maxDistance int,
-    creationTime int
+    max_distance int,
+    creation_time int
 );
 
 INSERT INTO school (name) VALUES ('Not Available');
