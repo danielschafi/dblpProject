@@ -261,8 +261,16 @@ def render_page_content(pathname):
                 html.Div([
                     dbc.Row([
                         dbc.Col(
-                            dbc.Button([html.I(className="fas fa-file-import fa"), " Important"], color="primary", className="col-6"),
-                            dbc.Button([html.I(className="fas fa-file-export fa"), "Export"], color="primary", className="col-6")
+                            html.Button('Import', id='import-button', className="btn btn-primary mr-1"),
+                            className="mr-1"
+                        ),
+                        dbc.Col(
+                            html.Button('Export', id='export-button', className="btn btn-primary"),
+                        className="mr-1"
+                        ),
+                        dbc.Col(
+                            html.Div(id="output-div"),
+                            className="mr-1"
                         ),
                     ]),
                 ]),
