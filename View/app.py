@@ -200,9 +200,12 @@ def render_page_content(pathname):
                                     {'label': '2017', 'value': '2017'},
                                     {'label': '2018', 'value': '2018'},
                                     {'label': '2019', 'value': '2019'},
-                                    {'label': '2020', 'value': '2020'}
+                                    {'label': '2020', 'value': '2020'},
+                                    {'label': '2021', 'value': '2021'},
+                                    {'label': '2022', 'value': '2022'},
+                                    {'label': '2023', 'value': '2023'},
                                 ],
-                                value='2000'
+                                value='2023'
                             ),
                             className="mr-1"
                         ),
@@ -245,18 +248,16 @@ def render_page_content(pathname):
                             ),
                             className="mr-1"
                         ), 
-                    ], className="p-5 bg-light rounded-3"),
-                ], className="p-5 bg-light rounded-3"),
+                    ]),
+                ]),
                 html.Div([
                     dbc.Row([
                         dbc.Col(
-                            dbc.Button("Export", id="export-button", color="primary", className="col-6")
-                        ),
-                        dbc.Col(
-                            dbc.Button("Import", color="primary", className="col-6")
+                            dbc.Button([html.I(className="fas fa-file-import fa"), " Important"], color="primary", className="col-6"),
+                            dbc.Button([html.I(className="fas fa-file-export fa"), "Export"], color="primary", className="col-6")
                         ),
                     ]),
-                ], className="p-5 bg-light rounded-3"),
+                ]),
                 html.Div(id="output-div"),
             ], className="p-5 bg-light rounded-3")
     # If the user tries to reach a different page, return a 404 message
