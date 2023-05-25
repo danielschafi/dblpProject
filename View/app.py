@@ -182,7 +182,7 @@ def render_page_content(pathname):
                     dbc.Row([
                         dbc.Col(
                             html.Label("Select Year:"),
-                            className="mr-1"
+                            className="col-sm-1 col-form-label"
                         ),
                         dbc.Col(
                             dcc.Dropdown(
@@ -215,11 +215,11 @@ def render_page_content(pathname):
                                 ],
                                 value='2023'
                             ),
-                            className="mr-1"
+                            className="col-sm-3"
                         ),
                         dbc.Col(
                             html.Label("Select Entries:"),
-                            className="mr-1"
+                            className="col-sm-1 col-form-label"
                         ),
                         dbc.Col(
                             # input field for anzahl entries
@@ -232,11 +232,11 @@ def render_page_content(pathname):
                                 step=1,
                                 value=10,
                             ),
-                            className="mr-1"
+                            className="col-sm-3"
                         ),
                         dbc.Col(
                             html.Label("Select Art:"),
-                            className="mr-1"
+                            className="col-sm-1 col-form-label"
                         ),
                         dbc.Col(
                             #select art of publication
@@ -254,25 +254,21 @@ def render_page_content(pathname):
                                 ],
                                 value='article'
                             ),
-                            className="mr-1"
-                        ), 
+                            className="col-sm-3"
+                        ),
                     ]),
-                ]),
-                html.Div([
                     dbc.Row([
-                        dbc.Col(
-                            html.Button('Import', id='import-button', className="btn btn-primary mr-1"),
-                            className="mr-1"
-                        ),
-                        dbc.Col(
-                            html.Button('Export', id='export-button', className="btn btn-primary"),
-                        className="mr-1"
-                        ),
-                        dbc.Col(
-                            html.Div(id="output-div"),
-                            className="mr-1"
-                        ),
-                    ]),
+                            dbc.Col(
+                                #create button to import data
+                                dbc.Button("Import Data", id="import-button", color="primary", className="w-75"),
+                            ),
+                            dbc.Col(
+                                #create button to export data
+                                dbc.Button("Export Data", id="export-button", color="primary",class_name="w-75"),
+                            ),
+                        ],
+                        className="g-0",
+                    ),
                 ]),
                 html.Div(id="output-div"),
             ], className="p-5 bg-light rounded-3")
