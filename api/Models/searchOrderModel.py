@@ -49,6 +49,10 @@ class SearchOrderModel(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+    
+    def changeStatus(self, status):
+        self.current_status = status
+        self.save()
         
     @classmethod
     def get(cls, myId):
@@ -59,3 +63,7 @@ class SearchOrderModel(db.Model):
     @classmethod
     def getByKeyword(cls, myKeyword):
         return cls.query.filter_by(keyword=myKeyword).all()
+        
+    @classmethod
+    def getByStatus(cls, status):
+        return cls.query.filter_by(current_status=status).all()

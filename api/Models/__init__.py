@@ -37,3 +37,4 @@ from Models.wwwModel import WwwModel
 from Models.wwwCiteListModel import WwwCiteListModel
 from Models.wwwAuthorListModel import WwwAuthorListModel
 from Models.searchOrderModel import SearchOrderModel
+from Models.connectModel import ConnectModel
