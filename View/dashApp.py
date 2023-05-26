@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 projectdict= Path(__file__).parents[1]
 sys.path.insert(0, str(projectdict))
-from dbreset import db
+#from dbreset import db
 
 import networkGraph 
 
