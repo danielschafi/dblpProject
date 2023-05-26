@@ -20,6 +20,45 @@ from dbreset import db
 import networkGraph 
 
 
+artList = [
+        {'label': 'Article', 'value': 'article'},
+        {'label': 'Inproceedings', 'value': 'inproceedings'},
+        {'label': 'Proceedings', 'value': 'proceedings'},
+        {'label': 'Book', 'value': 'book'},
+        {'label': 'Incollection', 'value': 'incollection'},
+        {'label': 'Phdthesis', 'value': 'phdthesis'},
+        {'label': 'Mastersthesis', 'value': 'mastersthesis'},
+        {'label': 'Www', 'value': 'www'}
+    ]
+
+yearList = [
+        {'label': '2000', 'value': '2000'},
+        {'label': '2001', 'value': '2001'},
+        {'label': '2002', 'value': '2002'},
+        {'label': '2003', 'value': '2003'},
+        {'label': '2004', 'value': '2004'},
+        {'label': '2005', 'value': '2005'},
+        {'label': '2006', 'value': '2006'},
+        {'label': '2007', 'value': '2007'},
+        {'label': '2008', 'value': '2008'},
+        {'label': '2009', 'value': '2009'},
+        {'label': '2010', 'value': '2010'},
+        {'label': '2011', 'value': '2011'},
+        {'label': '2012', 'value': '2012'},
+        {'label': '2013', 'value': '2013'},
+        {'label': '2014', 'value': '2014'},
+        {'label': '2015', 'value': '2015'},
+        {'label': '2016', 'value': '2016'},
+        {'label': '2017', 'value': '2017'},
+        {'label': '2018', 'value': '2018'},
+        {'label': '2019', 'value': '2019'},
+        {'label': '2020', 'value': '2020'},
+        {'label': '2021', 'value': '2021'},
+        {'label': '2022', 'value': '2022'},
+        {'label': '2023', 'value': '2023'},
+    ]
+
+
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP, dbc.icons.FONT_AWESOME])
 
 # the style arguments for the sidebar. We use position:fixed and a fixed width
@@ -53,7 +92,9 @@ sidebar = html.Div(
             [
                 dbc.NavLink([html.I(className="fas fa-home"), " Overview"], href="/", active="exact"),
                 dbc.NavLink([html.I(className="fas fa-chart-bar"), " Analyse"], href="/page-1", active="exact"),
-                dbc.NavLink([html.I(className="fas fa-cog"), " Settings"], href="/page-2", active="exact"),
+                dbc.NavLink([html.I(className="fas fa-cog"), " Settings"], href="/settings", active="exact"),
+                dbc.NavLink([html.I(className="fas fa-cog"), " Data"], href="/data", active="exact"),
+
             ],
             vertical=True,
             pills=True,
@@ -136,9 +177,8 @@ def render_page_content(pathname):
         
     elif pathname == "/page-1":
         return html.Div([
-            # Add search for order / idk here
-            # Post request to get data with keyword, table etc. return orderId with email. 
-            # set data to work with (set orderId)
+            
+
             # add counts of keywords, by table, other groupings maybe
             
             
@@ -206,7 +246,7 @@ def render_page_content(pathname):
                 ], className="p-5 bg-light rounded-3"),
         ], className="p-5 bg-light rounded-3")
         ], className="p-5 bg-light rounded-3")
-    elif pathname == "/page-2":
+    elif pathname == "/settings":
         return html.Div([
                 html.H1("Settings", className="display-4"),
                 html.Hr(),
@@ -220,32 +260,7 @@ def render_page_content(pathname):
                         dbc.Col(
                             dcc.Dropdown(
                                 id='year-dropdown',
-                                options=[
-                                    {'label': '2000', 'value': '2000'},
-                                    {'label': '2001', 'value': '2001'},
-                                    {'label': '2002', 'value': '2002'},
-                                    {'label': '2003', 'value': '2003'},
-                                    {'label': '2004', 'value': '2004'},
-                                    {'label': '2005', 'value': '2005'},
-                                    {'label': '2006', 'value': '2006'},
-                                    {'label': '2007', 'value': '2007'},
-                                    {'label': '2008', 'value': '2008'},
-                                    {'label': '2009', 'value': '2009'},
-                                    {'label': '2010', 'value': '2010'},
-                                    {'label': '2011', 'value': '2011'},
-                                    {'label': '2012', 'value': '2012'},
-                                    {'label': '2013', 'value': '2013'},
-                                    {'label': '2014', 'value': '2014'},
-                                    {'label': '2015', 'value': '2015'},
-                                    {'label': '2016', 'value': '2016'},
-                                    {'label': '2017', 'value': '2017'},
-                                    {'label': '2018', 'value': '2018'},
-                                    {'label': '2019', 'value': '2019'},
-                                    {'label': '2020', 'value': '2020'},
-                                    {'label': '2021', 'value': '2021'},
-                                    {'label': '2022', 'value': '2022'},
-                                    {'label': '2023', 'value': '2023'},
-                                ],
+                                options=yearList,
                                 value='2023'
                             ),
                             className="col-sm-3"
@@ -275,16 +290,7 @@ def render_page_content(pathname):
                             #select art of publication
                             dcc.Dropdown(
                                 id='art-dropdown',
-                                options=[
-                                    {'label': 'Article', 'value': 'article'},
-                                    {'label': 'Inproceedings', 'value': 'inproceedings'},
-                                    {'label': 'Proceedings', 'value': 'proceedings'},
-                                    {'label': 'Book', 'value': 'book'},
-                                    {'label': 'Incollection', 'value': 'incollection'},
-                                    {'label': 'Phdthesis', 'value': 'phdthesis'},
-                                    {'label': 'Mastersthesis', 'value': 'mastersthesis'},
-                                    {'label': 'Www', 'value': 'www'}
-                                ],
+                                options=artList,
                                 value='article'
                             ),
                             className="col-sm-3"
@@ -305,6 +311,40 @@ def render_page_content(pathname):
                 ]),
                 html.Div(id="output-div"),
             ], className="p-5 bg-light rounded-3")
+        
+    elif pathname == "/data":
+        return html.Div([
+            
+            html.H1("Data", className="display-4"),
+            html.Hr(),
+            html.P(
+            "Use this to make an order for a part of the whole dataset with the filters." + 
+            "After receiving the OrderId you can enter it in the \"Use Order\" field, to use the Data from the request."
+            ),
+            dbc.Row([
+                dbc.Col(
+                    html.Label("Keyword:"),
+                    className="col-sm-1 col-form-label",
+                ),
+                dbc.Col(
+                    dcc.Input(id="input-keyword"),
+                    className="col-sm-3",
+                ), 
+                dbc.Col(html.Label("Select Art:"),
+                className="col-sm-1 col-form-label"),
+                dbc.Col(
+                    dcc.Dropdown(
+                    id='data-art-dropdown',
+                    options=artList,
+                    value='article'
+                ),
+                className="col-sm-3"),
+                dbc.Col(
+                    dbc.Button("Place Order", id="button-order", color="primary"),
+                    )
+            ])
+        ])
+
     # If the user tries to reach a different page, return a 404 message
     return html.Div(
         [
