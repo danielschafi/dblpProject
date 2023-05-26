@@ -11,6 +11,11 @@ import csv
 import io
 import base64
 import requests
+import sys
+from pathlib import Path
+projectdict= Path(__file__).parents[1]
+sys.path.insert(0, str(projectdict))
+from dbreset import db
 
 import networkGraph 
 
@@ -64,6 +69,9 @@ app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
 @app.callback(Output('output-div', 'children'), [Input('export-button', 'n_clicks')])
 def export_data(n_clicks):
+
+    word = db.hello()
+
     if n_clicks is not None and n_clicks > 0:
         data = [
             {'Name': 'John', 'Age': 25, 'City': 'New York'},
