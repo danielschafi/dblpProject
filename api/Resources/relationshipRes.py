@@ -72,6 +72,46 @@ class RelationshipRes(Resource):
             return create_response(relations, 200)
         return create_response({"message": f"The Node with table: {data['table']}"\
                                 f" and id: {data['id']} does not exist"}, 404)
+    
+    @classmethod
+    def getRelations(cls, table, _id):
+        #yeah, its copied... Maybe change that as soon as a new table is added. :/
+        relations = None
+        if table == cls.TABLE_NAMES[0]:
+            relations = RelationshipRes.getAuthorRel(_id)
+        elif table == cls.TABLE_NAMES[1]:
+            relations = RelationshipRes.getCiteRel(_id)
+        elif table == cls.TABLE_NAMES[2]:
+            relations = RelationshipRes.getEditorRel(_id)
+        elif table == cls.TABLE_NAMES[3]:
+            relations = RelationshipRes.getJournalRel(_id)
+        elif table == cls.TABLE_NAMES[4]:
+            relations = RelationshipRes.getSchoolRel(_id)
+        elif table == cls.TABLE_NAMES[5]:
+            relations = RelationshipRes.getPublisherRel(_id)
+        elif table == cls.TABLE_NAMES[6]:
+            relations = RelationshipRes.getSeriesRel(_id)
+        elif table == cls.TABLE_NAMES[7]:
+            relations = RelationshipRes.getProceedingsRel(_id)
+        elif table == cls.TABLE_NAMES[8]:
+            relations = RelationshipRes.getInproceedingsRel(_id)
+        elif table == cls.TABLE_NAMES[9]:
+            relations = RelationshipRes.getDataRel(_id)
+        elif table == cls.TABLE_NAMES[10]:
+            relations = RelationshipRes.getMasterthesisRel(_id)
+        elif table == cls.TABLE_NAMES[11]:
+            relations = RelationshipRes.getPhdthesisRel(_id)
+        elif table == cls.TABLE_NAMES[12]:
+            relations = RelationshipRes.getIncollectionRel(_id)
+        elif table == cls.TABLE_NAMES[13]:
+            relations = RelationshipRes.getBookRel(_id)
+        elif table == cls.TABLE_NAMES[14]:
+            relations = RelationshipRes.getWwwRel(_id)
+        elif table == cls.TABLE_NAMES[15]:
+            relations = RelationshipRes.getArticleRel(_id)
+        elif table == cls.TABLE_NAMES[16]:
+            relations = RelationshipRes.getEeRel(_id)
+        return relations
 
         
     
