@@ -77,6 +77,7 @@ def processOrder(order):
                             connect.queue()
             node.queueAndPass()
         queued = ConnectModel.getQueuedNodes(orderid)
+    order.changeStatus(SearchOrderModel.STATUS_FINISHED)
 
 
 

@@ -9,7 +9,7 @@ from sqlalchemy import PrimaryKeyConstraint
 
 class ConnectModel(db.Model):
 
-    NOT_QUEUED = -1,
+    NOT_QUEUED = -1
     QUEUED = 0
     QUEUED_AND_PASSED = 1
 

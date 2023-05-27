@@ -5,6 +5,8 @@ Notes: -
 """
 
 from db import db
+from Models.phdthesisEeListModel import PhdthesisEeListModel
+from Models.phdthesisAuthorListModel import PhdthesisAuthorListModel
 
 class PhdthesisModel(db.Model):
 
@@ -110,13 +112,24 @@ class PhdthesisModel(db.Model):
         publishers = []
         schools = []
         series = []
+        ees=[]
+        authors=[]
         for result in results:
             ids.append(result.id)
             publishers.append(result.publisherid)
             schools.append(result.schoolid)
             series.append(result.seriesid)
+            authorList = PhdthesisAuthorListModel.getByPhdthesisId(result.id)
+            for link in authorList:
+                authors.append(link.authorid)
+            eeList = PhdthesisEeListModel.getByPhdthesisId(result.id)
+            for link in eeList:
+                ees.append(link.eeid)
         #remove double Ids
+        
         publishers = set(publishers)
         schools = set(schools)
         series = set(series)
-        return ids, publishers, schools, series
+        authors = set(authors)
+        ees = set(ees)
+        return ids, publishers, schools, series, authors, ees

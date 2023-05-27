@@ -5,6 +5,8 @@ Notes: -
 """
 
 from db import db
+from Models.masterthesisAuthorListModel import MasterthesisAuthorListModel
+from Models.masterthesisEeListModel import MasterthesisEeListModel
 
 class MasterthesisModel(db.Model):
 
@@ -59,9 +61,19 @@ class MasterthesisModel(db.Model):
         results = cls.query.filter(cls.title.contains(keyword)).all()
         ids = []
         schools = []
+        authors = []
+        ees = []
         for result in results:
             ids.append(result.id)
             schools.append(result.schoolid)
+            authorList = MasterthesisAuthorListModel.getByMastersthesisId(result.id)
+            for link in authorList:
+                authors.append(link.authorid)
+            eeList = MasterthesisEeListModel.getByMasterthesisId(result.id)
+            for link in eeList:
+                ees.append(link.eeid)
         #remove double Ids
         schools = set(schools)
-        return ids, schools
+        authors = set(authors)
+        ees = set(ees)
+        return ids, schools, authors, ees

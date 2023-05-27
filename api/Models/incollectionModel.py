@@ -5,6 +5,9 @@ Notes: -
 """
 from sqlalchemy import or_
 from db import db
+from Models.incollectionAuthorListModel import IncollectionAuthorListModel
+from Models.incollectionCiteListModel import IncollectionCiteListModel
+from Models.incollectionEeListModel import IncollectionEeListModel
 
 class IncollectionModel(db.Model):
 
@@ -59,6 +62,21 @@ class IncollectionModel(db.Model):
     def getNodesKeyword(cls, keyword):
         results = cls.query.filter(or_(cls.title.contains(keyword), cls.booktitle.contains(keyword))).all()
         ids = []
+        authors = []
+        ees = []
+        cites = []
         for result in results:
             ids.append(result.id)
-        return ids
+            authorList = IncollectionAuthorListModel.getByIncollectionId(result.id)
+            for link in authorList:
+                authors.append(link.authorid)
+            eeList = IncollectionEeListModel.getByIncollectionId(result.id)
+            for link in eeList:
+                ees.append(link.eeid)
+            citeList = IncollectionCiteListModel.getByIncollectionId(result.id)
+            for link in citeList:
+                cites.append(link.citeid)
+        authors = set(authors)
+        ees = set(ees)
+        cites = set(cites)        
+        return ids, authors, ees, cites

@@ -5,6 +5,8 @@ Notes: -
 """
 
 from db import db
+from Models.dataAuthorListModel import DataAuthorListModel
+from Models.dataEeListModel import DataEeListModel
 
 class DataModel(db.Model):
 
@@ -58,6 +60,16 @@ class DataModel(db.Model):
     def getNodesKeyword(cls, keyword):
         results = cls.query.filter(cls.title.contains(keyword)).all()
         ids = []
+        authors = []
+        ees = []
         for result in results:
             ids.append(result.id)
-        return ids
+            authorList = DataAuthorListModel.getByDataId(result.id)
+            for link in authorList:
+                authors.append(link.authorid)
+            eeList = DataEeListModel.getByDataId(result.id)
+            for link in eeList:
+                ees.append(link.eeid)
+        authors = set(authors)
+        ees = set(ees)
+        return ids, authors, ees

@@ -5,6 +5,9 @@ Notes: -
 """
 
 from db import db
+from Models.bookAuthorListModel import BookAuthorListModel
+from Models.bookEditorListModel import BookEditorListModel
+from Models.bookEeListModel import BookEeListModel
 
 class BookModel(db.Model):
 
@@ -90,11 +93,26 @@ class BookModel(db.Model):
         schools = []
         series = []
         publishers = []
+        authors = []
+        editors = []
+        ees = []
         for result in results:
             ids.append(result.id)
             schools.append(result.schoolid)
             series.append(result.seriesid)
             publishers.append(result.publisherid)
+            authorList = BookAuthorListModel.getByBookId(result.id)
+            for link in authorList:
+                authors.append(link.authorid)
+            eeList = BookEeListModel.getByBookId(result.id)
+            for link in eeList:
+                ees.append(link.eeid)
+            editorList = BookEditorListModel.getByBookId(result.id)
+            for link in editorList:
+                editors.append(link.editorid)
         #remove double Ids
         schools = set(schools)
-        return ids, schools, series, publishers
+        authors = set(authors)
+        ees = set(ees)
+        editors = set(editors)
+        return ids, schools, series, publishers, authors, ees, editors

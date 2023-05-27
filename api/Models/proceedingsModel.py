@@ -6,6 +6,8 @@ Notes: -
 
 from db import db
 from sqlalchemy import or_
+from Models.proceedingsEditorListModel import ProceedingsEditorListModel
+from Models.proceedingsEeListModel import ProceedingsEeListModel
 
 class ProceedingsModel(db.Model):
 
@@ -80,10 +82,20 @@ class ProceedingsModel(db.Model):
         ids = []
         publishers = []
         series = []
+        editors = []
+        ees = []
         for result in results:
             ids.append(result.id)
             publishers.append(result.publisherid)
             series.append(result.seriesid)
+            editorList = ProceedingsEditorListModel.getByProceedingsId(result.id)
+            for link in editorList:
+                editors.append(link.editorid)
+            eeList = ProceedingsEeListModel.getByProceedingsId(result.id)
+            for link in eeList:
+                ees.append(link.eeid)
         publishers = set(publishers)
         series = set(series)
-        return ids, series, publishers
+        editors = set(editors)
+        ees = set(ees)
+        return ids, series, publishers, editors, ees

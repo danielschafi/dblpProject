@@ -6,6 +6,8 @@ Notes: -
 
 from db import db
 from sqlalchemy import or_
+from Models.inproceedingsAuthorListModel import InproceedingsAuthorListModel
+from Models.inproceedingsEeListModel import InproceedingsEeListModel
 
 class InproceedingsModel(db.Model):
 
@@ -60,6 +62,14 @@ class InproceedingsModel(db.Model):
     def getNodesKeyword(cls, keyword):
         results = cls.query.filter(or_(cls.title.contains(keyword), cls.booktitle.contains(keyword))).all()
         ids = []
+        authors = []
+        ees = []
         for result in results:
             ids.append(result.id)
-        return ids
+            authorList = InproceedingsAuthorListModel.getByInproceedingsId(result.id)
+            for link in authorList:
+                authors.append(link.authorid)
+            eeList = InproceedingsEeListModel.getByInproceedingsId(result.id)
+            for link in eeList:
+                ees.append(link.eeid)
+        return ids, authors, ees

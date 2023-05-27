@@ -6,6 +6,8 @@ Notes: -
 
 from db import db
 from Models.journalModel import JournalModel
+from Models.articleAuthorListModel import ArticleAuthorListModel
+from Models.articleEeListModel import ArticleEeListModel
 
 class ArticleModel(db.Model):
 
@@ -75,9 +77,19 @@ class ArticleModel(db.Model):
         results = cls.query.filter(cls.title.contains(keyword)).all()
         ids = []
         journals = []
+        ees=[]
+        authors=[]
         for result in results:
             ids.append(result.id)
             journals.append(result.journalid)
+            authorList = ArticleAuthorListModel.getByArticleId(result.id)
+            for link in authorList:
+                authors.append(link.authorid)
+            eeList = ArticleEeListModel.getByArticleId(result.id)
+            for link in eeList:
+                ees.append(link.eeid)
         #remove double Ids
         journals = set(journals)
-        return ids, journals
+        authors = set(authors)
+        ees = set(ees)
+        return ids, journals, authors, ees

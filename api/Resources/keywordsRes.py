@@ -29,27 +29,46 @@ class KeywordRes(Resource):
         schools = []
         series = []
         journals = []
+        ees = []
+        cites = []
+        editors = []
+
         #get phdThesis with keyword in title
         phdThesis = self.getPhdThesis(kword=keyword, 
                                  publishersList=publishers,
                                  schoolsList=schools,
-                                 seriesList=series)
+                                 seriesList=series,
+                                 eeList=ees,
+                                 authorList=authors)
         #get articles with keyword in title
         articles = self.getArticles(kword=keyword,
-                                    journalList=journals)
+                                    journalList=journals,
+                                    eeList=ees,
+                                    authorList=authors)
         #Get data with keyword in title
-        datas = self.getData(kword=keyword)
+        datas = self.getData(kword=keyword,
+                                eeList=ees,
+                                authorList=authors)
         #get incollections with keyword in title or booktitle
-        incollections = self.getIncollections(kword=keyword)
+        incollections = self.getIncollections(kword=keyword,
+                                              authorList=authors,
+                                              eeList=ees,
+                                              citeList=cites)
         #get inprocceedings with keyword in title or booktitle
-        inproceedings = self.getInproceedings(kword=keyword)
+        inproceedings = self.getInproceedings(kword=keyword,
+                                              authorList=authors,
+                                              eeList=ees)
         #get masterthesis with keyword in title
         masterthesi = self.getMasterThesis(kword=keyword,
-                                           schoolsList=schools)
+                                           schoolsList=schools,
+                                              authorList=authors,
+                                              eeList=ees)
         #get proceedings with keyword in title or booktitle
         proceedings = self.getProceedings(kword=keyword,
                                           publishersList=publishers,
-                                          seriesList=series)
+                                          seriesList=series,
+                                          editorList=editors,
+                                          eeList = ees)
         #get www model with keyword in title
         #TODO: WWWS Title are all Home Page?
         wwws = []
@@ -59,12 +78,20 @@ class KeywordRes(Resource):
         books = self.getBooks(kword=keyword,
                               schoolsList=schools,
                               seriesList=series,
-                              publishersList=publishers)
+                              publishersList=publishers,
+                                authorList=authors,
+                                eeList=ees,
+                                editorList=editors)
+        
         publishers = list(set(publishers))
         authors = list(set(authors))
         schools = list(set(schools))
         series = list(set(series))
         journals = list(set(journals))
+        ees = list(set(ees))
+        authors = list(set(authors))
+        cites = list(set(cites))
+        editors = list(set(editors))
 
         return create_response(
             {
@@ -73,7 +100,9 @@ class KeywordRes(Resource):
                                + len(journals) + len(articles)
                                + len(datas) + len(masterthesi)
                                + len(books) + len(incollections)
-                               + len(inproceedings) + len(wwws)),
+                               + len(inproceedings) + len(wwws)
+                               + len(authors) + len(ees)
+                               + len(cites) + len(editors)),
                 "phdthesis": phdThesis,
                 "publisher": publishers,
                 "school": schools,
@@ -86,50 +115,72 @@ class KeywordRes(Resource):
                 "incollection": incollections,
                 "proceedings": proceedings,
                 "inproceedings": inproceedings,
-                "www": wwws
+                "www": wwws,
+                "author": authors,
+                "ee": ees,
+                "cite": cites,
+                "editor": editors
            }, 200
         )
 
-    def getPhdThesis(self, kword, publishersList,schoolsList,seriesList):
-        thesisiIds, publisherIds, schoolsIds, seriesIds = PhdthesisModel.getNodesKeyword(kword)
+    def getPhdThesis(self, kword, publishersList,schoolsList,seriesList, authorList, eeList):
+        thesisiIds, publisherIds, schoolsIds, seriesIds, authors, ees = PhdthesisModel.getNodesKeyword(kword)
         publishersList.extend(publisherIds)
         schoolsList.extend(schoolsIds)
         seriesList.extend(seriesIds)
+        authorList.extend(authors)
+        eeList.extend(ees)
         return thesisiIds
     
-    def getArticles(self, kword, journalList):
-        articlesIds, journalIds = ArticleModel.getNodesKeyword(kword)
+    def getArticles(self, kword, journalList, authorList, eeList):
+        articlesIds, journalIds, authors, ees = ArticleModel.getNodesKeyword(kword)
         journalList.extend(journalIds)
+        authorList.extend(authors)
+        eeList.extend(ees)
         return articlesIds
 
-    def getData(self, kword):
-        dataIds = DataModel.getNodesKeyword(kword)
+    def getData(self, kword, authorList, eeList):
+        dataIds, authors, ees = DataModel.getNodesKeyword(kword)
+        authorList.extend(authors)
+        eeList.extend(ees)
         return dataIds
     
-    def getIncollections(self, kword):
-        incollectionIds = IncollectionModel.getNodesKeyword(kword)
+    def getIncollections(self, kword, authorList, eeList, citeList):
+        incollectionIds, authors, ees, cites = IncollectionModel.getNodesKeyword(kword)
+        authorList.extend(authors)
+        eeList.extend(ees)
+        citeList.extend(cites)
         return incollectionIds
     
-    def getMasterThesis(self, kword, schoolsList):
-        masterThesisIds, schoolsIds = MasterthesisModel.getNodesKeyword(kword)
+    def getMasterThesis(self, kword, schoolsList, authorList, eeList):
+        masterThesisIds, schoolsIds, authors, ees = MasterthesisModel.getNodesKeyword(kword)
         schoolsList.extend(schoolsIds)
+        authorList.extend(authors)
+        eeList.extend(ees)
         return masterThesisIds
     
-    def getBooks(self, kword, schoolsList, seriesList, publishersList):
-        booksIds, schoolsIds, seriesIds, publishersIds = BookModel.getNodesKeyword(kword)
+    def getBooks(self, kword, schoolsList, seriesList, publishersList, authorList, eeList, editorList):
+        booksIds, schoolsIds, seriesIds, publishersIds, authors, ees, editors = BookModel.getNodesKeyword(kword)
         schoolsList.extend(schoolsIds)
         seriesList.extend(seriesIds)
         publishersList.extend(publishersIds)
+        authorList.extend(authors)
+        eeList.extend(ees)
+        editorList.extend(editors)
         return booksIds
     
-    def getProceedings(self, kword, seriesList, publishersList):
-        proceedingsIds, seriesIds, publishersIds = ProceedingsModel.getNodesKeyword(kword)
+    def getProceedings(self, kword, seriesList, publishersList, editorList, eeList):
+        proceedingsIds, seriesIds, publishersIds, editors, ees = ProceedingsModel.getNodesKeyword(kword)
         seriesList.extend(seriesIds)
         publishersList.extend(publishersIds)
+        editorList.extend(editors)
+        eeList.extend(ees)
         return proceedingsIds
     
-    def getInproceedings(self, kword):
-        inproceedingsIds = InproceedingsModel.getNodesKeyword(kword)
+    def getInproceedings(self, kword, authorList, eeList):
+        inproceedingsIds, authors, ees = InproceedingsModel.getNodesKeyword(kword)
+        authorList.extend(authors)
+        eeList.extend(ees)
         return inproceedingsIds
     
     def getWWW(self, kword):
