@@ -22,7 +22,7 @@ def insertOrder(order):
 
 def getNodes(keyword):
     request = requests.get(f"{URL}/api/relation")
-    print(keyword)
+    if response
 
 
 if __name__ == "__main__":
