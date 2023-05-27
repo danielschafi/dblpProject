@@ -76,11 +76,11 @@ def networkDistanceGraph(app):
                     margin=dict(b=20, l=5, r=5, t=40),
                     xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                     yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                    autosize=False,
-                    width=1000,
-                    height=1000,
+                    #autosize=False,
+                    #width=1000,
+                    #height=1000,
                     paper_bgcolor="rgba(0,0,0,0)",
-                    plot_bgcolor="rgba(0,0,0,0)"
+                    plot_bgcolor="rgba(0,0,0,0)",
                 )
     )
     
@@ -119,11 +119,8 @@ def networkDistanceBar(app):
                     showlegend=False,
                     hovermode="closest",
                     margin=dict(b=20, l=5, r=5, t=40),
-                    xaxis=dict(showgrid=False, zeroline=False, showticklabels=True),
-                    yaxis=dict(showgrid=False, zeroline=False, showticklabels=True),
                     paper_bgcolor="rgba(0,0,0,0)",
                     plot_bgcolor="rgba(0,0,0,0)",
-                    autosize=True
                 )
     )
     
