@@ -69,3 +69,5 @@ class SearchOrderModel(db.Model):
     @classmethod
     def getByStatus(cls, status):
         return cls.query.filter_by(current_status=status).all()
+    
+    

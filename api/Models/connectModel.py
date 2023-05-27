@@ -55,11 +55,11 @@ class ConnectModel(db.Model):
         db.session.commit()
     
     def queue(self):
-        self.queue = ConnectModel.QUEUED
+        self.queued = ConnectModel.QUEUED
         self.save()
     
     def queueAndPass(self):
-        self.queue = ConnectModel.QUEUED_AND_PASSED
+        self.queued = ConnectModel.QUEUED_AND_PASSED
         self.save()
 
     def setVisited(self):
@@ -91,3 +91,7 @@ class ConnectModel(db.Model):
         for connect in connectList:
             db.session.add(connect)
         db.session.commit()
+
+    @classmethod
+    def getQueuedNodes(cls, myOrderId):
+        return cls.query.filter_by(orderid=myOrderId, queued=cls.QUEUED).order_by(cls.distance).limit(500).all()

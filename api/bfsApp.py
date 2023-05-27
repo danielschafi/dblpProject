@@ -22,7 +22,7 @@ def main():
                 order.changeStatus(SearchOrderModel.STATUS_PROCESSING)
 
         #get with processing status
-        processingOrders = SearchOrderModel.getByStatus(SearchOrderModel.STATUS_SETUP)
+        processingOrders = SearchOrderModel.getByStatus(SearchOrderModel.STATUS_PROCESSING)
         for order in processingOrders:
             processOrder(order)
 
@@ -60,7 +60,8 @@ def getNodes(keyword):
     return nodes
 
 def processOrder(order):
-    pass
+    queued = ConnectModel.getQueuedNodes(order.id)
+    print(queued)
 
 
 if __name__ == "__main__":
