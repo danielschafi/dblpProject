@@ -320,9 +320,9 @@ class RelationshipRes(Resource):
             ids.append(node.editorid)
         returnValue["editor"] = ids
         #add publisher
-        returnValue["publisher"] = proc.publisherid
+        returnValue["publisher"] = [proc.publisherid]
         #add series
-        returnValue["series"] = proc.seriesid
+        returnValue["series"] = [proc.seriesid]
         return returnValue
     
     @classmethod
@@ -373,7 +373,7 @@ class RelationshipRes(Resource):
             return None
         returnValue = {}
         #getSchool
-        returnValue["school"] = thesis.schoolid
+        returnValue["school"] = [thesis.schoolid]
         #get autohors
         nodes = Models.MasterthesisAuthorListModel.getByMastersthesisId(_id)
         ids = []
@@ -394,9 +394,9 @@ class RelationshipRes(Resource):
         if not thesis:
             return None
         returnValue = {}
-        returnValue["school"] = thesis.schoolid
-        returnValue["series"] = thesis.seriesid
-        returnValue["publisher"] = thesis.publisherid
+        returnValue["school"] = [thesis.schoolid]
+        returnValue["series"] = [thesis.seriesid]
+        returnValue["publisher"] = [thesis.publisherid]
         #Get Authors
         nodes = Models.PhdthesisAuthorListModel.getByPhdthesisId(_id)
         ids = []
@@ -445,9 +445,9 @@ class RelationshipRes(Resource):
             return None
         returnValue = {}
         #add stuff
-        returnValue["school"] = book.schoolid
-        returnValue["series"] = book.seriesid
-        returnValue["publisher"] = book.publisherid
+        returnValue["school"] = [book.schoolid]
+        returnValue["series"] = [book.seriesid]
+        returnValue["publisher"] = [book.publisherid]
         #Get Authors
         nodes = Models.BookAuthorListModel.getByBookId(_id)
         ids = []
@@ -494,7 +494,7 @@ class RelationshipRes(Resource):
         if not article:
             return None
         returnValue = {}
-        returnValue["journal"] = article.journalid
+        returnValue["journal"] = [article.journalid]
         #Get Authors
         nodes = Models.ArticleAuthorListModel.getByArticleId(_id)
         ids = []

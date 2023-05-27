@@ -7,6 +7,7 @@ from Resources.relationshipRes import RelationshipRes
 from app import app 
 from db import db
 import requests
+from tqdm import tqdm
 
 URL = "http://localhost:5000"
 
@@ -15,7 +16,7 @@ def main():
     with app.app_context():
         #get open status
         setupOrders = SearchOrderModel.getByStatus(SearchOrderModel.STATUS_SETUP)
-        for order in setupOrders:
+        for order in tqdm(setupOrders, desc="Setup Orders"):
             status = insertOrder(order)
             if not status:
                 order.changeStatus(SearchOrderModel.STATUS_FAILED)
@@ -24,7 +25,7 @@ def main():
 
         #get with processing status
         processingOrders = SearchOrderModel.getByStatus(SearchOrderModel.STATUS_PROCESSING)
-        for order in processingOrders:
+        for order in tqdm(processingOrders, desc="Process Orders"):
             processOrder(order)
 
 def insertOrder(order):
@@ -36,7 +37,7 @@ def insertOrder(order):
     del nodes["numberOfNodes"]
     connectList = []
     order.changeStatus(SearchOrderModel.STAUTS_INSERTING)
-    for table, idList in nodes.items():
+    for table, idList in tqdm(nodes.items(), desc="Inserting Nodes"):
         for _id in idList:
             connectList.append(ConnectModel(id=_id,tablename=table, orderid=orderId))
     ConnectModel.multiInsert(connectList)
@@ -61,11 +62,22 @@ def getNodes(keyword):
     return nodes
 
 def processOrder(order):
-    queued = ConnectModel.getQueuedNodes(order.id)
-    for node in queued:
-        relations = RelationshipRes.getRelations(table=node.tablename, _id=node.id)
-        for relation in relations:
-            if 
+    orderid = order.id
+    queued = ConnectModel.getQueuedNodes(orderid)
+    while len(queued) > 0:
+        for node in tqdm(queued, desc="Working on Queue"):
+            relations = RelationshipRes.getRelations(table=node.tablename, _id=node.id)
+            for table, ids in relations.items():
+                for _id in ids:
+                    connect = ConnectModel.get(id=_id, orderid=orderid, tablename=table)
+                    if connect:
+                        if connect.queued == ConnectModel.NOT_QUEUED:
+                            connect.setVisited()
+                            connect.setDistance(node.distance + 1)
+                            connect.queue()
+            node.queueAndPass()
+        queued = ConnectModel.getQueuedNodes(orderid)
+
 
 
 if __name__ == "__main__":
