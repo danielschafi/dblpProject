@@ -3,6 +3,7 @@ BreathFirstSearch algorithm that is searching
 connection-Table to find shortest paths of nodes.
 """
 from Models import SearchOrderModel, ConnectModel
+from Resources.relationshipRes import RelationshipRes
 from app import app 
 from db import db
 import requests
@@ -61,7 +62,10 @@ def getNodes(keyword):
 
 def processOrder(order):
     queued = ConnectModel.getQueuedNodes(order.id)
-    print(queued)
+    for node in queued:
+        relations = RelationshipRes.getRelations(table=node.tablename, _id=node.id)
+        for relation in relations:
+            if 
 
 
 if __name__ == "__main__":
