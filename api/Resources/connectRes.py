@@ -15,10 +15,16 @@ class ConnectRes(Resource):
         #gets author with author.id = id from db
         parser = getGetParser()
         data = parser.parse_args()
-        connect = ConnectModel.get(**data)
-        if connect:
-            return create_response(connect.to_json(), 200)
-        return create_response({"message":"Connect-Node not found"}, 404)
+        if data["tablename"] and data["id"]:
+            connect = ConnectModel.get(**data)
+            if connect:
+                return create_response(connect.to_json(), 200)
+            return create_response({"message":"Connect-Node not found"}, 404)
+        connects = ConnectModel.getByOrderId(data["orderid"])
+        returnValue = []
+        for connect in connects:
+            returnValue.append(connect.to_json())
+        return create_response(returnValue, 200)
     
     def post(self):
       parser = getGetParser()
@@ -55,12 +61,8 @@ def getGetParser():
                         help="This field cannot be left blank")
     parser.add_argument("tablename",
                         type=str,
-                        required=True,
-                        help="This field cannot be left blank"
                         )
     parser.add_argument("id",
                         type=str,
-                        required=True,
-                        help="This field cannot be left blank"
                         )
     return parser

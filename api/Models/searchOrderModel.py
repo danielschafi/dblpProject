@@ -12,7 +12,8 @@ class SearchOrderModel(db.Model):
     STATUS_SETUP = 0
     STATUS_PROCESSING = 1
     STATUS_FINISHED = 2
-    STATUS_FAILED = 3
+    STAUTS_INSERTING = 3
+    STATUS_FAILED = 4
 
     __tablename__ = "search_order"
     id = db.Column(db.Integer, primary_key=True)

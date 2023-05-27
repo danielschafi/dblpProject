@@ -85,3 +85,9 @@ class ConnectModel(db.Model):
     def getByOrderId(cls, myOrderId):
         #returns all authors filterd by orcID
         return cls.query.filter_by(orderid=myOrderId).all()
+    
+    @classmethod
+    def multiInsert(cls, connectList):
+        for connect in connectList:
+            db.session.add(connect)
+        db.session.commit()
