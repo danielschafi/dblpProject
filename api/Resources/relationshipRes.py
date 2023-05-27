@@ -209,7 +209,7 @@ class RelationshipRes(Resource):
         proceedings = Models.ProceedingsEditorListModel.getByEditorId(_id)
         a = []
         for n in proceedings:
-            a.append(n.bookid)
+            a.append(n.editorid)
         returnValue["proceeding"] = a
         
 
