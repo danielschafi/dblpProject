@@ -62,9 +62,9 @@ if __name__ == '__main__':
             ),
             dbc.Nav(
                 [
-                    dbc.NavLink(["Network"], href="/", active="exact"),
-                    dbc.NavLink(["Statistics"], href="/statistics", active="exact"),
-                    dbc.NavLink(["Data"], href="/data", active="exact"),
+                    dbc.NavLink([html.I(className="fas fa-home"), " Network"], href="/", active="exact"),
+                    dbc.NavLink([html.I(className="fas fa-chart-bar"), " Statistics"], href="/statistics", active="exact"),
+                    dbc.NavLink([html.I(className="fas fa-cog"), " Data"], href="/data", active="exact"),
 
                     ],
                 vertical=True,
