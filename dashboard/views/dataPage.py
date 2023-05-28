@@ -17,7 +17,7 @@ from dblpGetNewData import getData, getDataCSV
 
 
 
-from constants import *
+from dashboard.globals import *
 from maindash import app
 
 

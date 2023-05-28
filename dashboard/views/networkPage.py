@@ -10,7 +10,7 @@ import pandas as pd
 import networkx as nx
 from dash import Dash, dcc, html, Input, Output
 
-
+from dashboard.globals import *
 
 
 from maindash import app
@@ -18,16 +18,18 @@ from dash.dependencies import Input, Output
 
 
 def getNetworkPage():
-        return html.Div([
+    getFilterDropdownDict()
+    
+    return html.Div([
         html.Div([
             html.H1("Overview", className="display-4"),
             html.Hr(),
             html.P(
                 "Welcome to our dashboard about the DBLP dataset", className="lead"
-            ),
+                ),
             html.P(
-                "This dashboard is made by: Adrian Joost, Daniel Schafhäutle, Sangeeths Chandrakumar")
-        ], className="p-5 bg-light rounded-3"),
+                "This dashboard is made by: Adrian Joost, Daniel Schafhäutle, Sangeeths Chandrakumar"
+                ),
         
         dbc.Row([
             html.H1("Network Graph", className="display-4"),
@@ -35,17 +37,17 @@ def getNetworkPage():
 
             dbc.Col([
                 dcc.Graph(id="network-distance-graph",
-                          figure=networkDistanceGraph())
-                ], width=9),
+                        figure=networkDistanceGraph())
+                ], width=8),
             
             dbc.Col([
                 dcc.Graph(id="network-distance-bar", 
-                          figure=networkDistanceBar())
-                ], width=3)
+                        figure=networkDistanceBar())
+                ], width=4)
             ])
-       
         ])
-
+    ], className="p-5 bg-light rounded-3"),
+        
 
 
 
@@ -56,11 +58,22 @@ def networkDistanceGraph():
     colors = ["rgb"+ val for val in ['(230, 25, 75)', '(60, 180, 75)', '(255, 225, 25)', '(0, 130, 200)', '(245, 130, 48)', '(145, 30, 180)',
               '(70, 240, 240)', '(240, 50, 230)', '(210, 245, 60)', '(250, 190, 212)', '(0, 128, 128)', '(220, 190, 255)', 
               '(170, 110, 40)', '(255, 250, 200)', '(128, 0, 0)', '(170, 255, 195)', '(128, 128, 0)', '(255, 215, 180)', 
+              '(0, 0, 128)', '(128, 128, 128)', '(255, 255, 255)', '(0, 0, 0)', '(230, 25, 75)', '(60, 180, 75)', '(255, 225, 25)', '(0, 130, 200)', '(245, 130, 48)', '(145, 30, 180)',
+              '(70, 240, 240)', '(240, 50, 230)', '(210, 245, 60)', '(250, 190, 212)', '(0, 128, 128)', '(220, 190, 255)', 
+              '(170, 110, 40)', '(255, 250, 200)', '(128, 0, 0)', '(170, 255, 195)', '(128, 128, 0)', '(255, 215, 180)', 
+              '(0, 0, 128)', '(128, 128, 128)', '(255, 255, 255)', '(0, 0, 0)', '(230, 25, 75)', '(60, 180, 75)', '(255, 225, 25)', '(0, 130, 200)', '(245, 130, 48)', '(145, 30, 180)',
+              '(70, 240, 240)', '(240, 50, 230)', '(210, 245, 60)', '(250, 190, 212)', '(0, 128, 128)', '(220, 190, 255)', 
+              '(170, 110, 40)', '(255, 250, 200)', '(128, 0, 0)', '(170, 255, 195)', '(128, 128, 0)', '(255, 215, 180)', 
+              '(0, 0, 128)', '(128, 128, 128)', '(255, 255, 255)', '(0, 0, 0)', '(230, 25, 75)', '(60, 180, 75)', '(255, 225, 25)', '(0, 130, 200)', '(245, 130, 48)', '(145, 30, 180)',
+              '(70, 240, 240)', '(240, 50, 230)', '(210, 245, 60)', '(250, 190, 212)', '(0, 128, 128)', '(220, 190, 255)', 
+              '(170, 110, 40)', '(255, 250, 200)', '(128, 0, 0)', '(170, 255, 195)', '(128, 128, 0)', '(255, 215, 180)', 
+              '(0, 0, 128)', '(128, 128, 128)', '(255, 255, 255)', '(0, 0, 0)', '(230, 25, 75)', '(60, 180, 75)', '(255, 225, 25)', '(0, 130, 200)', '(245, 130, 48)', '(145, 30, 180)',
+              '(70, 240, 240)', '(240, 50, 230)', '(210, 245, 60)', '(250, 190, 212)', '(0, 128, 128)', '(220, 190, 255)', 
+              '(170, 110, 40)', '(255, 250, 200)', '(128, 0, 0)', '(170, 255, 195)', '(128, 128, 0)', '(255, 215, 180)', 
               '(0, 0, 128)', '(128, 128, 128)', '(255, 255, 255)', '(0, 0, 0)']]
 
-    def colFunc(distance):
-        return colors[distance]
-    df["Color"] = df["Distance"].apply(colFunc)
+
+    df["Color"] = df["Distance"].apply(lambda x: colors[x])
     
     G = nx.from_pandas_edgelist(df, source="Previous", target="Id", edge_attr=True)    
     
@@ -84,9 +97,10 @@ def networkDistanceGraph():
         text=[f"{node['Id']}" for _, node in df.iterrows()],
         hoverinfo="text",
     )
-    """
 
-    """
+    
+    
+
     # Trace for edges
     edge_x = []
     edge_y = []

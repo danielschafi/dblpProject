@@ -20,10 +20,7 @@ projectdict= Path(__file__).parents[1]
 sys.path.insert(0, str(projectdict))
 from dblpGetNewData import getData, getDataCSV
 
-
-
-
-from constants import *
+from dashboard.globals import *
 
 from maindash import app
 from views.dataPage import getDataPage
