@@ -112,7 +112,8 @@ content = html.Div(id="page-content", style=CONTENT_STYLE)
 
 app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
-@app.callback(Output("download-csv", "data"),
+@app.callback([Output("download-csv", "data"),
+               Output("alert-success", "is_open")],
                [Input('export-button', 'n_clicks')],
                 [State('year-dropdown', 'value'),
                 State('input-anzahl', 'value'),
@@ -121,7 +122,7 @@ app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 def export_data(n_clicks, year, anzahl, art):
     if n_clicks is not None and n_clicks > 0:
         dataframe = getDataCSV(year, anzahl, art)
-        return dcc.send_data_frame(dataframe.to_csv, "dblp.csv")
+        return dcc.send_data_frame(dataframe.to_csv, "dblp.csv"), True
          
 @app.callback(Output('output-div-import', 'children'),
                [Input('import-button', 'n_clicks')],
@@ -309,6 +310,7 @@ def render_page_content(pathname):
                     ),
                 ]),
                 dcc.Download(id="download-csv"),
+                dbc.Alert("This is a success alert! Well done!", color="success",id="alert-success", dismissable=True),
                 html.Div(id="output-div-import"),
             ], className="p-5 bg-light rounded-3")
         
