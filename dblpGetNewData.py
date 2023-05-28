@@ -1,4 +1,7 @@
 from urllib.request import urlretrieve
+import pandas as pd
+
+from sqlalchemy import create_engine, text
 import xml_split
 import shutil
 import os
@@ -76,3 +79,20 @@ def getData(year=None, count=10, art=None):
     dblpParser.parseXML(dblpDest, year, count, art)
 
     logger.info("finished parsing dblp.xml and inserting into database")
+
+def getDataCSV(year, count, art):
+    engine = create_engine('postgresql://postgres:1234@localhost/dblp')
+    if art != None:
+        conn = engine.connect()
+        query = text(f"SELECT * FROM {art} LIMIT :count".format(art))
+        query = query.bindparams(count=count)
+        result = conn.execute(query)
+        #get all rows in datafram
+        df = result.fetchall()
+        df = pd.DataFrame(df)
+        df.columns = result.keys()
+        return df
+            
+    return None
+            
+   
