@@ -9,19 +9,35 @@ import plotly.graph_objects as go
 import pandas as pd
 import networkx as nx
 from dash import Dash, dcc, html, Input, Output
+import sys
+import os
+
+# Get the parent directory of the 'Models' directory
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'api/Models'))
+
+# Add the parent directory to sys.path
+sys.path.append(parent_dir)
+
+# Get the parent directory of the 'api' directory
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+
+# Add the parent directory to sys.path
+sys.path.append(parent_dir)
+
+from api import modelInteraction
+
 
 from dashboard.globals import *
-
-
 from maindash import app
-from dash.dependencies import Input, Output
 
 
 def getNetworkPage():
-    getFilterDropdownDict()
     
     return html.Div([
         html.Div([
+            html.Div([
+                dcc.Dropdown(modelInteraction.getOrderDropdown(), modelInteraction.getOrderDropdown()[0], id="active-order-dropdown") 
+                ]),
             html.H1("Overview", className="display-4"),
             html.Hr(),
             html.P(
@@ -55,22 +71,7 @@ def getNetworkPage():
 def networkDistanceGraph():
     df = pd.read_csv("sample_networkGraphData.csv", usecols=[0,1,2])    
 
-    colors = ["rgb"+ val for val in ['(230, 25, 75)', '(60, 180, 75)', '(255, 225, 25)', '(0, 130, 200)', '(245, 130, 48)', '(145, 30, 180)',
-              '(70, 240, 240)', '(240, 50, 230)', '(210, 245, 60)', '(250, 190, 212)', '(0, 128, 128)', '(220, 190, 255)', 
-              '(170, 110, 40)', '(255, 250, 200)', '(128, 0, 0)', '(170, 255, 195)', '(128, 128, 0)', '(255, 215, 180)', 
-              '(0, 0, 128)', '(128, 128, 128)', '(255, 255, 255)', '(0, 0, 0)', '(230, 25, 75)', '(60, 180, 75)', '(255, 225, 25)', '(0, 130, 200)', '(245, 130, 48)', '(145, 30, 180)',
-              '(70, 240, 240)', '(240, 50, 230)', '(210, 245, 60)', '(250, 190, 212)', '(0, 128, 128)', '(220, 190, 255)', 
-              '(170, 110, 40)', '(255, 250, 200)', '(128, 0, 0)', '(170, 255, 195)', '(128, 128, 0)', '(255, 215, 180)', 
-              '(0, 0, 128)', '(128, 128, 128)', '(255, 255, 255)', '(0, 0, 0)', '(230, 25, 75)', '(60, 180, 75)', '(255, 225, 25)', '(0, 130, 200)', '(245, 130, 48)', '(145, 30, 180)',
-              '(70, 240, 240)', '(240, 50, 230)', '(210, 245, 60)', '(250, 190, 212)', '(0, 128, 128)', '(220, 190, 255)', 
-              '(170, 110, 40)', '(255, 250, 200)', '(128, 0, 0)', '(170, 255, 195)', '(128, 128, 0)', '(255, 215, 180)', 
-              '(0, 0, 128)', '(128, 128, 128)', '(255, 255, 255)', '(0, 0, 0)', '(230, 25, 75)', '(60, 180, 75)', '(255, 225, 25)', '(0, 130, 200)', '(245, 130, 48)', '(145, 30, 180)',
-              '(70, 240, 240)', '(240, 50, 230)', '(210, 245, 60)', '(250, 190, 212)', '(0, 128, 128)', '(220, 190, 255)', 
-              '(170, 110, 40)', '(255, 250, 200)', '(128, 0, 0)', '(170, 255, 195)', '(128, 128, 0)', '(255, 215, 180)', 
-              '(0, 0, 128)', '(128, 128, 128)', '(255, 255, 255)', '(0, 0, 0)', '(230, 25, 75)', '(60, 180, 75)', '(255, 225, 25)', '(0, 130, 200)', '(245, 130, 48)', '(145, 30, 180)',
-              '(70, 240, 240)', '(240, 50, 230)', '(210, 245, 60)', '(250, 190, 212)', '(0, 128, 128)', '(220, 190, 255)', 
-              '(170, 110, 40)', '(255, 250, 200)', '(128, 0, 0)', '(170, 255, 195)', '(128, 128, 0)', '(255, 215, 180)', 
-              '(0, 0, 128)', '(128, 128, 128)', '(255, 255, 255)', '(0, 0, 0)']]
+
 
 
     df["Color"] = df["Distance"].apply(lambda x: colors[x])
@@ -142,17 +143,11 @@ def networkDistanceGraph():
 def networkDistanceBar():
     df = pd.read_csv("sample_networkGraphData.csv", usecols=[0,1,2])    
 
-    colors = ["rgb"+ val for val in ['(230, 25, 75)', '(60, 180, 75)', '(255, 225, 25)', '(0, 130, 200)', '(245, 130, 48)', '(145, 30, 180)',
-              '(70, 240, 240)', '(240, 50, 230)', '(210, 245, 60)', '(250, 190, 212)', '(0, 128, 128)', '(220, 190, 255)', 
-              '(170, 110, 40)', '(255, 250, 200)', '(128, 0, 0)', '(170, 255, 195)', '(128, 128, 0)', '(255, 215, 180)', 
-              '(0, 0, 128)', '(128, 128, 128)', '(255, 255, 255)', '(0, 0, 0)']]
 
     def colFunc(distance):
         return colors[distance]
     df["Color"] = df["Distance"].apply(colFunc)
     
-    
-
 
     # Calculate the count for each distance
     counts = df["Distance"].value_counts().sort_index()
