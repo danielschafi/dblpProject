@@ -1,15 +1,4 @@
-import sys
-from pathlib import Path
-projectdict= Path(__file__).parents[1]
-sys.path.insert(0, str(projectdict))
-sys.path.insert(0, str(projectdict)+"/api")
 
-
-from api.Models import SearchOrderModel
-from api.app import app 
-from api.db import db
-import requests
-from tqdm import tqdm
 
 
 artList = [
@@ -51,10 +40,3 @@ yearList = [
     ]
 
 
-def getFilterDropdownDict():
-    db.init_app(app)
-    with app.app_context():
-        #get open status
-        availableOrders = SearchOrderModel.getByStatus(SearchOrderModel.STATUS_FINISHED)
-        
-        for o in availableOrders: print(o)
