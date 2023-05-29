@@ -158,6 +158,9 @@ def networkReachedStackedBar():
     reached = 1231
     notReached = 231
     
+    percentageReached = (reached /(reached + notReached)) * 100
+    percentageNotReached = 100 - percentageReached
+    
     fig = go.Figure()
     fig.add_trace(go.Bar(
         y=[''],
@@ -168,7 +171,7 @@ def networkReachedStackedBar():
             line=dict(width=3),
         ),
         width=0.5,
-        hovertext="Reached"
+        hovertext=f"Reached {round(percentageReached, 2)}%"
     ))
     fig.add_trace(go.Bar(
         y=[''],
@@ -179,7 +182,7 @@ def networkReachedStackedBar():
             line=dict(width=3)
         ),
         width=0.5,
-        hovertext="Not Reached"
+        hovertext=f"Not Reached {round(percentageNotReached,2)}%"
     ))
 
     fig.update_layout(barmode='stack')
