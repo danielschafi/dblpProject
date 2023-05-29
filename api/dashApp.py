@@ -41,7 +41,7 @@ if __name__ == '__main__':
     sidebar = html.Div(
         [
             html.Img(src=dashApp.get_asset_url('DBLP_Logo.png'), style={'width':'100%'}),
-            html.H2("Sidebar", className="display-4"),
+            html.H2("Dashboard", className="display-5"),
             html.Hr(),
             html.P(
                 "Welcome to our dashboard about the DBLP dataset", className="lead"
