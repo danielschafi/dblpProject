@@ -1,18 +1,7 @@
-import json
-import tempfile
-import dash
 import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html
 from flask import make_response, send_file
-import plotly.io as pio
-import plotly.io._templates as templates
-import plotly.graph_objects as go
-import pandas as pd
-import networkx as nx
-import csv
-import io
-import base64
-import requests
+
 import sys
 from dash.dependencies import Input, Output, State
 from pathlib import Path

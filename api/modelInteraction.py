@@ -16,6 +16,5 @@ def getOrderDropdown():
             select(SearchOrderModel).filter_by(current_status=SearchOrderModel.STATUS_FINISHED)
         ).scalars().all()
         
-    return [{"label": f"Id: {order.id},\tKeyword: {order.keyword},\tStart: {order.start_node}", "value": order.id } for order in availableOrders], availableOrders[-1].id
+    return [{"label": f"Id: {order.id}, Keyword: {order.keyword}, Start: {order.start_node}", "value": order.id } for order in availableOrders], availableOrders[-1].id
     
-getOrderDropdown()

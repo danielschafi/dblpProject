@@ -15,9 +15,6 @@ def getNetworkPage():
     orders, defaultOrder = getOrderDropdown()
     return html.Div([
         html.Div([
-            html.Div([
-                dcc.Dropdown(orders, defaultOrder, id="active-order-dropdown") 
-                ]),
             html.H1("Overview", className="display-4"),
             html.Hr(),
             html.P(
@@ -30,6 +27,11 @@ def getNetworkPage():
         dbc.Row([
             html.H1("Network Graph", className="display-4"),
             html.Hr(),
+            
+            html.Div([
+                html.P("Select Filter:", className="lead"),
+                dcc.Dropdown(orders, defaultOrder, id="active-order-dropdown") 
+                ]),
 
             dbc.Col([
                 dcc.Graph(id="network-distance-graph",
