@@ -91,6 +91,8 @@ def getDataPage():
                 prevent_initial_call=True,)
 def export_data(n_clicks, year, anzahl, art):
     if n_clicks is not None and n_clicks > 0:
+        if art == "All":
+            art = None
         dataframe = getDataCSV(year, anzahl, art)
         return dcc.send_data_frame(dataframe.to_csv, "dblp.csv"), True
          

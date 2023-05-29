@@ -2,6 +2,7 @@
 
 
 artList = [
+        {'label': 'All', 'value': 'All'},
         {'label': 'Article', 'value': 'article'},
         {'label': 'Inproceedings', 'value': 'inproceedings'},
         {'label': 'Proceedings', 'value': 'proceedings'},
