@@ -77,13 +77,12 @@ def getDataPage():
                     ),
                 ]),
                 dcc.Download(id="download-csv"),
-                dbc.Alert("This is a success alert! Well done!", color="success",id="alert-success", dismissable=True),
-                html.Div(id="output-div-import"),
+            html.Div(id="output-div-import")
             ], className="p-5 bg-light rounded-3")
 
 
-@dashApp.callback([Output("download-csv", "data"),
-               Output("alert-success", "is_open")],
+
+@dashApp.callback([Output("download-csv", "data")],
                [Input('export-button', 'n_clicks')],
                 [State('year-dropdown', 'value'),
                 State('input-anzahl', 'value'),
@@ -105,5 +104,10 @@ def import_data(n_clicks, year, anzahl, art):
     if n_clicks is not None and n_clicks > 0:
         if art == "All":
             art = None
-        getData(year, anzahl, art)
-        return "Data imported"
+        logger = getData(year, anzahl, art)
+        # logger.append(f"Imported {anzahl} entries of type {art} from year {year}")
+        return html.Div([
+            html.Hr(),
+            html.P("Imported Data:",style={'fontWeight': 'bold'}),
+            html.Ul([html.Li(x) for x in logger])
+        ],style={'backgroundColor': 'rgb(201, 255, 204)','paddingLeft': '5px', 'paddingBottom': '1em'})

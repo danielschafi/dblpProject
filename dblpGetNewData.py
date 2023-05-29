@@ -16,6 +16,9 @@ import logging
 
 def getData(year=None, count=10, art=None):
     
+    # create a logger list
+    
+    
     logging.basicConfig(level=logging.INFO,  # Set the minimum level for log messages
                         format='%(asctime)s - %(levelname)s - %(message)s')  # Define the log format
     logger = logging.getLogger(__name__)
@@ -27,6 +30,8 @@ def getData(year=None, count=10, art=None):
     if os.path.exists(outputDir):
         shutil.rmtree(outputDir)
 
+    loggerList = []
+    loggerList.append(f"Old files and directory removed from directory: {outputDir}")
     logger.info(f"Old files and directory removed from directory: {outputDir}")
 
     # Create destination folders
@@ -36,6 +41,7 @@ def getData(year=None, count=10, art=None):
     else:
         exit()
     
+    loggerList.append(f"Folders for new Data created: {outputDir}")
     logger.info(f"Folders for new Data created: {outputDir}")
 
 
@@ -52,15 +58,19 @@ def getData(year=None, count=10, art=None):
 
 
     # get files from url
+    loggerList.append("dblp.dtd started download")
     logger.info("dblp.dtd started download")
     urlretrieve(dtdUrl, dtdDest)
+    loggerList.append("dblp.dtd finished download")
     logger.info("dblp.dtd finished download")
 
+    loggerList.append("dblp.xml.gz started download")
     logger.info("dblp.xml.gz started download")
     urlretrieve(dblpgzUrl, dblpgzDest)
+    loggerList.append("dblp.xml.gz finished download")
     logger.info("dblp.xml.gz finished download")
 
-
+    loggerList.append("dblp.xml.gz file start unzipping")
     logger.info("dblp.xml.gz file start unzipping")
     #unzip .gz file
     dblpDest = f"{outputDir}/dblp.xml"
@@ -70,15 +80,17 @@ def getData(year=None, count=10, art=None):
         with open(dblpDest, 'wb') as xml_file:
             shutil.copyfileobj(gz_file, xml_file, length=buffer_size)
 
+    loggerList.append("dblp.xml.gz file finished unzipping")
     logger.info("dblp.xml.gz file finished unzipping")
 
 
-
+    loggerList.append("started parsing dblp.xml and inserting into database")
     logger.info("started parsing dblp.xml and inserting into database")
     # Parse, insert into database
     dblpParser.parseXML(dblpDest, year, count, art)
-
+    loggerList.append("finished parsing dblp.xml and inserting into database")
     logger.info("finished parsing dblp.xml and inserting into database")
+    return loggerList
 
 def getDataCSV(year, count, art):
     engine = create_engine('postgresql://postgres:1234@localhost/dblp')
