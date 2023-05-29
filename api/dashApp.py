@@ -20,12 +20,12 @@ projectdict= Path(__file__).parents[1]
 sys.path.insert(0, str(projectdict))
 from dblpGetNewData import getData, getDataCSV
 
-from dashboard.globals import *
+from globals import *
 
-from maindash import app
-from views.dataPage import getDataPage
-from views.statisticsPage import getStatisticsPage
-from views.networkPage import getNetworkPage
+from maindash import dashApp
+from dataPage import getDataPage
+from statisticsPage import getStatisticsPage
+from networkPage import getNetworkPage
 
 if __name__ == '__main__':
     
@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     sidebar = html.Div(
         [
-            html.Img(src=app.get_asset_url('DBLP_Logo.png'), style={'width':'100%'}),
+            html.Img(src=dashApp.get_asset_url('DBLP_Logo.png'), style={'width':'100%'}),
             html.H2("Sidebar", className="display-4"),
             html.Hr(),
             html.P(
@@ -73,11 +73,11 @@ if __name__ == '__main__':
 
       
     content = html.Div(id="page-content", style=CONTENT_STYLE)
-    app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
+    dashApp.layout = html.Div([dcc.Location(id="url"), sidebar, content])
     
     
     
-    @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+    @dashApp.callback(Output("page-content", "children"), [Input("url", "pathname")])
     def render_page_content(pathname):
         if pathname == "/":
             return getNetworkPage()
@@ -99,7 +99,7 @@ if __name__ == '__main__':
         )
             
         
-    app.run_server(debug=True, port=8888)
+    dashApp.run_server(debug=True, port=8888)
     
     
 

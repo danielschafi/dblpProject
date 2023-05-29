@@ -2,41 +2,21 @@ from dash import Input, Output, dcc, html
 import plotly.graph_objects as go
 import pandas as pd
 import networkx as nx
-
 import dash_bootstrap_components as dbc
-from dash import Input, Output, dcc, html
-import plotly.graph_objects as go
-import pandas as pd
-import networkx as nx
-from dash import Dash, dcc, html, Input, Output
-import sys
-import os
 
-# Get the parent directory of the 'Models' directory
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'api/Models'))
+from modelInteraction import getOrderDropdown
+      
 
-# Add the parent directory to sys.path
-sys.path.append(parent_dir)
-
-# Get the parent directory of the 'api' directory
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-
-# Add the parent directory to sys.path
-sys.path.append(parent_dir)
-
-from api import modelInteraction
-
-
-from dashboard.globals import *
-from maindash import app
+from globals import *
+from maindash import dashApp
 
 
 def getNetworkPage():
-    
+    orders, defaultOrder = getOrderDropdown()
     return html.Div([
         html.Div([
             html.Div([
-                dcc.Dropdown(modelInteraction.getOrderDropdown(), modelInteraction.getOrderDropdown()[0], id="active-order-dropdown") 
+                dcc.Dropdown(orders, defaultOrder, id="active-order-dropdown") 
                 ]),
             html.H1("Overview", className="display-4"),
             html.Hr(),

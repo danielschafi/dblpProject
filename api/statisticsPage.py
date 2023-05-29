@@ -4,20 +4,13 @@ from dash import Input, Output, dcc, html
 
 import plotly.graph_objects as go
 
-import csv
-import io
-import base64
-import requests
-import sys
 from dash.dependencies import Input, Output, State
-from pathlib import Path
-projectdict= Path(__file__).parents[1]
-sys.path.insert(0, str(projectdict))
+
 from dblpGetNewData import getData, getDataCSV
 
 
 
-from maindash import app
+from maindash import dashApp
 
 
 def getStatisticsPage():

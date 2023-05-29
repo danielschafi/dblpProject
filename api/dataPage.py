@@ -4,21 +4,13 @@ from dash import Input, Output, dcc, html
 
 import plotly.graph_objects as go
 
-import csv
-import io
-import base64
-import requests
-import sys
 from dash.dependencies import Input, Output, State
-from pathlib import Path
-projectdict= Path(__file__).parents[1]
-sys.path.insert(0, str(projectdict))
 from dblpGetNewData import getData, getDataCSV
 
 
 
-from dashboard.globals import *
-from maindash import app
+from globals import *
+from maindash import dashApp
 
 
 def getDataPage():
@@ -90,7 +82,7 @@ def getDataPage():
             ], className="p-5 bg-light rounded-3")
 
 
-@app.callback([Output("download-csv", "data"),
+@dashApp.callback([Output("download-csv", "data"),
                Output("alert-success", "is_open")],
                [Input('export-button', 'n_clicks')],
                 [State('year-dropdown', 'value'),
@@ -102,7 +94,7 @@ def export_data(n_clicks, year, anzahl, art):
         dataframe = getDataCSV(year, anzahl, art)
         return dcc.send_data_frame(dataframe.to_csv, "dblp.csv"), True
          
-@app.callback(Output('output-div-import', 'children'),
+@dashApp.callback(Output('output-div-import', 'children'),
                [Input('import-button', 'n_clicks')],
                [State('year-dropdown', 'value'),
                 State('input-anzahl', 'value'),
