@@ -40,8 +40,10 @@ def getNetworkPage():
             
             dbc.Col([
                 dcc.Graph(id="network-distance-bar", 
-                        figure=networkDistanceBar())
-                ], width=4)
+                        figure=networkDistanceBar()),
+                dcc.Graph(id="network-distance-bar", 
+                        figure=networkReachedStackedBar())
+                ], width=4)            
             ])
         ])
     ], className="p-5 bg-light rounded-3"),
@@ -52,9 +54,6 @@ def getNetworkPage():
 
 def networkDistanceGraph():
     df = pd.read_csv("sample_networkGraphData.csv", usecols=[0,1,2])    
-
-
-
 
     df["Color"] = df["Distance"].apply(lambda x: colors[x])
     
@@ -153,3 +152,43 @@ def networkDistanceBar():
                 )
     )
     
+    
+    
+def networkReachedStackedBar():
+    reached = 1231
+    notReached = 231
+    
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        y=[''],
+        x=[reached],
+        name='Reached',
+        orientation='h',
+        marker=dict(
+            line=dict(width=3),
+        ),
+        width=0.5,
+        hovertext="Reached"
+    ))
+    fig.add_trace(go.Bar(
+        y=[''],
+        x=[notReached],
+        name='Not Reached',
+        orientation='h',
+        marker=dict(
+            line=dict(width=3)
+        ),
+        width=0.5,
+        hovertext="Not Reached"
+    ))
+
+    fig.update_layout(barmode='stack')
+    fig.update_layout(
+        go.Layout(
+            showlegend=False,
+            hovermode="closest",
+            margin=dict(b=20, l=5, r=5, t=40),
+            paper_bgcolor="#f8f9fa",
+            plot_bgcolor="#f8f9fa",
+        ))
+    return fig
