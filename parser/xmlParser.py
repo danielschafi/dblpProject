@@ -122,7 +122,7 @@ def parallel_parse_xml_chunkwise(suffix):
     print("part %d Done" % suffix)
 
 
-def parseXML(dblpXmlPath = "dblp.xml", year=2023, limit=10, art=None):
+def parseXML(dblpXmlPath = "dblp.xml", year=None, limit=10, art=None):
     parse_xml_chunkwise(dblpXmlPath, 10000, year, limit, art)
 
 if __name__ == "__main__":
