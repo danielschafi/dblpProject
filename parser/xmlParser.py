@@ -36,7 +36,7 @@ def parseElement(element, year=None, limit=10, art=None):
         endDate=f"{year}-12-31"
 
         
-    mDate = element.get("mDate")
+    mDate = element.get("mdate")
     if mDate is None or not (year is None or startDate <= mDate <= endDate):
         return
     
@@ -122,7 +122,7 @@ def parallel_parse_xml_chunkwise(suffix):
     print("part %d Done" % suffix)
 
 
-def parseXML(dblpXmlPath = "dblp.xml", year=None, limit=10, art=None):
+def parseXML(dblpXmlPath = "dblp.xml", year=2023, limit=10, art=None):
     parse_xml_chunkwise(dblpXmlPath, 10000, year, limit, art)
 
 if __name__ == "__main__":
