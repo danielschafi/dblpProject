@@ -29,7 +29,7 @@ def getNetworkPage():
             html.Hr(),
             
             html.Div([
-                html.P("Select Filter:", className="lead"),
+                html.P("Select Order:", className="lead"),
                 dcc.Dropdown(orders, defaultOrder, id="active-order-dropdown") 
                 ]),
 

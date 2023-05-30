@@ -21,6 +21,7 @@ def getDataPage():
     return html.Div([
                 html.H1("Data", className="display-4"),
                 html.Hr(),
+                html.P("Orders:", className="lead"),
                 dcc.Graph(
                     id="orders-table",
                     figure=getOrdersTable()
@@ -143,6 +144,7 @@ def getOrdersTable():
                 cells=dict(
                     values=df.transpose().values.tolist(),
                     align='left',
+                    
                 ),
             )
         ],

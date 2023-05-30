@@ -33,7 +33,7 @@ def getOrdersDf():
 
     with Session() as  session:
         orders = session.execute(
-            select(SearchOrderModel).filter_by(current_status=SearchOrderModel.STATUS_FINISHED)
+            select(SearchOrderModel)
         ).scalars().all()
     df= pd.DataFrame([vars(o) for o in orders])[["id", "keyword", "start_node", "max_distance", "current_status"]]
 
