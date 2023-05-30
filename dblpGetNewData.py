@@ -93,17 +93,22 @@ def getData(year=None, count=10, art=None):
     return loggerList
 
 def getDataCSV(year, count, art):
+    loggerlist = []
     engine = create_engine('postgresql://postgres:1234@localhost/dblp')
     if art != None:
+        loggerlist.append("Exporting data to csv")
         conn = engine.connect()
         query = text(f"SELECT * FROM {art} LIMIT :count".format(art))
         query = query.bindparams(count=count)
         result = conn.execute(query)
         #get all rows in datafram
+        loggerlist.append("Exporting data to csv dataframe")
         df = result.fetchall()
         df = pd.DataFrame(df)
         df.columns = result.keys()
-        return df
+        loggerlist.append("Exporting data to csv dataframe finished")
+        loggerlist.append("Exported data {} entries of type {} from year {}".format(count, art, year))
+        return df, loggerlist
             
     return None
             

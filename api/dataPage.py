@@ -70,19 +70,21 @@ def getDataPage():
                             ),
                             dbc.Col(
                                 #create button to export data
-                                dbc.Button("Export Data", id="export-button", color="primary",class_name="w-75"),
+                                dbc.Button("Export Data", id="export-button", color="primary",class_name="w-75", style={'float': 'right'}),
                             ),
                         ],
                         className="g-0",
+                        style={'paddingTop': '1em'}
                     ),
                 ]),
                 dcc.Download(id="download-csv"),
-            html.Div(id="output-div-import")
+            html.Div(id="output-div-import"),
+            html.Div(id="output-div-export")
             ], className="p-5 bg-light rounded-3")
 
 
 
-@dashApp.callback([Output("download-csv", "data")],
+@dashApp.callback([Output("download-csv", "data"),Output('output-div-export', 'children')],
                [Input('export-button', 'n_clicks')],
                 [State('year-dropdown', 'value'),
                 State('input-anzahl', 'value'),
@@ -92,8 +94,12 @@ def export_data(n_clicks, year, anzahl, art):
     if n_clicks is not None and n_clicks > 0:
         if art == "All":
             art = None
-        dataframe = getDataCSV(year, anzahl, art)
-        return dcc.send_data_frame(dataframe.to_csv, "dblp.csv"), True
+        dataframe,loggerlist = getDataCSV(year, anzahl, art)
+        return dcc.send_data_frame(dataframe.to_csv, "dblp.csv"), html.Div([
+            html.Hr(),
+            html.P("Exported Data:",style={'fontWeight': 'bold'}),
+            html.Ul([html.Li(x) for x in loggerlist])
+        ],style={'backgroundColor': 'rgb(201, 255, 204)','paddingLeft': '5px', 'paddingBottom': '1em'})
          
 @dashApp.callback(Output('output-div-import', 'children'),
                [Input('import-button', 'n_clicks')],
