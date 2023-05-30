@@ -156,3 +156,6 @@ colors = [
         '(0, 0, 0)',
     ]
 ]
+
+
+orderStatusList = ["SETUP", "PROCESSING", "FINISHED" , "INSERTING", "FAILED"]
