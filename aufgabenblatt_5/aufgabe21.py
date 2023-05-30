@@ -4,7 +4,7 @@ import requests
 import json
 import nltk
 #How many dataPoints are searched. Be carefull with this...
-NUMBER_OF_DATA=1000
+NUMBER_OF_DATA=100000
 URL = "http://127.0.0.1:5000/api"
 URL_TAILS = [
     

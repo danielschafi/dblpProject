@@ -75,6 +75,7 @@ def processOrder(order):
                             connect.setVisited()
                             connect.setDistance(node.distance + 1)
                             connect.queue()
+                            connect.precedent_node = f"{node.tablename},{node.id}"
             node.queueAndPass()
         queued = ConnectModel.getQueuedNodes(orderid)
     order.changeStatus(SearchOrderModel.STATUS_FINISHED)
