@@ -34,8 +34,7 @@ def getNetworkPage():
                 ]),
 
             dbc.Col([
-                dcc.Graph(id="network-distance-graph",
-                        figure=networkDistanceGraph())
+                dcc.Graph(id="network-distance-graph")
                 ], width=8),
             
             dbc.Col([
@@ -49,9 +48,16 @@ def getNetworkPage():
     ], className="p-5 bg-light rounded-3"),
         
 
+@dashApp.callback(
+    Output('network-distance-graph', 'figure'),
+    Input('active-order-dropdown', 'value'))
+def update_network_graph(value):
+    return networkDistanceGraph()
 
 
 
+def getConnectData():
+    
 def networkDistanceGraph():
     df = pd.read_csv("sample_networkGraphData.csv", usecols=[0,1,2])    
 
@@ -110,7 +116,6 @@ def networkDistanceGraph():
                     margin=dict(b=20, l=5, r=5, t=40),
                     xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                     yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                    #autosize=False,
                     width=1000,
                     height=1000,
                     paper_bgcolor="#f8f9fa",

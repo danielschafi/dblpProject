@@ -1,4 +1,4 @@
-from Models import SearchOrderModel
+from Models import SearchOrderModel, ConnectModel
 from app import app, db
 from maindash import dashApp
 from sqlalchemy import create_engine, text, select
@@ -52,3 +52,22 @@ def postNewOrder(keyword= " ", start_node= " ", email=" ", max_distance=-1):
     
     response = requests.post(url=url+"/searchorders/1", data=order, headers=headers)
     return response.status_code
+
+
+def getAllConnectData(orderid):       
+    engine = create_engine(engine_url)
+
+    Session = sessionmaker(engine)
+
+    with Session() as  session:
+        connectData = session.execute(
+            select(ConnectModel).
+            filter_by(orderid=orderid)
+        ).scalars().all()
+    df = pd.DataFrame([vars(o) for o in connectData])[['precedent_node', 'distance', 'visited', 'id', 'tablename', 'orderid']]
+    
+    print(df.columns)
+    print(df[df["precedent_node"].isnull() == False])
+    return df
+    
+getAllConnectData(1)
