@@ -1,3 +1,4 @@
+import json
 from Models import SearchOrderModel, ConnectModel
 from app import app, db
 from maindash import dashApp
@@ -8,7 +9,7 @@ import requests
 import pandas as pd
 from globals import orderStatusList
 
-url = "http://localhost:5000"
+url= "http://127.0.0.1:5000/api"
 engine_url = 'postgresql://postgres:1234@localhost/dblp'
 
 headers = {"Content-Type": "application/json"}
@@ -45,17 +46,19 @@ def getOrdersDf():
     df["current_status"] = df["current_status"].apply(lambda x: orderStatusList[x])
 
     return  df
+
     
     
 def postNewOrder(keyword= " ", start_node= " ", email=" ", max_distance=-1):
     order = {
-    "keyword": keyword,
-    "start_node": start_node,
-    "email":email,
-    "max_distance": max_distance
+        "keyword": keyword,
+        "start_node": start_node,
+        "email":email,
+        "max_distance": max_distance
     }
-    
-    response = requests.post(url=url+"/searchorders/1", data=order, headers=headers)
+
+    order = json.dumps(order)
+    response = requests.post(url=url+"/searchorder/1", data=order, headers=headers)
     return response.status_code
 
 
