@@ -4,7 +4,7 @@ import pandas as pd
 import networkx as nx
 import dash_bootstrap_components as dbc
 
-from modelInteraction import *
+from modelInteraction import getOrderDropdown, getAllConnectData, getNodeData
       
 
 from globals import *
@@ -39,7 +39,7 @@ def getNetworkPage():
             
             dbc.Col([
                 dcc.Graph(id="network-distance-bar"),
-                dcc.Graph(id="network-reached-stacked-bar"),
+                dcc.Graph(id="network-reached-stacked-bar")
                 ], width=4)            
             ])
         ])
@@ -88,10 +88,9 @@ def networkDistanceGraph(df):
             color=df["Color"],
             opacity=0.8,
             ),
-        text=[getNodeData(node['node']) for _, node in df.iterrows()],
+        text=[f"This Node: {node['node']}, Prev Node: {node['precedent_node']}, Distance: {node['distance']} <br>{getNodeData(node['node'])}"  for _, node in df.iterrows()],
         hoverinfo="text",
     )
-
 
 
     # Trace for edges

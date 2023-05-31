@@ -109,10 +109,10 @@ def getAllConnectData(orderid):
 def getNodeData(node):
     table, id = node.split(",")
     
-    response = requests.get(f"{url}/api/{table}/{int(id)}", headers=headers)
+    response = requests.get(f"{url}/{table}/{int(id)}", headers=headers)
     if response.status_code != 200:
         return None
-    nodes = response.json()
-    return nodes
+    txt = response.content
+    return txt
 
 getNodeData("book,390")
