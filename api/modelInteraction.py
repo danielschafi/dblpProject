@@ -82,7 +82,7 @@ def getAllConnectData(orderid):
     
     #startnode gets deleted if prev = none
     start_node = vars(start_node)["start_node"]
-            
+    print("startNode:", start_node)      
     df = pd.DataFrame([vars(o) for o in connectData])
     df['node'] = df['tablename'] + ',' + df['id'].astype(str)
     df.loc[df["node"] == start_node, "precedent_node"] = start_node
@@ -92,7 +92,11 @@ def getAllConnectData(orderid):
     #print(len(df[df["precedent_node"].isnull() == False]))
     
     return df
-    
-# df = getAllConnectData(8)
 
+from globals import *
+df = getAllConnectData(12)
+df = df[df["precedent_node"].isnull() == False]
+df["Color"] = df['distance'].apply(lambda x: colors[int(x)])
+
+print(df[df["precedent_node"] == "book,390"])
 # print(df[df["node"] == "book,138"])

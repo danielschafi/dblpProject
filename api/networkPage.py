@@ -38,10 +38,8 @@ def getNetworkPage():
                 ], width=8),
             
             dbc.Col([
-                dcc.Graph(id="network-distance-bar", 
-                        figure=networkDistanceBar()),
-                dcc.Graph(id="network-reached-stacked-bar", 
-                        figure=networkReachedStackedBar())
+                dcc.Graph(id="network-distance-bar"),
+                dcc.Graph(id="network-reached-stacked-bar")
                 ], width=4)            
             ])
         ])
@@ -50,6 +48,8 @@ def getNetworkPage():
 
 @dashApp.callback(
     Output('network-distance-graph', 'figure'),
+    Output('network-distance-bar', 'figure'),
+    Output('network-reached-stacked-bar', 'figure'),
     Input('active-order-dropdown', 'value'))
 def update_network_graph(value):
     if value is None:
@@ -60,20 +60,18 @@ def update_network_graph(value):
   
     reached = df.shape[0]
     df = df[df["precedent_node"].isnull() == False]
-    unreached = df.shape[0]
-    
-    return networkDistanceGraph(df)
-
-
-
-#def getConnectData():
-    
-def networkDistanceGraph(df):
+    notReached = df.shape[0]
     df["Color"] = df['distance'].apply(lambda x: colors[int(x)])
-    
-    G = nx.from_pandas_edgelist(df, source="precedent_node", target="node", edge_attr=True)    
+
+    return networkDistanceGraph(df), networkDistanceBar(df), networkReachedStackedBar(reached, notReached)
+
+
+def networkDistanceGraph(df):
+    df = df.sort_values(by="distance")
+    G = nx.from_pandas_edgelist(df, source="node", target="precedent_node", edge_attr=None)    
     
     #Node positions
+    #kamada_kawai_layout
     pos = nx.spring_layout(G)
     
     node_x = [pos[cord][0] for cord in list(G.nodes())]
@@ -90,12 +88,10 @@ def networkDistanceGraph(df):
             color=df["Color"],
             opacity=0.8,
             ),
-        text=[f"{node['node']}" for _, node in df.iterrows()],
+        text=[f"{node['node']}, {node['distance']}, {node['precedent_node']}" for _, node in df.iterrows()],
         hoverinfo="text",
     )
 
-    
-    
 
     # Trace for edges
     edge_x = []
@@ -113,7 +109,7 @@ def networkDistanceGraph(df):
         mode="lines",
         line=dict(
             width=2,
-        )
+            )
         )
     
 
@@ -134,17 +130,10 @@ def networkDistanceGraph(df):
     
     
     
-def networkDistanceBar():
-    df = pd.read_csv("sample_networkGraphData.csv", usecols=[0,1,2])    
-
-
-    def colFunc(distance):
-        return colors[distance]
-    df["Color"] = df["Distance"].apply(colFunc)
-    
+def networkDistanceBar(df):
 
     # Calculate the count for each distance
-    counts = df["Distance"].value_counts().sort_index()
+    counts = df["distance"].value_counts().sort_index()
     bar_colors = [colors[c] for c in counts.index]
 
     # Create a bar trace with custom colors
@@ -167,10 +156,7 @@ def networkDistanceBar():
     
     
     
-def networkReachedStackedBar():
-    reached = 1231
-    notReached = 231
-    
+def networkReachedStackedBar(reached, notReached):
     percentageReached = (reached /(reached + notReached)) * 100
     percentageNotReached = 100 - percentageReached
     
