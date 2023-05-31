@@ -4,7 +4,7 @@ import pandas as pd
 import networkx as nx
 import dash_bootstrap_components as dbc
 
-from modelInteraction import getOrderDropdown
+from modelInteraction import getOrderDropdown, getAllConnectData
       
 
 from globals import *
@@ -50,16 +50,18 @@ def getNetworkPage():
 
 @dashApp.callback(
     Output('network-distance-graph', 'figure'),
-    Output('network-distance-bar', 'figure'),
-    Output('network-reached-stacked-bar', 'figure'),
     Input('active-order-dropdown', 'value'))
 def update_network_graph(value):
     if value is None:
         return 
-    
     df = getAllConnectData(value)
-    print(df.columns)
-    print(df[df["precedent_node"].isnull() == False])
+    if df is None:
+        return
+  
+    reached = df.shape[0]
+    df = df[df["precedent_node"].isnull() == False]
+    unreached = df.shape[0]
+    
     return networkDistanceGraph(df)
 
 
@@ -67,12 +69,12 @@ def update_network_graph(value):
 #def getConnectData():
     
 def networkDistanceGraph(df):
-    df["Color"] = df["distance"].apply(lambda x: colors[x])
+    df["Color"] = df['distance'].apply(lambda x: colors[int(x)])
     
-    G = nx.from_pandas_edgelist(df, source="precedent_node", target="node_id", edge_attr=True)    
+    G = nx.from_pandas_edgelist(df, source="precedent_node", target="node", edge_attr=True)    
     
     #Node positions
-    pos=nx.kamada_kawai_layout(G)
+    pos = nx.spring_layout(G)
     
     node_x = [pos[cord][0] for cord in list(G.nodes())]
     node_y = [pos[cord][1] for cord in list(G.nodes())]
@@ -88,7 +90,7 @@ def networkDistanceGraph(df):
             color=df["Color"],
             opacity=0.8,
             ),
-        text=[f"{node['node_id']}" for _, node in df.iterrows()],
+        text=[f"{node['node']}" for _, node in df.iterrows()],
         hoverinfo="text",
     )
 

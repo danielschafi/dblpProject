@@ -70,17 +70,29 @@ def getAllConnectData(orderid):
             filter_by(orderid=orderid)
         ).scalars().all()
         
+        
+        start_node = session.execute(
+            select(SearchOrderModel).
+            filter_by(id=orderid)
+            ).scalar_one()
+        
+        
     if len(connectData) == 0:
         return None
-        
+    
+    #startnode gets deleted if prev = none
+    start_node = vars(start_node)["start_node"]
             
     df = pd.DataFrame([vars(o) for o in connectData])
     df['node'] = df['tablename'] + ',' + df['id'].astype(str)
-    
+    df.loc[df["node"] == start_node, "precedent_node"] = start_node
+
     df = df.drop(['_sa_instance_state', 'queued', 'tablename', 'id'], axis=1, errors='ignore')
 
-    print(df.columns)
-    print(len(df[df["precedent_node"].isnull() == False]))
+    #print(len(df[df["precedent_node"].isnull() == False]))
     
     return df
     
+# df = getAllConnectData(8)
+
+# print(df[df["node"] == "book,138"])
