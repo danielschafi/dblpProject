@@ -13,6 +13,7 @@ from globals import *
 
 from maindash import dashApp
 from dataPage import getDataPage
+from importPage import getImportPage
 from statisticsPage import getStatisticsPage
 from networkPage import getNetworkPage
 
@@ -51,6 +52,10 @@ if __name__ == '__main__':
                     dbc.NavLink([html.I(className="fas fa-home"), " Network"], href="/", active="exact"),
                     dbc.NavLink([html.I(className="fas fa-chart-bar"), " Statistics"], href="/statistics", active="exact"),
                     dbc.NavLink([html.I(className="fas fa-cog"), " Data"], href="/data", active="exact"),
+                    dbc.NavLink([html.I(className="fas fa-file-import"), " Import/Export"], href="/Import", active="exact"),
+
+                    #import icon
+
 
                     ],
                 vertical=True,
@@ -76,6 +81,9 @@ if __name__ == '__main__':
         
         elif pathname == "/data":
             return getDataPage()
+        
+        elif pathname == "/Import":
+            return getImportPage()
         
 
         return html.Div(
