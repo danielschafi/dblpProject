@@ -69,11 +69,18 @@ def getAllConnectData(orderid):
             select(ConnectModel).
             filter_by(orderid=orderid)
         ).scalars().all()
+        
+    if len(connectData) == 0:
+        return None
+        
+            
     df = pd.DataFrame([vars(o) for o in connectData])
+    df['node'] = df['tablename'] + ',' + df['id'].astype(str)
     
+    df = df.drop(['_sa_instance_state', 'queued', 'tablename', 'id'], axis=1, errors='ignore')
+
     print(df.columns)
-    print(df[df["precedent_node"].isnull() == False])
+    print(len(df[df["precedent_node"].isnull() == False]))
+    
     return df
     
-    
-#getAllConnectData(3)
