@@ -55,9 +55,7 @@ if __name__ == '__main__':
                     dbc.NavLink([html.I(className="fas fa-file-import"), " Import/Export"], href="/Import", active="exact"),
 
                     #import icon
-
-
-                    ],
+                ],
                 vertical=True,
                 pills=True,
             ),

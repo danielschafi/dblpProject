@@ -47,7 +47,21 @@ def getOrdersDf():
 
     return  df
 
-    
+def getDataId(title,art):
+    engine = create_engine('postgresql://postgres:1234@localhost/dblp')
+    if art != None:
+        conn = engine.connect()
+        query = text(f"SELECT * FROM {art} WHERE title ILIKE '%' || :title || '%'".format(art))
+        query = query.bindparams(title=title)
+        result = conn.execute(query)
+        #get all rows in datafram
+        df = result.fetchall()
+        df = pd.DataFrame(df)
+        df.columns = result.keys()
+        # drop all colomns except title and id
+        df = df.drop(df.columns.difference(['title', 'id']), 1)
+        return df
+    return None
     
 def postNewOrder(keyword= " ", start_node= " ", email=" ", max_distance=-1):
     order = {
