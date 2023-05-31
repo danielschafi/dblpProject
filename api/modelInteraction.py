@@ -23,8 +23,13 @@ def getOrderDropdown():
             select(SearchOrderModel).filter_by(current_status=SearchOrderModel.STATUS_FINISHED)
         ).scalars().all()
         
-    return [{"label": f"Id: {order.id}, Keyword: {order.keyword}, Start: {order.start_node}", "value": order.id } for order in availableOrders], availableOrders[-1].id
-    
+        if len(availableOrders) > 0:
+            return [{"label": f"Id: {order.id}, Keyword: {order.keyword}, Start: {order.start_node}", "value": order.id } for order in availableOrders], availableOrders[-1].id
+        else:
+            return [], None
+        
+        
+   
     
 def getOrdersDf():
     engine = create_engine(engine_url)
@@ -70,4 +75,3 @@ def getAllConnectData(orderid):
     print(df[df["precedent_node"].isnull() == False])
     return df
     
-getAllConnectData(1)

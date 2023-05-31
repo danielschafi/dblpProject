@@ -56,7 +56,7 @@ def update_network_graph(value):
 
 
 
-def getConnectData():
+#def getConnectData():
     
 def networkDistanceGraph():
     df = pd.read_csv("sample_networkGraphData.csv", usecols=[0,1,2])    
