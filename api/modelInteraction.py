@@ -93,27 +93,26 @@ def getAllConnectData(orderid):
             filter_by(id=orderid)
             ).scalar_one()
         
-        
     if len(connectData) == 0:
         return None
     
-    #startnode gets deleted if prev = none
     start_node = vars(start_node)["start_node"]
-    print("startNode:", start_node)      
     df = pd.DataFrame([vars(o) for o in connectData])
     df['node'] = df['tablename'] + ',' + df['id'].astype(str)
     df.loc[df["node"] == start_node, "precedent_node"] = start_node
-
     df = df.drop(['_sa_instance_state', 'queued', 'tablename', 'id'], axis=1, errors='ignore')
-
-    #print(len(df[df["precedent_node"].isnull() == False]))
     
     return df
 
-from globals import *
-df = getAllConnectData(12)
-df = df[df["precedent_node"].isnull() == False]
-df["Color"] = df['distance'].apply(lambda x: colors[int(x)])
 
-print(df[df["precedent_node"] == "book,390"])
-# print(df[df["node"] == "book,138"])
+
+def getNodeData(node):
+    table, id = node.split(",")
+    
+    response = requests.get(f"{url}/api/{table}/{int(id)}", headers=headers)
+    if response.status_code != 200:
+        return None
+    nodes = response.json()
+    return nodes
+
+getNodeData("book,390")
