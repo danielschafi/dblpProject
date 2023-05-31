@@ -40,7 +40,7 @@ def getNetworkPage():
             dbc.Col([
                 dcc.Graph(id="network-distance-bar", 
                         figure=networkDistanceBar()),
-                dcc.Graph(id="network-distance-bar", 
+                dcc.Graph(id="network-reached-stacked-bar", 
                         figure=networkReachedStackedBar())
                 ], width=4)            
             ])
@@ -50,20 +50,26 @@ def getNetworkPage():
 
 @dashApp.callback(
     Output('network-distance-graph', 'figure'),
+    Output('network-distance-bar', 'figure'),
+    Output('network-reached-stacked-bar', 'figure'),
     Input('active-order-dropdown', 'value'))
 def update_network_graph(value):
-    return networkDistanceGraph()
+    if value is None:
+        return 
+    
+    df = getAllConnectData(value)
+    print(df.columns)
+    print(df[df["precedent_node"].isnull() == False])
+    return networkDistanceGraph(df)
 
 
 
 #def getConnectData():
     
-def networkDistanceGraph():
-    df = pd.read_csv("sample_networkGraphData.csv", usecols=[0,1,2])    
-
-    df["Color"] = df["Distance"].apply(lambda x: colors[x])
+def networkDistanceGraph(df):
+    df["Color"] = df["distance"].apply(lambda x: colors[x])
     
-    G = nx.from_pandas_edgelist(df, source="Previous", target="Id", edge_attr=True)    
+    G = nx.from_pandas_edgelist(df, source="precedent_node", target="node_id", edge_attr=True)    
     
     #Node positions
     pos=nx.kamada_kawai_layout(G)
@@ -82,7 +88,7 @@ def networkDistanceGraph():
             color=df["Color"],
             opacity=0.8,
             ),
-        text=[f"{node['Id']}" for _, node in df.iterrows()],
+        text=[f"{node['node_id']}" for _, node in df.iterrows()],
         hoverinfo="text",
     )
 
