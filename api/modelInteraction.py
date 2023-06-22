@@ -5,6 +5,7 @@ from maindash import dashApp
 from sqlalchemy import create_engine, text, select
 from sqlalchemy.orm import sessionmaker
 import requests
+import re
 
 import pandas as pd
 from globals import orderStatusList
@@ -112,7 +113,8 @@ def getNodeData(node):
     response = requests.get(f"{url}/{table}/{int(id)}", headers=headers)
     if response.status_code != 200:
         return None
-    txt = response.content
-    return txt
+    txt = str(response.content)
+    return re.sub(r",","<br>", re.sub(r"{|}|\\n","", txt))
+
 
 getNodeData("book,390")

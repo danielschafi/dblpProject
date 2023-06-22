@@ -88,7 +88,7 @@ def networkDistanceGraph(df):
             color=df["Color"],
             opacity=0.8,
             ),
-        text=[f"This Node: {node['node']}, Prev Node: {node['precedent_node']}, Distance: {node['distance']} <br>{getNodeData(node['node'])}"  for _, node in df.iterrows()],
+        text=[f"This Node: {node['node']}<br>Prev Node: {node['precedent_node']}<br>Distance from start: {node['distance']}<br>{getNodeData(node['node'])}"  for _, node in df.iterrows()],
         hoverinfo="text",
     )
 
