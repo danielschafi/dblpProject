@@ -101,7 +101,7 @@ def getAllConnectData(orderid):
     df = pd.DataFrame([vars(o) for o in connectData])
     df['node'] = df['tablename'] + ',' + df['id'].astype(str)
     df.loc[df["node"] == start_node, "precedent_node"] = start_node
-    df = df.drop(['_sa_instance_state', 'queued', 'tablename', 'id'], axis=1, errors='ignore')
+    df = df.drop(['_sa_instance_state', 'queued', 'id'], axis=1, errors='ignore')
     
     return df
 

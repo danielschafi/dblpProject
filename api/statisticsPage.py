@@ -1,78 +1,73 @@
-
-import dash_bootstrap_components as dbc
 from dash import Input, Output, dcc, html
-
 import plotly.graph_objects as go
+import pandas as pd
+import networkx as nx
+import dash_bootstrap_components as dbc
 
-from dash.dependencies import Input, Output, State
+from modelInteraction import getOrderDropdown, getAllConnectData, getNodeData
+      
 
-from dblpGetNewData import getData, getDataCSV
-
-
-
+from globals import *
 from maindash import dashApp
+import plotly.express as px
 
 
 def getStatisticsPage():
-
-        return html.Div([
+    orders, defaultOrder = getOrderDropdown()
+    return html.Div([
+        html.Div([
+            html.H1("Overview", className="display-4"),
+            html.Hr(),
+            html.P(
+                "Welcome to our dashboard about the DBLP dataset", className="lead"
+                ),
+            html.P(
+                "This dashboard is made by: Adrian Joost, Daniel Schafhäutle, Sangeeths Chandrakumar"
+                ),
+        
+        dbc.Row([
+            html.H1("Dataset Overview", className="display-4"),
+            html.Hr(),
             
-            #split page in 2 X 2
             html.Div([
-                html.Div([
-                    html.H1("Number of publications per year", className="display-4"),
-                    html.Hr(),
-                    #plot bar chart with number of publications per year
-                    dcc.Graph(
-                        id="bar-chart",
-                        figure={
-                            "data": [
-                                go.Bar(
-                                    x=[1, 2, 3, 4],
-                                    y=[2, 3, 1, 4],
-                                    marker=dict(
-                                        color="rgb(255, 0, 0)",
-                                    ),
-                                ),
-                            ],
-                            "layout": go.Layout(
-                                title="Bar Chart",
-                                xaxis={"title": "X Axis"},
-                                yaxis={"title": "Y Axis"},
-                                hovermode="closest",
-                            ),
-                        },
-                    ),
-                ], className="p-5 bg-light rounded-3"),
-                html.Div([
-                    html.H1("Number of publications per year", className="display-4"),
-                    html.Hr(),
-                    # plot line chart with number of publications per year
-                    dcc.Graph(
-                        id="line-chart",
-                        figure={
-                            "data": [
-                                go.Scatter(
-                                    x=[1, 2, 3, 4],
-                                    y=[2, 3, 1, 4],
-                                    mode="lines+markers",
-                                    marker=dict(
-                                        color="rgb(255, 0, 0)",
-                                    ),
-                                ),
-                            ],
-                            "layout": go.Layout(
-                                title="Line Chart",
-                                xaxis={"title": "X Axis"},
-                                yaxis={"title": "Y Axis"},
-                                hovermode="closest",
-                            ),
-                        },
-                    ),
-                ], className="p-5 bg-light rounded-3"),
-        ], className="p-5 bg-light rounded-3")
-        ], className="p-5 bg-light rounded-3")
+                html.P("Select Order:", className="lead"),
+                dcc.Dropdown(orders, defaultOrder, id="active-order-dropdown") 
+                ]),
+            
+            dbc.Col([
+                html.P("Publication media distribution", className="lead"),
+                dcc.Graph(id="publication-media-distribution-pie"),
+                ])            
+            ])
+        ])
+    ], className="p-5 bg-light rounded-3"),
+        
+
+@dashApp.callback(
+    #Output('avg-publications-bar', 'figure'),
+    Output('publication-media-distribution-pie', 'figure'),
+
+    Input('active-order-dropdown', 'value'))
+def update_network_graph(value):
+    if value is None:
+        return 
+    df = getAllConnectData(value)
+    if df is None:
+        return
+  
+    return pubMediaDistPie(df)
+
 
 
     
+    
+def pubMediaDistPie(df):
+    fig = px.pie(df, names='tablename')
+    fig.update_layout(
+                    hovermode="closest",
+                    margin=dict(b=20, l=5, r=5, t=40),
+                    paper_bgcolor="#f8f9fa",
+                    plot_bgcolor="#f8f9fa",
+                    )
+    return fig
 
