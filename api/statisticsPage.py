@@ -16,28 +16,19 @@ def getStatisticsPage():
     orders, defaultOrder = getOrderDropdown()
     return html.Div([
         html.Div([
-            html.H1("Overview", className="display-4"),
-            html.Hr(),
-            html.P(
-                "Welcome to our dashboard about the DBLP dataset", className="lead"
-                ),
-            html.P(
-                "This dashboard is made by: Adrian Joost, Daniel Schafhäutle, Sangeeths Chandrakumar"
-                ),
-        
-        dbc.Row([
-            html.H1("Dataset Overview", className="display-4"),
-            html.Hr(),
-            
-            html.Div([
-                html.P("Select Order:", className="lead"),
-                dcc.Dropdown(orders, defaultOrder, id="active-order-dropdown") 
-                ]),
-            
-            dbc.Col([
-                html.P("Publication media distribution", className="lead"),
-                dcc.Graph(id="publication-media-distribution-pie"),
-                ])            
+            dbc.Row([
+                html.H1("Dataset Overview", className="display-4"),
+                html.Hr(),
+                
+                html.Div([
+                    html.P("Select Order:", className="lead"),
+                    dcc.Dropdown(orders, defaultOrder, id="active-order-dropdown") 
+                    ]),
+                
+                dbc.Col([
+                    html.P("Publication media distribution", className="lead"),
+                    dcc.Graph(id="publication-media-distribution-pie"),
+                    ])            
             ])
         ])
     ], className="p-5 bg-light rounded-3"),
