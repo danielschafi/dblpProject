@@ -28,7 +28,11 @@ def getStatisticsPage():
                 dbc.Col([
                     html.P("Publication media distribution", className="lead"),
                     dcc.Graph(id="publication-media-distribution-pie"),
-                    ])            
+                    ]),
+                dbc.Col([
+                    html.P("Publication media distribution", className="lead"),
+                    dcc.Graph(id="publication-media-distribution-pie-bar"),
+                ]),
             ])
         ])
     ], className="p-5 bg-light rounded-3"),
@@ -37,7 +41,6 @@ def getStatisticsPage():
 @dashApp.callback(
     #Output('avg-publications-bar', 'figure'),
     Output('publication-media-distribution-pie', 'figure'),
-
     Input('active-order-dropdown', 'value'))
 def update_network_graph(value):
     if value is None:
@@ -45,12 +48,28 @@ def update_network_graph(value):
     df = getAllConnectData(value)
     if df is None:
         return
-  
+    print(df)
     return pubMediaDistPie(df)
 
+@dashApp.callback(
+    Output('publication-media-distribution-pie-bar', 'figure'),
+    Input('active-order-dropdown', 'value'))
+def update_network_graph(value):
+    if value is None:
+        return 
+    df = getAllConnectData(value)
+    if df is None:
+        return
+    print(df)
+    return pubMediaDistPieBar(df)
 
-
-    
+def pubMediaDistPieBar(df):
+    df['count'] = 1
+    df = df.groupby(['tablename']).count()
+    df = df.reset_index()
+    df = df.sort_values(by=['count'], ascending=False)
+    fig = px.bar(df, x='tablename', y='count', color='tablename')
+    return fig
     
 def pubMediaDistPie(df):
     fig = px.pie(df, names='tablename')
