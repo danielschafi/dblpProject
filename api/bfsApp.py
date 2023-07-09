@@ -67,15 +67,16 @@ def processOrder(order):
     while len(queued) > 0:
         for node in tqdm(queued, desc="Working on Queue"):
             relations = RelationshipRes.getRelations(table=node.tablename, _id=node.id)
-            for table, ids in relations.items():
-                for _id in ids:
-                    connect = ConnectModel.get(id=_id, orderid=orderid, tablename=table)
-                    if connect:
-                        if connect.queued == ConnectModel.NOT_QUEUED:
-                            connect.setVisited()
-                            connect.setDistance(node.distance + 1)
-                            connect.queue()
-                            connect.precedent_node = f"{node.tablename},{node.id}"
+            if relations:
+                for table, ids in relations.items():
+                    for _id in ids:
+                        connect = ConnectModel.get(id=_id, orderid=orderid, tablename=table)
+                        if connect:
+                            if connect.queued == ConnectModel.NOT_QUEUED:
+                                connect.setVisited()
+                                connect.setDistance(node.distance + 1)
+                                connect.queue()
+                                connect.precedent_node = f"{node.tablename},{node.id}"
             node.queueAndPass()
         queued = ConnectModel.getQueuedNodes(orderid)
     order.changeStatus(SearchOrderModel.STATUS_FINISHED)
