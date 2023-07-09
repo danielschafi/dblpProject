@@ -2,6 +2,7 @@
 BreathFirstSearch algorithm that is searching
 connection-Table to find shortest paths of nodes.
 """
+import time
 from Models import SearchOrderModel, ConnectModel
 from Resources.relationshipRes import RelationshipRes
 from app import app 
@@ -14,19 +15,21 @@ URL = "http://localhost:5000"
 def main():
     db.init_app(app)
     with app.app_context():
-        #get open status
-        setupOrders = SearchOrderModel.getByStatus(SearchOrderModel.STATUS_SETUP)
-        for order in tqdm(setupOrders, desc="Setup Orders"):
-            status = insertOrder(order)
-            if not status:
-                order.changeStatus(SearchOrderModel.STATUS_FAILED)
-            else:
-                order.changeStatus(SearchOrderModel.STATUS_PROCESSING)
+        while True:
+            #get open status
+            setupOrders = SearchOrderModel.getByStatus(SearchOrderModel.STATUS_SETUP)
+            for order in tqdm(setupOrders, desc="Setup Orders"):
+                status = insertOrder(order)
+                if not status:
+                    order.changeStatus(SearchOrderModel.STATUS_FAILED)
+                else:
+                    order.changeStatus(SearchOrderModel.STATUS_PROCESSING)
 
-        #get with processing status
-        processingOrders = SearchOrderModel.getByStatus(SearchOrderModel.STATUS_PROCESSING)
-        for order in tqdm(processingOrders, desc="Process Orders"):
-            processOrder(order)
+            #get with processing status
+            processingOrders = SearchOrderModel.getByStatus(SearchOrderModel.STATUS_PROCESSING)
+            for order in tqdm(processingOrders, desc="Process Orders"):
+                processOrder(order)
+            time.sleep(20)
 
 def insertOrder(order):
     nodes = getNodes(order.keyword)
