@@ -48,7 +48,6 @@ def update_network_graph(value):
     df = getAllConnectData(value)
     if df is None:
         return
-    print(df)
     return pubMediaDistPie(df)
 
 @dashApp.callback(
@@ -60,7 +59,6 @@ def update_network_graph(value):
     df = getAllConnectData(value)
     if df is None:
         return
-    print(df)
     return pubMediaDistPieBar(df)
 
 def pubMediaDistPieBar(df):
