@@ -1,0 +1,16 @@
+.bg-light {
+    background-color: #c6e3ff40 !important;
+}
+.nav-pills .nav-link{
+    color: #ffffff !important;
+}
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #000 !important;
+    background-color: #f1f8ff !important;
+}
+.imgcenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 47%;
+}

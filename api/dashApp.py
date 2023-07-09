@@ -26,7 +26,8 @@ if __name__ == '__main__':
         "bottom": 0,
         "width": "16rem",
         "padding": "2rem 1rem",
-        "background-color": "#f8f9fa"
+        "background-color": "rgb(0, 148, 255)",
+        "color": "white",
     }
 
 
@@ -41,8 +42,7 @@ if __name__ == '__main__':
 
     sidebar = html.Div(
         [
-            html.Img(src=dashApp.get_asset_url('DBLP_Logo.png'), style={'width':'100%'}),
-            html.H2("Dashboard", className="display-5"),
+            html.H2(html.Img(src=dashApp.get_asset_url('DBLP_Logo.png'),className="imgcenter"),"Dashboard", className="display-5"),
             html.Hr(),
             html.P(
                 "Welcome to our dashboard about the DBLP dataset", className="lead"
